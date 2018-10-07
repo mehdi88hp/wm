@@ -13,14 +13,14 @@
                             <div class="btn btn-outline-info d-flex justify-content-center align-items-center"
                                  :key="1"
                                  v-if="Stage !== 'final'"
-                                 :class="{disabled : !isDeliveryTimeChosen || (!order_service_id && Stage === 'order_service')}"
+                                 :class="{disabled : !isDeliveryTimeChosen || (!order_service && Stage === 'order_service')}"
                                  v-on:click="Next()">
                                 <i class="fas fa-2x fa-backward"></i>&nbsp;<span>مرحله بعد</span>
                             </div>
                             <div class="btn btn-outline-success d-flex justify-content-center align-items-center"
                                  :key="2"
                                  v-if="Stage === 'final'"
-                                 v-on:click="Next()">
+                                 v-on:click="ConfirmOrder()">
                                 <i class="fas fa-2x fa-backward"></i>&nbsp;<span>تایید نهایی سفارش</span>
                             </div>
                         </transition>
@@ -54,13 +54,13 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="input-group mb-3">
-                                        <select v-on:change="getRegion()" v-model="address_id" dir="rtl"
+                                        <select v-on:change="getRegion()" v-model="address" dir="rtl"
                                                 class="custom-select text-right"
                                                 id="inputAddress">
                                             <option value="-1" selected disabled hidden>انتخاب کنید ...</option>
                                             <option v-for="(address, key) in $userData.addresses"
                                                     v-bind:key="key"
-                                                    v-bind:value="address.id"
+                                                    v-bind:value="address"
                                             >{{ address.city + ' - ' + address.neighbourhood + ' - ' + address.address }}
                                             </option>
                                         </select>
@@ -118,7 +118,7 @@
                                             <option value="-1" selected disabled hidden>انتخاب کنید ...</option>
                                             <option v-for="(time, key) in pickup_times" v-bind:key="key"
                                                     v-bind:value="time">
-                                                {{ "ساعت " + time.time.split(' : ')[0] + " تا " + time.time.split(' : ')[1] }}
+                                                {{ show_time(time.time) }}
                                             </option>
                                         </select>
                                         <div class="input-group-append">
@@ -161,7 +161,7 @@
                                             <option value="-1" selected disabled hidden>انتخاب کنید ...</option>
                                             <option v-for="(time, key) in delivery_times" v-bind:key="key"
                                                     v-bind:value="time">
-                                                {{ "ساعت " + time.split(' : ')[0] + " تا " + time.split(' : ')[1] }}
+                                                {{ show_time(time) }}
                                             </option>
                                         </select>
                                         <div class="input-group-append">
@@ -191,9 +191,9 @@
                                     <div v-ripple v-for="(order_service_row, key) in $userData.order_services"
                                          :id="'order_service_row'+key"
                                          class="card col-12 border border-info mb-3"
-                                         :class="{'card-order-service' : order_service_id !== order_service_row.id, 'card-order-service-clicked' : order_service_id === order_service_row.id}"
+                                         :class="{'card-order-service' : order_service !== order_service_row.id, 'card-order-service-clicked' : order_service === order_service_row.id}"
                                          :key="key"
-                                         v-on:click="selectOrderService('order_service_row'+key)" :data-id="order_service_row.id" order_service_el>
+                                         v-on:click="selectOrderService('order_service_row'+key, order_service_row)" order_service_el>
                                         <div class="card-body text-right">
 
                                             <div class="row">
@@ -236,7 +236,7 @@
                                             <hr class="mb-3 mt-2"/>
 
                                             <div class="row mb-4">
-                                                <div v-for="(extra_option_row, key) in getOrderExtraOptions($userData.order_extra_options)"
+                                                <div v-for="(extra_option_row, key) in getOrderExtraOptions()"
                                                      :key="key" class="col-lg-6 text-right">
                                                     <div style="padding: 0;" class="card card-extra-option col-12 mb-4">
                                                         <img width="100%" height="100%"
@@ -260,15 +260,15 @@
                                                             <div class="row">
                                                                 <div class="col-6 d-flex justify-content-start">
                                                                     <i class="fas fa-minus m-2"
-                                                                       v-on:click="Minus(extra_option_row.id)"></i>
+                                                                       v-on:click="Minus(key)"></i>
                                                                     <i class="fas fa-plus m-2"
-                                                                       v-on:click="Plus(extra_option_row.id)"></i>
+                                                                       v-on:click="Plus(key)"></i>
                                                                 </div>
                                                                 <div class="col-6">
                                                                     <div class="col-12 m-2">
                                                                         <span>تعداد : </span>
                                                                         &nbsp;
-                                                                        <span :id="'count_extra_option_'+extra_option_row.id">{{ extra_options[extra_option_row.id] }}</span>
+                                                                        <span :id="'count_extra_option_'+key">{{ extra_options[key].count }}</span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -292,22 +292,26 @@
                                                 <div class="row">
                                                     <div class="col-12 border border-info rounded p-3">
                                                         <div class="row mb-3">
-                                                            <div class="col-md-9 text-left">a</div>
+                                                            <div class="col-md-9 text-right">
+                                                                {{ address.city + ' - ' + address.neighbourhood + ' - ' + address.address }}
+                                                            </div>
                                                             <div class="col-md-3 text-right">آدرس دریافت</div>
                                                         </div>
 
                                                         <div class="row mb-3">
-                                                            <div class="col-md-6 text-left">a</div>
+                                                            <div class="col-md-6 text-left">
+                                                                {{ pickup_date.date_pickup + ' | ' + show_time(pickup_time.time) }}
+                                                            </div>
                                                             <div class="col-md-6 text-right">تاریخ و ساعت دریافت</div>
                                                         </div>
 
                                                         <div class="row mb-3">
-                                                            <div class="col-md-6 text-left">a</div>
+                                                            <div class="col-md-6 text-left">{{ delivery_date.date + ' | ' + show_time(delivery_time) }}</div>
                                                             <div class="col-md-6 text-right">تاریخ و ساعت تحویل</div>
                                                         </div>
 
                                                         <div class="row">
-                                                            <div class="col-md-6 text-left">a</div>
+                                                            <div class="col-md-6 text-left">{{ order_service.title }}</div>
                                                             <div class="col-md-6 text-right">نوع سرویس سفارش</div>
                                                         </div>
 
@@ -337,10 +341,10 @@
                                                         <tr v-for="(option, index) in getOrderExtraOption()"
                                                             v-bind:key="index">
                                                             <td>{{ index+1 }}</td>
-                                                            <td>{{ getOptionbyId(getKeyByValue(getOrderExtraOption(), option)).title }}</td>
-                                                            <td>{{ getOptionbyId(getKeyByValue(getOrderExtraOption(), option)).price }}</td>
-                                                            <td>{{ option }}</td>
-                                                            <td>{{ 'xxx' }}</td>
+                                                            <td>{{ option.title }}</td>
+                                                            <td>{{ option.price }}</td>
+                                                            <td>{{ option.count }}</td>
+                                                            <td>{{ option.count * option.price }}</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>
@@ -367,22 +371,22 @@
 
 
         <!-- the modal -->
-        <div class="modal" id="not_image_modal" tabindex="-1" role="dialog" dir="rtl">
+        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog" dir="rtl">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title w-100 text-right">خطا</h5>
+                        <h5 class="modal-title w-100 text-right">پیام تایید</h5>
                         <button type="button" class="close flex-shrink-1" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="d-block text-center">
-                            <h5>فایل انتخاب شده تصویر نیست</h5>
+                            <h5>سفارش شما با موفقیت ثبت شد. منتظر تایید سفارش از سوی کارشناسان واش-ماش باشید</h5>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">متوجه شدم</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
                     </div>
                 </div>
             </div>
@@ -408,7 +412,7 @@
                 isDeliveryDateChosen: false,
                 isDeliveryTimeChosen: false,
 
-                order_service_id: '',
+                order_service: '',
 
                 pickup_dates: [],
                 pickup_times: [],
@@ -416,7 +420,7 @@
                 delivery_dates: [],
                 delivery_times: [],
 
-                address_id: '-1',
+                address: '-1',
                 pickup_date: '-1',
                 pickup_time: '-1',
                 delivery_date: '-1',
@@ -431,6 +435,7 @@
             }
         },
         computed: {
+
             groupedOrders() {
                 return this.chunk(this.orders, 2)
             },
@@ -445,7 +450,7 @@
 
             getRegion: function () {
                 this.$nextTick(function () {
-                    if (parseInt(this.address_id) === -1) {
+                    if (parseInt(this.address) === -1) {
                         this.isAddressChosen = false;
                         this.pickup_date = '-1';
                         this.pickup_time = '-1';
@@ -458,7 +463,7 @@
                         let formData = new FormData();
 
                         formData.append('token', this.$TOKEN);
-                        formData.append('id', this.address_id);
+                        formData.append('id', this.address.id);
 
                         this.$API.post(
                             '/api/v5/user/getRegionById', formData,
@@ -561,7 +566,7 @@
             },
 
 
-            selectOrderService: function (id) {
+            selectOrderService: function (id, order_service) {
                 this.$nextTick(function () {
 
                     $('div[order_service_el]').each(function () {
@@ -573,58 +578,125 @@
                     order_service_row.removeClass('card-order-service');
                     order_service_row.addClass('card-order-service-clicked');
 
-                    this.order_service_id = order_service_row.data('id');
+                    this.order_service = order_service;
                 });
 
             },
 
-            getOrderExtraOptions: function (options) {
+            getOrderExtraOptions: function () {
 
+                const extra_options = this.$userData.order_extra_options;
                 if (!this.extra_options.length) {
                     const THIS = this;
-                    options.forEach(function (option) {
-                        THIS.extra_options[option.id] = 0;
+                    extra_options.forEach(function (option, key) {
+                        const row = {};
+                        row.id = option.id;
+                        row.title = option.title;
+                        row.price = option.price;
+                        row.count = 0;
+                        THIS.extra_options[key] = row;
                     });
                 }
-                return options;
+                return extra_options;
             },
 
             Plus: function (key) {
-                this.extra_options[key] += 1;
-                $('#count_extra_option_'+key).text(this.extra_options[key]);
+                this.extra_options[key].count += 1;
+                $('#count_extra_option_'+key).text(this.extra_options[key].count);
             },
 
             Minus: function (key) {
-                if (this.extra_options[key] > 0) {
-                    this.extra_options[key] -= 1;
+                if (this.extra_options[key].count > 0) {
+                    this.extra_options[key].count -= 1;
                 }
-                $('#count_extra_option_'+key).text(this.extra_options[key]);
+                $('#count_extra_option_'+key).text(this.extra_options[key].count);
+            },
+
+            getOrderExtraOption: function () {
+                const THIS = this;
+                return this.extra_options.filter(function (option, key) {
+                    if (option.count !== 0) {
+                        return THIS.extra_options[key];
+                    }
+                });
+            },
+
+            show_time: function(time) {
+                const array = time.split(' : ');
+                return "ساعت " + array[0] + " تا " + array[1];
             },
 
             getKeyByValue: function(object, value) {
                 return Object.keys(object).find(key => object[key] === value);
             },
 
-            getOptionbyId: function (id) {
-                return this.$userData.order_extra_options.filter(function (option) {
-                    return option.id === id;
-                })
+
+            ConfirmOrder: function () {
+
+                const THIS = this;
+                this.isProgressActive = true;
+
+
+                let formData = new FormData();
+
+                formData.append('token', this.$TOKEN);
+                formData.append('date_pickup_user', this.pickup_date.date_pickup);
+                formData.append('time_pickup_user', this.pickup_time.time);
+                formData.append('date_delivery_user', this.delivery_date.date);
+                formData.append('time_delivery_user', this.delivery_time);
+                formData.append('address_id', this.address.id);
+                formData.append('order_service_id', this.order_service.id);
+
+                // create extra_options_array to send
+                this.getOrderExtraOption().forEach(function (option, key) {
+                    formData.append('extra_options['+ key +'][id]', option.id);
+                    formData.append('extra_options['+ key +'][count]', option.count);
+                });
+
+                this.$API.post(
+                    '/api/v5/user/registerOrder', formData,
+                    {
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    })
+                    .then(
+                        (response) => {
+                            this.isProgressActive = false;
+
+                            if (parseInt(response.data.code) === 1) {
+                                // request to refresh data
+                                this.$initData();
+                                this.$nextTick(function () {
+                                    const modal = $("#confirm_modal");
+                                    modal.modal('show');
+                                    modal.on('hide.bs.modal', function () {
+                                        THIS.$router.push({ path: '/dashboard/orders' });
+                                    });
+                                });
+                            } else {
+                                if (Object.keys(response.data.msg)[0] === 'token') {
+                                    // todo logout and open login page
+                                } else {
+                                    console.log(response.data.msg);
+                                    this.Error = '';
+                                    const THIS = this;
+                                    Object.values(response.data.msg).forEach(function (error_message) {
+                                        THIS.Error += "\n - " + error_message;
+                                    });
+                                    this.isHiddenError = false;
+
+                                }
+                            }
+                        }, (error) => {
+                            this.isProgressActive = true;
+                            console.log(error)
+                        }
+                    );
+
+
             },
 
-            Change: function () {
-                this.isHiddenError = true;
-                this.Error = '';
-            },
-
-            SendData: function () {
-
-                this.isHiddenError = true;
-                this.Error = '';
-            },
-
-            getOrderExtraOption: function () {
-                return this.extra_options.filter(function(option) { return option !== 0; });
-            },
 
             countWords: function (str) {
                 return str.trim().split('').length;

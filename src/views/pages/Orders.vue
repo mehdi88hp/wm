@@ -76,46 +76,51 @@
                             <div class="card-body" dir="rtl">
                                 <div class="row">
                                     <div class="col-5">وضعیت فاکتور :</div>
-                                    <div id="order_info_modal_factor_status" class="col-7 text-left"></div>
+                                    <div id="order_info_modal_factor_status" class="col-7 text-left">{{ factor_payment_status }}</div>
                                 </div>
-                                <div class="row mt-2">
+                                <div v-if="order_missionary" class="row mt-2">
                                     <div class="col-5">هزینه سفارش :</div>
-                                    <div id="order_info_modal_missionary" class="col-7 text-left"></div>
+                                    <div id="order_info_modal_missionary" class="col-7 text-left">{{ toMoneyFormat(order_missionary) }}</div>
                                 </div>
-                                <div class="row mt-2">
+                                <div v-if="order_missionary && to_pay" class="row mt-2">
                                     <div class="col-5">مبلغ مورد نیاز :</div>
-                                    <div id="order_info_modal_to_pay" class="col-7 text-left"></div>
+                                    <div id="order_info_modal_to_pay" class="col-7 text-left">{{ toMoneyFormat(to_pay) }}</div>
                                 </div>
-                                <div class="row d-flex justify-content-center mt-3">
-                                    <button class="btn btn-success" id="order_info_modal_payButton"></button>
+                                <div v-if="order_missionary && to_pay" class="row d-flex justify-content-center mt-3">
+                                    <button class="btn btn-success" id="order_info_modal_payButton">{{ payButtonText }}</button>
                                 </div>
                             </div>
                         </div>
 
-                        <table id="order_info_modal_table"
-                               class="table table-borderless table-hover align-self-center mt-4" dir="rtl">
-                            <thead>
-                            <tr class="bg-dark text-white">
-                                <th>#</th>
-                                <th>نام</th>
-                                <th>دسته بندی</th>
-                                <th>هزینه واحد (ریال)</th>
-                                <th>تعداد</th>
-                                <th>قیمت کل (ریال)</th>
-                            </tr>
-                            </thead>
 
-                            <tbody>
-                            <tr v-for="(factor, index) in factors" v-bind:key="index">
-                                <td>{{ index+1 }}</td>
-                                <td>{{ factor['title'] }}</td>
-                                <td>{{ factor['service'] }}</td>
-                                <td>{{ factor['price'] }}</td>
-                                <td>{{ factor['number'] }}</td>
-                                <td>{{ factor['total'] }}</td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div v-if="factors.length" class="row mt-5">
+                            <!--<h5 class="col-12 text-center">فاکتورها</h5>-->
+
+                            <table id="order_info_modal_table"
+                                   class="table table-borderless table-hover align-self-center mt-2" dir="rtl">
+                                <thead>
+                                <tr class="bg-dark text-white">
+                                    <th>#</th>
+                                    <th>عنوان</th>
+                                    <th>دسته بندی</th>
+                                    <th>هزینه واحد (ریال)</th>
+                                    <th>تعداد</th>
+                                    <th>قیمت کل (ریال)</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr v-for="(factor, index) in factors" v-bind:key="index">
+                                    <td>{{ index+1 }}</td>
+                                    <td>{{ factor['title'] }}</td>
+                                    <td>{{ factor['service'] }}</td>
+                                    <td>{{ factor['price'] }}</td>
+                                    <td>{{ factor['number'] }}</td>
+                                    <td>{{ factor['total'] }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div class="modal-footer" dir="rtl">
                         <button type="button" class="btn btn-secondary btn-danger" data-dismiss="modal">بستن</button>
@@ -139,6 +144,16 @@
                 data: [],
                 orders: [],
                 factors: [],
+
+                order_number: '',
+                modal_delivery: '',
+                modal_pickup: '',
+                factor_payment_status: '',
+                order_missionary: '',
+                to_pay: '',
+                payButtonText: '',
+
+
 
             }
         },
@@ -167,50 +182,38 @@
 
 
             HandleModal: function (order) {
+
+                this.factors = [];
+
+                this.order_number = '';
+                this.modal_delivery = '';
+                this.modal_pickup = '';
+                this.factor_payment_status = '';
+                this.order_missionary = '';
+                this.to_pay = '';
+                this.payButtonText = '';
+
+                this.order_number = 'سفارش شماره ' + order['number_order'];
+
+                this.modal_pickup = order['date_pickup_user'] + " ساعت " +
+                    order['time_pickup_user'].split(':')[0] + "تا" +
+                    order['time_pickup_user'].split(':')[1];
+
+                this.modal_delivery = order['date_delivery_user'] + " ساعت " +
+                    order['time_delivery_user'].split(':')[0] + "تا" +
+                    order['time_delivery_user'].split(':')[1];
+
+                this.factor_payment_status = order['factor_payment_status'];
+
+                this.order_missionary = order['factor_missionary'];
+
+                this.to_pay = order['remaining_amount'];
+                this.payButtonText = this.toMoneyFormat(order['remaining_amount'])
+                    + ' افزایش اعتبار و پرداخت فاکتور';
+
+                this.factors = order['factors'];
+
                 this.$nextTick(function () {
-
-                    $('#order_info_modal_Title').text('سفارش شماره ' + order['number_order']);
-
-                    $('#order_info_modal_pickup').text(order['date_pickup_user'] + " ساعت " +
-                        order['time_pickup_user'].split(':')[0] + "تا" +
-                        order['time_pickup_user'].split(':')[1]);
-
-                    $('#order_info_modal_delivery').text(order['date_delivery_user'] + " ساعت " +
-                        order['time_delivery_user'].split(':')[0] + "تا" +
-                        order['time_delivery_user'].split(':')[1]);
-
-                    $('#order_info_modal_factor_status').text(order['factor_payment_status']);
-
-
-                    const order_info_modal_missionary = $('#order_info_modal_missionary');
-                    const order_info_modal_to_pay = $('#order_info_modal_to_pay');
-                    const order_info_modal_payButton = $('#order_info_modal_payButton');
-                    if (order['factor_missionary']) {
-                        order_info_modal_missionary.parent().show();
-                        order_info_modal_missionary.text(this.toMoneyFormat(order['factor_missionary']));
-
-                        if (order['remaining_amount']) {
-                            order_info_modal_to_pay.parent().show();
-                            order_info_modal_payButton.show();
-                            order_info_modal_to_pay.text(this.toMoneyFormat(order['remaining_amount']));
-                            order_info_modal_payButton.text(
-                                this.toMoneyFormat(order['remaining_amount'])
-                                + ' افزایش اعتبار و پرداخت فاکتور'
-                            );
-                        }
-                    } else {
-                        order_info_modal_missionary.parent().hide();
-                        order_info_modal_to_pay.parent().hide();
-                        order_info_modal_payButton.hide();
-                    }
-
-                    if (order['factors']) {
-                        $('#order_info_modal_table').show();
-                        this.factors = order['factors'];
-                    } else {
-                        $('#order_info_modal_table').hide();
-                    }
-
                     $('#order_info_modal').modal('show');
                 });
             },
@@ -222,7 +225,7 @@
         },
         beforeMount: function () {
 
-            this.orders = this.$userData['orders'];
+            this.orders = this.$userData['orders'].reverse();
 
 
         }
@@ -237,11 +240,11 @@
     }
 
     .card-hover-blue {
-        -o-transition:.3s;
-        -ms-transition:.3s;
-        -moz-transition:.3s;
-        -webkit-transition:.3s;
-        transition:.3s;
+        -o-transition: .3s;
+        -ms-transition: .3s;
+        -moz-transition: .3s;
+        -webkit-transition: .3s;
+        transition: .3s;
     }
 
     .card-hover-blue:hover {
