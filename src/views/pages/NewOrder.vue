@@ -19,6 +19,7 @@
                             </div>
                             <div class="btn btn-outline-success d-flex justify-content-center align-items-center"
                                  :key="2"
+                                 :class="{disabled : isProgressActive}"
                                  v-if="Stage === 'final'"
                                  v-on:click="ConfirmOrder()">
                                 <i class="fas fa-2x fa-backward"></i>&nbsp;<span>تایید نهایی سفارش</span>
@@ -191,9 +192,10 @@
                                     <div v-ripple v-for="(order_service_row, key) in $userData.order_services"
                                          :id="'order_service_row'+key"
                                          class="card col-12 border border-info mb-3"
-                                         :class="{'card-order-service' : order_service !== order_service_row.id, 'card-order-service-clicked' : order_service === order_service_row.id}"
+                                         :class="{'card-order-service' : order_service !== order_service_row, 'card-order-service-clicked' : order_service === order_service_row}"
                                          :key="key"
                                          v-on:click="selectOrderService('order_service_row'+key, order_service_row)" order_service_el>
+
                                         <div class="card-body text-right">
 
                                             <div class="row">
@@ -279,15 +281,36 @@
                                             </div>
 
                                         </div>
+
+                                        <!-- final approvement -->
                                         <div :key="2" v-if="Stage !== 'extra_option'">
 
+                                            <transition name="fade" mode="out-in">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div v-if="isProgressActive" class="progress mb-3">
+                                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                                                 role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                                                                 aria-valuemax="100"
+                                                                 style="width: 100%"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </transition>
+
+                                            <transition name="fade" mode="out-in">
+                                                <div class="alert alert-danger small text-right like-pre"
+                                                     v-if="!isHiddenError" dir="rtl">{{ Error }}
+                                                </div>
+                                            </transition>
 
                                             <div class="row">
                                                 <h1 class="col-12 text-right">تایید مشخصات سفارش</h1>
                                                 <p class="col-12 text-right text-justify mt-2">&emsp;مشخصات سفارش را با دقت بررسی کرده و سپس برروی تایید نهایی سفارش کلیک کنید&emsp;</p>
                                             </div>
 
-                                            <!-- final approvement -->
+                                            <hr class="mb-3 mt-2"/>
+
                                             <div class="container">
                                                 <div class="row">
                                                     <div class="col-12 border border-info rounded p-3">
@@ -450,50 +473,60 @@
 
             getRegion: function () {
                 this.$nextTick(function () {
-                    if (parseInt(this.address) === -1) {
-                        this.isAddressChosen = false;
-                        this.pickup_date = '-1';
-                        this.pickup_time = '-1';
-                        this.delivery_date = '-1';
-                        this.delivery_time = '-1';
-                    } else {
 
-                        this.isProgressActive = true;
+                    this.pickup_date = '-1';
+                    this.pickup_time = '-1';
+                    this.delivery_date = '-1';
+                    this.delivery_time = '-1';
 
-                        let formData = new FormData();
+                    this.isAddressChosen = false;
+                    this.isPickupDateChosen = false;
+                    this.isPickupTimeChosen = false;
+                    this.isDeliveryDateChosen = false;
+                    this.isDeliveryTimeChosen = false;
 
-                        formData.append('token', this.$TOKEN);
-                        formData.append('id', this.address.id);
+                    this.isProgressActive = true;
 
-                        this.$API.post(
-                            '/api/v5/user/getRegionById', formData,
-                            {
-                                headers: {
-                                    'Accept': 'application/json',
+                    let formData = new FormData();
+
+                    formData.append('token', this.$TOKEN);
+                    formData.append('id', this.address.id);
+
+                    this.$API.post(
+                        '/api/v5/user/getRegionById', formData,
+                        {
+                            headers: {
+                                'Accept': 'application/json',
+                            }
+                        })
+                        .then(
+                            (response) => {
+                                this.isProgressActive = false;
+
+                                if (parseInt(response.data.code) === 1) {
+                                    this.pickup_dates = response.data.datas;
+                                    this.isAddressChosen = true;
+                                } else {
+                                    this.Error = "آدرس نامعتبر است";
+                                    this.isHiddenError = false;
+
+                                    this.pickup_date = '-1';
+                                    this.pickup_time = '-1';
+                                    this.delivery_date = '-1';
+                                    this.delivery_time = '-1';
+
+                                    this.isAddressChosen = false;
+                                    this.isPickupDateChosen = false;
+                                    this.isPickupTimeChosen = false;
+                                    this.isDeliveryDateChosen = false;
+                                    this.isDeliveryTimeChosen = false;
                                 }
-                            })
-                            .then(
-                                (response) => {
-                                    this.isProgressActive = false;
+                            }, (error) => {
+                                this.isProgressActive = true;
+                                console.log(error)
+                            }
+                        );
 
-                                    if (parseInt(response.data.code) === 1) {
-                                        this.pickup_dates = response.data.datas;
-                                        this.isAddressChosen = true;
-                                    } else {
-                                        this.Error = "آدرس نامعتبر است";
-                                        this.isHiddenError = false;
-                                        this.pickup_date = '-1';
-                                        this.pickup_time = '-1';
-                                        this.delivery_date = '-1';
-                                        this.delivery_time = '-1';
-                                    }
-                                }, (error) => {
-                                    this.isProgressActive = true;
-                                    console.log(error)
-                                }
-                            );
-
-                    }
 
                 });
 
@@ -501,42 +534,52 @@
 
 
             selectPickupDate: function () {
-                if (parseInt(this.pickup_date) === -1) {
-                    this.isPickupDateChosen = false;
-                    this.pickup_time = '-1';
-                    this.delivery_date = '-1';
-                    this.delivery_time = '-1';
-                } else {
-                    this.pickup_times = this.pickup_date.time_pickup;
-                    this.isPickupDateChosen = true;
-                }
+
+                this.pickup_time = '-1';
+                this.delivery_date = '-1';
+                this.delivery_time = '-1';
+
+                this.isPickupDateChosen = false;
+                this.isPickupTimeChosen = false;
+                this.isDeliveryDateChosen = false;
+                this.isDeliveryTimeChosen = false;
+
+                this.pickup_times = this.pickup_date.time_pickup;
+                this.isPickupDateChosen = true;
 
             },
 
             selectPickupTime: function () {
-                if (parseInt(this.pickup_time) === -1) {
-                    this.isPickupTimeChosen = false;
-                    this.delivery_date = '-1';
-                    this.delivery_time = '-1';
-                } else {
-                    this.delivery_dates = this.pickup_time.delivery;
-                    this.isPickupTimeChosen = true;
-                }
+
+                this.delivery_date = '-1';
+                this.delivery_time = '-1';
+
+                this.isPickupTimeChosen = false;
+                this.isDeliveryDateChosen = false;
+                this.isDeliveryTimeChosen = false;
+
+                this.delivery_dates = this.pickup_time.delivery;
+                this.isPickupTimeChosen = true;
+
 
             },
 
             selectDeliveryDate: function () {
-                if (parseInt(this.delivery_date) === -1) {
-                    this.isDeliveryDateChosen = false;
-                    this.delivery_time = '-1';
-                } else {
-                    this.delivery_times = this.delivery_date.time;
-                    this.isDeliveryDateChosen = true;
-                }
+
+
+                this.delivery_time = '-1';
+
+                this.isDeliveryDateChosen = false;
+                this.isDeliveryTimeChosen = false;
+
+                this.delivery_times = this.delivery_date.time;
+                this.isDeliveryDateChosen = true;
+
 
             },
 
             selectDeliveryTime: function () {
+
                 this.isDeliveryTimeChosen = parseInt(this.delivery_time) !== -1;
 
             },
@@ -567,19 +610,7 @@
 
 
             selectOrderService: function (id, order_service) {
-                this.$nextTick(function () {
-
-                    $('div[order_service_el]').each(function () {
-                        $(this).removeClass('card-order-service-clicked');
-                        $(this).addClass('card-order-service');
-                    });
-
-                    const order_service_row = $('#'+id);
-                    order_service_row.removeClass('card-order-service');
-                    order_service_row.addClass('card-order-service-clicked');
-
-                    this.order_service = order_service;
-                });
+                this.order_service = order_service;
 
             },
 
@@ -635,6 +666,7 @@
 
                 const THIS = this;
                 this.isProgressActive = true;
+                this.isHiddenError = true;
 
 
                 let formData = new FormData();
@@ -677,6 +709,9 @@
                             } else {
                                 if (Object.keys(response.data.msg)[0] === 'token') {
                                     // todo logout and open login page
+                                    localStorage.removeItem('data');
+                                    this.$router.push('login');
+
                                 } else {
                                     console.log(response.data.msg);
                                     this.Error = '';
@@ -689,7 +724,7 @@
                                 }
                             }
                         }, (error) => {
-                            this.isProgressActive = true;
+                            this.isProgressActive = false;
                             console.log(error)
                         }
                     );
