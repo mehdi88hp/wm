@@ -72,6 +72,12 @@ const router = new Router({
                 },
             ]
         },
+
+        {
+            path: '*',
+            name: '404',
+            component: () => import('./views/404.vue'),
+        }
     ]
 });
 
@@ -79,6 +85,9 @@ const router = new Router({
 router.beforeEach(function (to, from, next) {
 
     if (to.path === '/login' || to.path === '/login/') {
+        next();
+
+    } else if (to.path === '*') {
         next();
 
     } else if (to.path === '/' || to.path === '') {
