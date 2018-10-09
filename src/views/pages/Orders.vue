@@ -53,7 +53,7 @@
                         <button type="button" class="close col-1" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h5 class="modal-title col-11 text-right" id="order_info_modal_Title">Modal title</h5>
+                        <h5 class="modal-title col-11 text-right" id="order_info_modal_Title">{{ modal_title }}</h5>
                     </div>
                     <div class="modal-body">
 
@@ -62,12 +62,12 @@
                             <div class="card-body" dir="rtl">
                                 <div class="row">
                                     <div class="col-3">دریافت :</div>
-                                    <div id="order_info_modal_pickup" class="col-9 text-left"></div>
+                                    <div id="order_info_modal_pickup" class="col-9 text-left">{{ pickup_info }}</div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-3">تحویل :</div>
-                                    <div id="order_info_modal_delivery" class="col-9 text-left"></div>
+                                    <div id="order_info_modal_delivery" class="col-9 text-left">{{ delivery_info }}</div>
                                 </div>
                             </div>
                         </div>
@@ -145,6 +145,11 @@
                 orders: [],
                 factors: [],
 
+                modal_title: '',
+
+                pickup_info: '',
+                delivery_info: '',
+
                 order_number: '',
                 modal_delivery: '',
                 modal_pickup: '',
@@ -185,6 +190,11 @@
 
                 this.factors = [];
 
+                this.modal_title = '';
+
+                this.pickup_info = '';
+                this.delivery_info = '';
+
                 this.order_number = '';
                 this.modal_delivery = '';
                 this.modal_pickup = '';
@@ -192,6 +202,16 @@
                 this.order_missionary = '';
                 this.to_pay = '';
                 this.payButtonText = '';
+
+                this.modal_title = 'سفارش شماره ' + order['number_order'];
+
+                this.pickup_info = order['date_pickup_user'] + " ساعت " +
+                    order['time_pickup_user'].split(':')[0] + "تا" +
+                    order['time_pickup_user'].split(':')[1];
+
+                this.delivery_info = order['date_delivery_user'] + " ساعت " +
+                    order['time_delivery_user'].split(':')[0] + "تا" +
+                    order['time_delivery_user'].split(':')[1];
 
                 this.order_number = 'سفارش شماره ' + order['number_order'];
 
