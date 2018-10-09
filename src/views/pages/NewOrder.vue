@@ -173,6 +173,70 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <hr class="my-3"/>
+
+                            <!-- check coupon -->
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <button class="col-12 btn btn-outline-info"
+                                            :class="{disabled: !coupon}" @click="checkCoupon()">
+                                        ثبت
+                                    </button>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control text-center"
+                                               placeholder="کد تخفیف خود را وارد کنید"
+                                               aria-label="کد تخفیف خود را وارد کنید"
+                                               aria-describedby="coupon-label"
+                                               @input="isHiddenErrorCoupon = true"
+                                        v-model="coupon">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text bg-dark text-white"
+                                                  id="coupon-label">کد تخفیف</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <transition name="fade" mode="out-in">
+                                <div v-if="isProgressActiveCoupon"  class="row">
+                                    <div class="col-12">
+                                        <div class="progress mb-2">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                                 role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                                                 aria-valuemax="100"
+                                                 style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </transition>
+
+                            <transition name="fade" mode="out-in">
+                                <div class="alert small text-right text-justify mt-2"
+                                     :class="{'alert-danger': !hasValidCoupon, 'alert-success': hasValidCoupon}"
+                                     v-if="!isHiddenErrorCoupon" dir="rtl">
+                                    {{ ErrorCoupon }}
+                                </div>
+                            </transition>
+
+
+
+                            <hr class="my-3"/>
+
+                            <!-- write description -->
+                            <div class="input-group">
+                                <textarea style="min-height: 50pt;" class="form-control text-right"
+                                          aria-label="توضیحات اضافی" v-model="description"></textarea>
+                                <div style="min-height: 50pt;" class="input-group-append">
+                                    <span class="input-group-text bg-secondary text-white">توضیحات اضافی</span>
+                                </div>
+                            </div>
+
+
                         </div>
                         <div :key="2" v-if="Stage !== 'setting'">
 
@@ -299,7 +363,7 @@
                                             </transition>
 
                                             <transition name="fade" mode="out-in">
-                                                <div class="alert alert-danger small text-right like-pre"
+                                                <div class="alert alert-danger small text-right text-justify"
                                                      v-if="!isHiddenError" dir="rtl">{{ Error }}
                                                 </div>
                                             </transition>
@@ -333,9 +397,25 @@
                                                             <div class="col-md-6 text-right">تاریخ و ساعت تحویل</div>
                                                         </div>
 
-                                                        <div class="row">
+                                                        <div class="row mb-3">
                                                             <div class="col-md-6 text-left">{{ order_service.title }}</div>
                                                             <div class="col-md-6 text-right">نوع سرویس سفارش</div>
+                                                        </div>
+
+                                                        <div v-if="couponCode" class="row">
+                                                            <div class="col-md-6 text-left">{{ couponCode }}</div>
+                                                            <div class="col-md-6 text-right">کد تخفیف ثبت شده</div>
+                                                        </div>
+
+
+                                                        <div v-if="description" class="row d-flex justify-content-center">
+                                                            <div class="col-11 border border-dark rounded my-3 p-3">
+                                                                <div class="row">
+                                                                    <div class="col-md-6 text-right">{{ description }}
+                                                                    </div>
+                                                                    <div class="col-md-6 text-right">توضیحات سفارش</div>
+                                                                </div>
+                                                            </div>
                                                         </div>
 
                                                     </div>
@@ -449,12 +529,22 @@
                 delivery_date: '-1',
                 delivery_time: '-1',
 
+                hasValidCoupon: false,
+                coupon: '',
+                couponCode: '',
+
+                description: '',
+
                 extra_options: [],
 
                 isProgressActive: false,
+                isProgressActiveCoupon: false,
 
                 isHiddenError: true,
                 Error: '',
+
+                isHiddenErrorCoupon: true,
+                ErrorCoupon: '',
             }
         },
         computed: {
@@ -470,6 +560,46 @@
         },
 
         methods: {
+
+            checkCoupon: function () {
+
+                this.isProgressActiveCoupon = true;
+
+                let formData = new FormData();
+
+                formData.append('token', this.$TOKEN);
+                formData.append('coupon', this.coupon);
+
+                this.$API.post(
+                    '/api/v5/user/checkCoupon', formData,
+                    {
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    })
+                    .then(
+                        (response) => {
+                            this.isProgressActiveCoupon = false;
+
+                            if (parseInt(response.data.code) === 1) {
+                                this.couponCode = this.coupon;
+                                this.hasValidCoupon = true;
+
+                                this.isHiddenErrorCoupon = false;
+                                this.ErrorCoupon = 'کد تخفیف معتبر است و با موفقیت ثبت شد';
+                            } else {
+                                this.hasValidCoupon = false;
+                                this.isHiddenErrorCoupon = false;
+                                this.ErrorCoupon = response.data.msg;
+                            }
+                        }, (error) => {
+                            this.hasValidCoupon = false;
+                            this.isProgressActiveCoupon = true;
+                            console.log(error)
+                        }
+                    );
+
+            },
 
             getRegion: function () {
                 this.$nextTick(function () {
@@ -678,6 +808,11 @@
                 formData.append('time_delivery_user', this.delivery_time);
                 formData.append('address_id', this.address.id);
                 formData.append('order_service_id', this.order_service.id);
+                formData.append('description', this.description);
+
+                if (this.hasValidCoupon) {
+                    formData.append('coupon', this.couponCode);
+                }
 
                 // create extra_options_array to send
                 this.getOrderExtraOption().forEach(function (option, key) {
