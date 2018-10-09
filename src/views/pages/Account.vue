@@ -56,7 +56,7 @@
                             <div class="form-group col-10">
 
                                 <transition name="fade" mode="out-in">
-                                    <div class="alert alert-danger small text-right like-pre"
+                                    <div class="alert alert-danger small text-right text-justify"
                                          v-if="!isHiddenError">{{ Error }}
                                     </div>
                                 </transition>
