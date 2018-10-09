@@ -16,7 +16,7 @@
 
                     <div class="row mt-5 d-flex justify-content-center">
 
-                        <a style="height: 10%;" v-ripple href=""
+                        <a style="height: 10%;" v-ripple href="https://t.me/WASHMASHAPP"
                            class="col-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-telegram">
 
                             <i class="fab fa-2x fa-telegram telegram"></i>
@@ -30,7 +30,7 @@
                     <div class="row mt-4 d-flex justify-content-center">
 
 
-                        <a style="height: 10%;" v-ripple href=""
+                        <a style="height: 10%;" v-ripple href="http://www.instagram.com/WASHMASHAPP"
                            class="col-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-instagram">
 
                             <i class="fab fa-2x fa-instagram instagram"></i>
@@ -43,7 +43,7 @@
 
                     <div class="row mt-4 d-flex justify-content-center">
 
-                        <a style="height: 10%;" v-ripple href=""
+                        <a style="height: 10%;" v-ripple href="http://www.facebook.com/WASHMASHAPP"
                            class="col-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-facebook">
 
                             <i class="fab fa-2x fa-facebook facebook"></i>
@@ -56,7 +56,7 @@
 
                     <div class="row mt-4 mb-5 d-flex justify-content-center">
 
-                        <a style="height: 10%;" v-ripple href=""
+                        <a style="height: 10%;" v-ripple href="https://twitter.com/WASHMASHAPP"
                            class="col-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-twitter">
 
                             <i class="fab fa-2x fa-twitter twitter"></i>
