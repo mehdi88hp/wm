@@ -33,7 +33,7 @@
                             <i class="far fa-question-circle"></i>&nbsp;&nbsp;<span>سوالات متداول</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/new-order' })">
+                        <a v-on:click="$router.push({ path: '/dashboard/help' })">
                             <i class="fas fa-info"></i>&nbsp;&nbsp;<span>راهنما</span>
                         </a>
                         <div class="dropdown-divider"></div>
@@ -49,7 +49,7 @@
                             <i class="fas fa-phone-square"></i>&nbsp;&nbsp;<span>تماس با واش ماش</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/sign-out' })">
+                        <a v-on:click="logOut()">
                             <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;<span>خروج از حساب</span>
                         </a>
                     </div>
@@ -131,6 +131,28 @@
                         $('#menu').removeClass('change');
                     }
                 }
+            },
+
+
+            logOut: function () {
+
+                let formData = new FormData();
+
+                formData.append('token', this.$TOKEN);
+
+                this.$API.post(
+                    '/api/v5/user/SingOut',
+                    formData,
+                    {
+                        headers: {
+                            'Accept': 'application/json',
+                        }
+                    });
+
+                document.removeEventListener('click', this.documentClick);
+
+                localStorage.removeItem('data');
+                this.$router.push({ path: '/login' });
             }
         },
 

@@ -18,9 +18,13 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$BaseUrl = 'http://127.0.0.1:8000';
 
-Vue.prototype.$userData = JSON.parse(localStorage.getItem('data'));
-Vue.prototype.$TOKEN = Vue.prototype.$userData['token'];
+Vue.prototype.$userData = '';
+Vue.prototype.$TOKEN = '';
 
+if (localStorage.getItem('data')) {
+    Vue.prototype.$userData = JSON.parse(localStorage.getItem('data'));
+    Vue.prototype.$TOKEN = Vue.prototype.$userData['token'];
+}
 
 const api = axios.create({baseURL: Vue.prototype.$BaseUrl});
 Vue.prototype.$API = api;

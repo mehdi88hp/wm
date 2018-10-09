@@ -710,7 +710,7 @@
                                 if (Object.keys(response.data.msg)[0] === 'token') {
                                     // todo logout and open login page
                                     localStorage.removeItem('data');
-                                    this.$router.push('login');
+                                    this.$router.push({ path: '/login' });
 
                                 } else {
                                     console.log(response.data.msg);

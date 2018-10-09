@@ -74,7 +74,7 @@
 <script>
 
 
-
+    import Vue from 'vue'
 
     export default {
         name: "login",
@@ -147,6 +147,8 @@
                             console.log(response.data);
                             if (parseInt(response.data.code) === 1) {
                                 localStorage.setItem('data', JSON.stringify(response.data));
+                                Vue.prototype.$userData = response.data;
+                                Vue.prototype.$TOKEN = response.data.token;
                                 this.$router.push({ path: '/dashboard/new-order' });
                             } else {
                                 this.isCodeInvalid = true;
