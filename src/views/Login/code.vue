@@ -147,7 +147,7 @@
                             console.log(response.data);
                             if (parseInt(response.data.code) === 1) {
                                 localStorage.setItem('data', JSON.stringify(response.data));
-                                this.$router.push({ path: '/dashboard/orders' });
+                                this.$router.push({ path: '/dashboard/new-order' });
                             } else {
                                 this.isCodeInvalid = true;
                                 this.isCodeHiddenError = false;
