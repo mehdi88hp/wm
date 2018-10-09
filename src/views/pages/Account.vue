@@ -40,7 +40,7 @@
                             </div>
                             <div class="row col-8 mt-4">
                                 <h5 class="col-6">موجودی اکانت : </h5>
-                                <h5 class="col-6">{{ toMoneyFormat($userData.credit) }} تومان</h5>
+                                <h5 class="col-6">{{ toMoneyFormat($userData.credit/10) }} تومان</h5>
                             </div>
                             <div class="row col-12 mt-4">
                                 <button class="btn btn-outline-danger col m-2" v-on:click="isEditing=!isEditing">ویرایش
@@ -56,7 +56,7 @@
                             <div class="form-group col-10">
 
                                 <transition name="fade" mode="out-in">
-                                    <div v-on: class="alert alert-danger small text-right like-pre"
+                                    <div class="alert alert-danger small text-right like-pre"
                                          v-if="!isHiddenError">{{ Error }}
                                     </div>
                                 </transition>
@@ -265,6 +265,9 @@
                             } else {
                                 if (Object.keys(response.data.msg)[0] === 'token') {
                                     // todo logout and open login page
+                                    localStorage.removeItem('data');
+                                    this.$router.push('login');
+
                                 } else {
                                     console.log(response.data.msg);
                                     this.Error = '';
