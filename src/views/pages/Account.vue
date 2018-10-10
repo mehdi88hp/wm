@@ -56,7 +56,7 @@
                             <div class="form-group col-10">
 
                                 <transition name="fade" mode="out-in">
-                                    <div class="alert alert-danger small text-right text-justify"
+                                    <div class="alert alert-danger small text-right like-pre"
                                          v-if="!isHiddenError">{{ Error }}
                                     </div>
                                 </transition>
@@ -264,7 +264,7 @@
 
                             } else {
                                 if (Object.keys(response.data.msg)[0] === 'token') {
-                                    // todo logout and open login page
+
                                     localStorage.removeItem('data');
                                     this.$router.push({ path: '/login' });
 

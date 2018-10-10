@@ -21,7 +21,7 @@
                            placeholder="شماره همراه">
 
                     <transition name="fade">
-                        <div class="alert alert-danger small mt-2 text-right"
+                        <div class="alert alert-danger small mt-2 text-right like-pre"
                              v-if="!isHiddenError">{{ Error }}
                         </div>
                     </transition>

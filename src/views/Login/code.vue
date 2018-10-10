@@ -24,7 +24,7 @@
                            placeholder="کد فعال سازی">
 
                     <transition name="fade">
-                        <div class="alert alert-danger small mt-2 text-right"
+                        <div class="alert alert-danger small mt-2 like-pre"
                              v-if="!isCodeHiddenError">{{ Error }}
                         </div>
                     </transition>
@@ -146,6 +146,9 @@
                             this.$parent.isProgressActive = false;
                             console.log(response.data);
                             if (parseInt(response.data.code) === 1) {
+
+                                // todo Handle to SingUp Page if user in new
+
                                 localStorage.setItem('data', JSON.stringify(response.data));
                                 Vue.prototype.$userData = response.data;
                                 Vue.prototype.$TOKEN = response.data.token;

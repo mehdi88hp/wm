@@ -13,6 +13,12 @@ require('popper.js');
 require('bootstrap');
 
 
+import VueLayers from 'vuelayers'
+import 'vuelayers/lib/style.css' // needs css-loader
+
+Vue.use(VueLayers);
+
+
 Vue.config.productionTip = false;
 
 
@@ -29,7 +35,7 @@ if (localStorage.getItem('data')) {
 const api = axios.create({baseURL: Vue.prototype.$BaseUrl});
 Vue.prototype.$API = api;
 
-Vue.prototype.$initData = function () {
+Vue.prototype.$initData = function (callBack) {
 
     let formData = new FormData();
     formData.append('token', Vue.prototype.$TOKEN);
@@ -47,16 +53,13 @@ Vue.prototype.$initData = function () {
                     console.log(response.data);
                     Vue.prototype.$userData = response.data;
                     localStorage.setItem('data', JSON.stringify(response.data));
-                    return true;
-
-                } else {
-                    return false;
+                    callBack(response.data);
                 }
             }, (error) => {
                 console.log(error);
-                return false;
             }
         );
+
 };
 
 

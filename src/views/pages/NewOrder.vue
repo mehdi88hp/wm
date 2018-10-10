@@ -363,7 +363,7 @@
                                             </transition>
 
                                             <transition name="fade" mode="out-in">
-                                                <div class="alert alert-danger small text-right text-justify"
+                                                <div class="alert alert-danger small text-right like-pre"
                                                      v-if="!isHiddenError" dir="rtl">{{ Error }}
                                                 </div>
                                             </transition>
@@ -726,7 +726,6 @@
             },
 
 
-
             Previous: function () {
                 if (this.Stage === 'order_service') {
                     this.Stage = 'setting';
@@ -763,14 +762,14 @@
 
             Plus: function (key) {
                 this.extra_options[key].count += 1;
-                $('#count_extra_option_'+key).text(this.extra_options[key].count);
+                $('#count_extra_option_' + key).text(this.extra_options[key].count);
             },
 
             Minus: function (key) {
                 if (this.extra_options[key].count > 0) {
                     this.extra_options[key].count -= 1;
                 }
-                $('#count_extra_option_'+key).text(this.extra_options[key].count);
+                $('#count_extra_option_' + key).text(this.extra_options[key].count);
             },
 
             getOrderExtraOption: function () {
@@ -782,12 +781,12 @@
                 });
             },
 
-            show_time: function(time) {
+            show_time: function (time) {
                 const array = time.split(' : ');
                 return "ساعت " + array[0] + " تا " + array[1];
             },
 
-            getKeyByValue: function(object, value) {
+            getKeyByValue: function (object, value) {
                 return Object.keys(object).find(key => object[key] === value);
             },
 
@@ -816,8 +815,8 @@
 
                 // create extra_options_array to send
                 this.getOrderExtraOption().forEach(function (option, key) {
-                    formData.append('extra_options['+ key +'][id]', option.id);
-                    formData.append('extra_options['+ key +'][count]', option.count);
+                    formData.append('extra_options[' + key + '][id]', option.id);
+                    formData.append('extra_options[' + key + '][count]', option.count);
                 });
 
                 this.$API.post(
@@ -833,19 +832,20 @@
 
                             if (parseInt(response.data.code) === 1) {
                                 // request to refresh data
-                                this.$initData();
-                                this.$nextTick(function () {
-                                    const modal = $("#confirm_modal");
-                                    modal.modal('show');
-                                    modal.on('hide.bs.modal', function () {
-                                        THIS.$router.push({ path: '/dashboard/orders' });
+                                this.$initData(function () {
+                                    this.$nextTick(function () {
+                                        const modal = $("#confirm_modal");
+                                        modal.modal('show');
+                                        modal.on('hide.bs.modal', function () {
+                                            THIS.$router.push({path: '/dashboard/orders'});
+                                        });
                                     });
                                 });
                             } else {
                                 if (Object.keys(response.data.msg)[0] === 'token') {
-                                    // todo logout and open login page
+
                                     localStorage.removeItem('data');
-                                    this.$router.push({ path: '/login' });
+                                    this.$router.push({path: '/login'});
 
                                 } else {
                                     console.log(response.data.msg);
