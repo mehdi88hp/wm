@@ -21,6 +21,10 @@
                             <i class="far fa-user"></i>&nbsp;&nbsp;<span>حساب کاربری</span>
                         </a>
                         <div class="dropdown-divider"></div>
+                        <a v-on:click="$router.push({ path: '/dashboard/addresses' })">
+                            <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;<span>آدرس های من</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
                         <a v-on:click="$router.push({ path: '/dashboard/bills' })">
                             <i class="fas fa-concierge-bell"></i>&nbsp;&nbsp;<span>صورت حساب ها</span>
                         </a>

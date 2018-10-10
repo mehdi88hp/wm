@@ -35,6 +35,30 @@ body {
     outline: 0;
 }
 
+.vh-25 {
+    min-height: 25vh;
+}
+
+.vw-25 {
+    width: 25vw;
+}
+
+.vh-50 {
+    min-height: 50vh;
+}
+
+.vw-50 {
+    width: 50vw;
+}
+
+.vh-75 {
+    min-height: 75vh;
+}
+
+.vw-75 {
+    width: 75vw;
+}
+
 .vh-100 {
     min-height: 100vh;
 }

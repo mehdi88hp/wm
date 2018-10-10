@@ -39,6 +39,10 @@ const router = new Router({
                     component: () => import('./views/pages/Account.vue')
                 },
                 {
+                    path: 'addresses',
+                    component: () => import('./views/pages/Addresses.vue')
+                },
+                {
                     path: 'bills',
                     component: () => import('./views/pages/Bills.vue')
                 },
