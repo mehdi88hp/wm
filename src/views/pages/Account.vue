@@ -47,7 +47,7 @@
                                     حساب
                                 </button>
                                 <button class="btn btn-outline-dark col m-2">افزایش موجودی</button>
-                                <button class="btn btn-outline-info col m-2">آدرس های من</button>
+                                <button class="btn btn-outline-info col m-2" @click="$router.push({path: '/dashboard/addresses'})">آدرس های من</button>
                             </div>
                         </div>
 
