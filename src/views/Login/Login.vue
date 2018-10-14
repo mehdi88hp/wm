@@ -85,7 +85,10 @@
             },
         },
         beforeMount: function () {
+            if (localStorage.getItem('logging-out')) {
 
+                localStorage.removeItem('logging-out');
+            }
         }
     }
 </script>

@@ -148,11 +148,19 @@
                             if (parseInt(response.data.code) === 1) {
 
                                 // todo Handle to SingUp Page if user in new
+                                if (!response.data.user_exists) {
 
-                                localStorage.setItem('data', JSON.stringify(response.data));
-                                Vue.prototype.$userData = response.data;
-                                Vue.prototype.$TOKEN = response.data.token;
-                                this.$router.push({ path: '/dashboard/new-order' });
+                                    localStorage.setItem('phone', phone_num);
+                                    this.$router.push({path: '/sign-up'});
+
+                                } else {
+
+                                    localStorage.setItem('data', JSON.stringify(response.data));
+                                    Vue.prototype.$userData = response.data;
+                                    Vue.prototype.$TOKEN = response.data.token;
+                                    this.$router.push({path: '/dashboard/new-order'});
+
+                                }
                             } else {
                                 this.isCodeInvalid = true;
                                 this.isCodeHiddenError = false;

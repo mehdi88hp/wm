@@ -308,11 +308,10 @@
                 let formData = new FormData();
 
                 formData.append('token', this.$TOKEN);
-                formData.append('$title', this.name);
+                formData.append('title', this.name);
                 formData.append('city', this.city);
                 formData.append('neighbourhood', this.zone);
                 formData.append('province', this.city);
-                formData.append('title', this.address);
                 formData.append('address', this.address);
                 formData.append('latitude', this.center[1]);
                 formData.append('longitude', this.center[0]);

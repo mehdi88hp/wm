@@ -76,23 +76,23 @@
                                            class="form-control col-8 text-info"/>
                                 </div>
 
-                                <div class="row col-12 align-items-center mt-3">
-                                    <label for="password" class="col-4 text-right">رمز فعلی</label>
-                                    <input placeholder="رمز عبور فعلی خود را وارد کنید" v-model="password"
-                                           type="password"
-                                           id="password"
-                                           class="form-control col-8 text-info"
-                                           v-on:input="Change()"/>
-                                </div>
+                                <!--<div class="row col-12 align-items-center mt-3">-->
+                                    <!--<label for="password" class="col-4 text-right">رمز فعلی</label>-->
+                                    <!--<input placeholder="رمز عبور فعلی خود را وارد کنید" v-model="password"-->
+                                           <!--type="password"-->
+                                           <!--id="password"-->
+                                           <!--class="form-control col-8 text-info"-->
+                                           <!--v-on:input="Change()"/>-->
+                                <!--</div>-->
 
-                                <div class="row col-12 align-items-center mt-3">
-                                    <label for="password_new" class="col-4 text-right">رمز جدید</label>
-                                    <input placeholder="رمز عبور جدید را وارد کنید" v-model="password_new"
-                                           type="password"
-                                           id="password_new"
-                                           class="form-control col-8 text-info"
-                                           v-on:input="Change()"/>
-                                </div>
+                                <!--<div class="row col-12 align-items-center mt-3">-->
+                                    <!--<label for="password_new" class="col-4 text-right">رمز جدید</label>-->
+                                    <!--<input placeholder="رمز عبور جدید را وارد کنید" v-model="password_new"-->
+                                           <!--type="password"-->
+                                           <!--id="password_new"-->
+                                           <!--class="form-control col-8 text-info"-->
+                                           <!--v-on:input="Change()"/>-->
+                                <!--</div>-->
 
                                 <transition name="fade" mode="out-in">
                                     <div v-if="isProgressActive" class="progress mt-4">
@@ -204,15 +204,15 @@
                     this.isHiddenError = false;
                 }
 
-                if (!this.password) {
-                    this.Error += "\n" + "- رمز عبور خالی است";
-                    this.isHiddenError = false;
-                }
-
-                if (!this.password_new) {
-                    this.Error += "\n" + "- رمز عبور جدید خود را وارد کنید";
-                    this.isHiddenError = false;
-                }
+                // if (!this.password) {
+                //     this.Error += "\n" + "- رمز عبور خالی است";
+                //     this.isHiddenError = false;
+                // }
+                //
+                // if (!this.password_new) {
+                //     this.Error += "\n" + "- رمز عبور جدید خود را وارد کنید";
+                //     this.isHiddenError = false;
+                // }
 
                 if (!this.isHiddenError) return;
 
@@ -222,9 +222,10 @@
                 formData.append('token', this.$TOKEN);
                 formData.append('name', this.name);
                 formData.append('last_name', this.last_name);
-                formData.append('password', this.password);
-                formData.append('new_password', this.password_new);
+                // formData.append('password', this.password);
+                // formData.append('new_password', this.password_new);
                 if (this.newPicFile) {
+                    console.log(this.newPicFile);
                     formData.append('pic', this.newPicFile);
                 }
 
@@ -251,7 +252,7 @@
 
                                 if (response.data.image) {
                                     new_data.image = response.data.image;
-                                    this.$parent.userPic = this.$BaseUrl + response.data.image;
+                                    this.$parent.userPic = response.data.image;
                                 }
 
                                 this.password = '';

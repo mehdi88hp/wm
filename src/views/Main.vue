@@ -153,14 +153,17 @@
                         }
                     });
 
-                document.removeEventListener('click', this.documentClick);
-
                 localStorage.removeItem('data');
-                this.$router.push({ path: '/login' });
+                localStorage.setItem('logging-out', 'true');
+                this.$router.push({path: '/login'});
             }
         },
 
         beforeMount() {
+
+            if (this.$router.currentRoute.path === '/dashboard' || this.$router.currentRoute.path === '/dashboard/') {
+                this.$router.push({path: '/dashboard/new-order'});
+            }
 
             if (this.$userData['image']) {
                 this.userPic = this.$userData['image'];
@@ -171,6 +174,9 @@
         },
         created() {
             document.addEventListener('click', this.documentClick);
+        },
+        destroyed() {
+            document.removeEventListener('click', this.documentClick);
         }
 
     }
