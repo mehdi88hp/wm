@@ -21,6 +21,11 @@ const router = new Router({
             component: () => import('./views/Login/Login.vue')
         },
         {
+            path: '/sign-up',
+            name: 'SingUp',
+            component: () => import('./views/SignUp.vue')
+        },
+        {
             path: '/dashboard',
             name: 'dashboard',
             component: Main,
@@ -88,32 +93,25 @@ const router = new Router({
 // global middleware for auth
 router.beforeEach(function (to, from, next) {
 
-    if (to.path === '/login' || to.path === '/login/') {
-        next();
+    if (to.path !== '/login'
+        && to.path !== '/login/'
+        && !localStorage.getItem('data')
+        && (to.path !== '/sign-up' && to.path !== '/sign-up/')) {
+        next('/login');
 
-    } else if (to.path === '*') {
-        next();
+    } else if ((to.path === '/login' || to.path === '/login/' || to.path === '/sign-up' || to.path === '/sign-up/')
+        && localStorage.getItem('phone')) {
 
-    } else if (to.path === '/' || to.path === '') {
-        if (localStorage.getItem('logging-out')) {
-            localStorage.removeItem('data');
-            next('login');
-        } else {
-            next();
-        }
-
-    } else if (to.path === '/dashboard' || to.path === '/dashboard/') {
         next('/dashboard/new-order');
 
+    } else if ((to.path === '/sign-up' || to.path === '/sign-up/') && !localStorage.getItem('phone')) {
+        next('/login');
+
     } else {
-        if (!localStorage.getItem('data')) {
-            next('login');
-        }
+        next();
 
     }
 
-
-    next();
 });
 
 export default router;
