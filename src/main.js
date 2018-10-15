@@ -5,32 +5,28 @@ import './registerServiceWorker'
 import axios from 'axios'
 import VueSession from 'vue-session'
 import process from "../.eslintrc";
-
-Vue.use(VueSession);
+import VueLayers from 'vuelayers'// openLayers for map
+import 'vuelayers/lib/style.css'
+import Ripple from 'vue-ripple-directive'
 
 // const $ = require('jquery');
-import $ from 'jquery'
-window.$ = $;
+// window.$ = $;
 // require('popper.js');
 // require('bootstrap');
+
+import $ from 'jquery'
+
+window.$ = $;
 import 'popper.js'
 import 'bootstrap'
 
 
-import VueLayers from 'vuelayers'
-import 'vuelayers/lib/style.css' // needs css-loader
-
-Vue.use(VueLayers);
-
-
-Vue.config.productionTip = false;
+// DEFINING GLOBAL VARIABLES AND FUNCTIONS
 
 Vue.prototype.$BaseUrl = process.env.ApiBaseUrl;
-// Vue.prototype.$BaseUrl = 'http://www.washmash.com/washmash_test/public';
 
 Vue.prototype.$userData = '';
 Vue.prototype.$TOKEN = '';
-
 if (localStorage.getItem('data')) {
     Vue.prototype.$userData = JSON.parse(localStorage.getItem('data'));
     Vue.prototype.$TOKEN = Vue.prototype.$userData['token'];
@@ -40,10 +36,8 @@ const api = axios.create({baseURL: Vue.prototype.$BaseUrl});
 Vue.prototype.$API = api;
 
 Vue.prototype.$initData = function (callBack) {
-
     let formData = new FormData();
     formData.append('token', Vue.prototype.$TOKEN);
-
     api.post(
         '/api/v5/user/Init', formData,
         {
@@ -63,11 +57,12 @@ Vue.prototype.$initData = function (callBack) {
                 console.log(error);
             }
         );
-
 };
 
 
-import Ripple from 'vue-ripple-directive'
+Vue.config.productionTip = false;
+Vue.use(VueLayers);
+Vue.use(VueSession);
 Vue.directive('ripple', Ripple);
 
 
