@@ -26,7 +26,15 @@
 
                 const THIS = this;
                 setTimeout(function() {
-                    THIS.$router.push({ path: '/login' });
+
+                    if (localStorage.getItem('data')) {
+                        THIS.$router.push({path: '/dashboard/new-order'});
+
+                    }else {
+                        THIS.$router.push({path: '/login'});
+
+                    }
+
                 }, delayInMilliseconds);
             },
         },

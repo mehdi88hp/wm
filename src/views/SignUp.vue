@@ -413,7 +413,13 @@
 
 
         beforeMount: function () {
+            if (localStorage.getItem('data')) {
+                this.$router.push({path: '/dashboard/new-order'});
 
+            } else if (!localStorage.getItem('phone')) {
+                this.$router.push({path: '/login'});
+
+            }
         },
         mounted: function () {
             this.LoadPic();

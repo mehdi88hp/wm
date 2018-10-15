@@ -87,8 +87,27 @@
                                     <div id="order_info_modal_to_pay" class="col-7 text-left">{{ toMoneyFormat(to_pay) }}</div>
                                 </div>
                                 <div v-if="order_missionary && to_pay" class="row d-flex justify-content-center mt-3">
-                                    <button class="btn btn-success" id="order_info_modal_payButton">{{ payButtonText }}</button>
+                                    <button class="btn btn-success" id="order_info_modal_payButton" @click="payOrder(order_number)">{{ payButtonText }}</button>
                                 </div>
+
+                                <transition name="fade" mode="out-in">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div v-if="isProgressActive" class="progress mt-3">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                                     role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                                                     aria-valuemax="100"
+                                                     style="width: 100%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </transition>
+
+                                <transition name="fade" mode="out-in">
+                                    <div class="alert alert-danger small text-right like-pre mt-3"
+                                         v-if="!isHiddenError" dir="rtl">{{ Error }}
+                                    </div>
+                                </transition>
                             </div>
                         </div>
 
@@ -129,6 +148,28 @@
             </div>
         </div>
 
+        <!-- the modal -->
+        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog" dir="rtl">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title w-100 text-right">پیام تایید</h5>
+                        <button type="button" class="close flex-shrink-1" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-block text-center">
+                            <h5>پرداخت با موفقیت انجام شد</h5>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </template>
@@ -157,6 +198,11 @@
                 order_missionary: '',
                 to_pay: '',
                 payButtonText: '',
+
+                isProgressActive: false,
+
+                isHiddenError: true,
+                Error: '',
 
 
 
@@ -213,7 +259,7 @@
                     order['time_delivery_user'].split(':')[0] + "تا" +
                     order['time_delivery_user'].split(':')[1];
 
-                this.order_number = 'سفارش شماره ' + order['number_order'];
+                this.order_number = order['number_order'];
 
                 this.modal_pickup = order['date_pickup_user'] + " ساعت " +
                     order['time_pickup_user'].split(':')[0] + "تا" +
@@ -236,6 +282,57 @@
                 this.$nextTick(function () {
                     $('#order_info_modal').modal('show');
                 });
+            },
+
+
+            payOrder: function (order_id) {
+
+                this.isProgressActive = true;
+                this.isHiddenError = true;
+
+                this.$API.get('/api/v5/user/payForOrder?token='+this.$TOKEN+'&order_id='+order_id)
+                    .then(
+                        (response) => {
+                            this.isProgressActive = false;
+
+                             if (parseInt(response.data.code) === 1) {
+
+                                 const THIS = this;
+                                 this.$initData(function (response) {
+                                     const modal = $("#confirm_modal");
+                                     modal.modal('show');
+                                     THIS.orders = response.orders.reverse();
+                                 });
+
+
+                             } else if (parseInt(response.data.code) === 0) {
+
+                                if (Object.keys(response.data.msg)[0] === 'token') {
+
+                                    localStorage.removeItem('data');
+                                    this.$router.push({path: '/login'});
+
+                                } else {
+                                    console.log(response.data.msg);
+                                    this.Error = '';
+                                    const THIS = this;
+                                    Object.values(response.data.msg).forEach(function (error_message) {
+                                        THIS.Error += "\n - " + error_message;
+                                    });
+                                    this.isHiddenError = false;
+
+                                }
+                            } else {
+                                const myWindow = window.open("", "_self");
+                                myWindow.document.write(response.data);
+
+                            }
+                        }, (error) => {
+                            this.isProgressActive = false;
+                            console.log(error)
+                        }
+                    );
+
             },
 
 

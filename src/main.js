@@ -23,6 +23,7 @@ Vue.config.productionTip = false;
 
 
 Vue.prototype.$BaseUrl = 'http://127.0.0.1:8000';
+// Vue.prototype.$BaseUrl = 'http://www.washmash.com/washmash_test/public';
 
 Vue.prototype.$userData = '';
 Vue.prototype.$TOKEN = '';

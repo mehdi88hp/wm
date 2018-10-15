@@ -89,9 +89,13 @@
             </div>
         </nav>
 
+
         <transition name="fade" mode="out-in">
-            <router-view style="height: 94vh;"/>
+            <keep-alive>
+                <router-view style="height: 94vh;"/>
+            </keep-alive>
         </transition>
+
     </div>
 </template>
 

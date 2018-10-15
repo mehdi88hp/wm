@@ -93,11 +93,13 @@
                                             <div class="col-5">
                                                 <div class="row">
                                                     <div class="col-6 px-1">
-                                                        <div class="col-12 btn btn-lg btn-outline-success">افزایش</div>
+                                                        <div class="col-12 btn btn-lg btn-outline-success"
+                                                             @click="LeadToPay()">افزایش
+                                                        </div>
                                                     </div>
                                                     <div class="col-6 px-1">
                                                         <div class="col-12 btn btn-lg btn-outline-danger"
-                                                             @click="IncreaseBalance = false">لغو
+                                                             @click="IncreaseBalance = false; amount = '';">لغو
                                                         </div>
                                                     </div>
                                                 </div>
@@ -174,6 +176,11 @@
         },
 
         methods: {
+
+            LeadToPay: function () {
+                const url = this.$BaseUrl + "/api/v5/user/addToCredit?token=" + this.$TOKEN + "&amount=" + this.amount + "&OS=web-app";
+                window.open(url,"_self")
+            },
 
             show_time: function (time) {
                 const array = time.split(' : ');

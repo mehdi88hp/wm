@@ -88,6 +88,10 @@
             if (localStorage.getItem('logging-out')) {
 
                 localStorage.removeItem('logging-out');
+
+            } else if (localStorage.getItem('data')) {
+                this.$router.push({path: '/dashboard/new-order'});
+
             }
         }
     }

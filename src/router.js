@@ -93,25 +93,28 @@ const router = new Router({
 // global middleware for auth
 router.beforeEach(function (to, from, next) {
 
-    if (to.path !== '/login'
-        && to.path !== '/login/'
-        && !localStorage.getItem('data')
-        && (to.path !== '/sign-up' && to.path !== '/sign-up/')) {
-        next('/login');
+    if (to.query.refresh) {
+        console.log('YES');
+        Vue.prototype.$initData(function () {
+            AuthMiddleware(to, next);
 
-    } else if ((to.path === '/login' || to.path === '/login/' || to.path === '/sign-up' || to.path === '/sign-up/')
-        && localStorage.getItem('phone')) {
-
-        next('/dashboard/new-order');
-
-    } else if ((to.path === '/sign-up' || to.path === '/sign-up/') && !localStorage.getItem('phone')) {
-        next('/login');
-
+        })
     } else {
-        next();
+        AuthMiddleware(to, next);
 
     }
-
 });
+
+function AuthMiddleware(to, next) {
+
+    if (!localStorage.getItem('data')) {
+        if (to.path !== '/login' && to.path !== '/login/'
+        && to.path !== '/sign-up' && to.path !== '/sign-up/') {
+            return next('/login');
+        }
+    }
+
+    return next();
+}
 
 export default router;
