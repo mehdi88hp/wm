@@ -20,6 +20,7 @@
 
         beforeMount() {
 
+
         },
         created() {
             document.title = 'واش ماش';
