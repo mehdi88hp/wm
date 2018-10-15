@@ -9,9 +9,9 @@
                 </div>
 
                 <div class="row mt-5 d-flex justify-content-center text-center">
-                <h1>
-                    PAGE NOT FOUND !!!
-                </h1>
+                    <h1>
+                        PAGE NOT FOUND !!!
+                    </h1>
                 </div>
             </div>
         </div>
@@ -27,14 +27,10 @@
             // component: String
         },
         data() {
-            return {
-
-            }
+            return {}
         },
 
-        methods: {
-
-        },
+        methods: {},
 
         beforeMount() {
 

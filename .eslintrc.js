@@ -1,16 +1,20 @@
-module.exports = {
+// module.exports = {
+export default {
     root: true,
     env: {
         node: true,
         jquery: true,
+        
+        BASE_URL: '/',
+        ApiBaseUrl: 'http://127.0.0.1:8000',
     },
     'extends': [
         'plugin:vue/essential',
         'eslint:recommended'
     ],
     rules: {
-        // 'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'no-console': 'off',
+        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+        // 'no-console': 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
     },
     parserOptions: {

@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import auth from './middleware/auth'
 import Main from './views/Main.vue'
-import * as process from "../.eslintrc";
+import process from "../.eslintrc";
 
 Vue.use(Router);
 

@@ -4,13 +4,17 @@ import router from './router'
 import './registerServiceWorker'
 import axios from 'axios'
 import VueSession from 'vue-session'
+import process from "../.eslintrc";
 
 Vue.use(VueSession);
 
-const $ = require('jquery');
+// const $ = require('jquery');
+import $ from 'jquery'
 window.$ = $;
-require('popper.js');
-require('bootstrap');
+// require('popper.js');
+// require('bootstrap');
+import 'popper.js'
+import 'bootstrap'
 
 
 import VueLayers from 'vuelayers'
@@ -21,8 +25,7 @@ Vue.use(VueLayers);
 
 Vue.config.productionTip = false;
 
-
-Vue.prototype.$BaseUrl = 'http://127.0.0.1:8000';
+Vue.prototype.$BaseUrl = process.env.ApiBaseUrl;
 // Vue.prototype.$BaseUrl = 'http://www.washmash.com/washmash_test/public';
 
 Vue.prototype.$userData = '';
@@ -65,7 +68,6 @@ Vue.prototype.$initData = function (callBack) {
 
 
 import Ripple from 'vue-ripple-directive'
-
 Vue.directive('ripple', Ripple);
 
 
