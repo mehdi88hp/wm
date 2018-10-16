@@ -106,7 +106,15 @@
             },
 
             toMoneyFormat: function (number) {
-                return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
+                // return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
+
+                const formatter = new Intl.NumberFormat('fa-IR', {
+                    style: 'currency',
+                    currency: 'IRR',
+                    minimumFractionDigits: 0
+                });
+
+                return formatter.format(number).replace("ریال", '');
             }
         },
         beforeMount: function () {

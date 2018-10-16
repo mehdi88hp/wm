@@ -4,7 +4,6 @@ import router from './router'
 import './registerServiceWorker'
 import axios from 'axios'
 import VueSession from 'vue-session'
-import process from "../.eslintrc";
 import VueLayers from 'vuelayers'// openLayers for map
 import 'vuelayers/lib/style.css'
 import Ripple from 'vue-ripple-directive'
@@ -23,7 +22,8 @@ import 'bootstrap'
 
 // DEFINING GLOBAL VARIABLES AND FUNCTIONS
 
-Vue.prototype.$BaseUrl = process.env.ApiBaseUrl;
+Vue.prototype.$ApiBaseUrl = 'http://www.washmash.com/washmash_test/public';
+// Vue.prototype.$ApiBaseUrl = 'http://127.0.0.1:8000';
 
 Vue.prototype.$userData = '';
 Vue.prototype.$TOKEN = '';
@@ -32,7 +32,7 @@ if (localStorage.getItem('data')) {
     Vue.prototype.$TOKEN = Vue.prototype.$userData['token'];
 }
 
-const api = axios.create({baseURL: Vue.prototype.$BaseUrl});
+const api = axios.create({baseURL: Vue.prototype.$ApiBaseUrl});
 Vue.prototype.$API = api;
 
 Vue.prototype.$initData = function (callBack) {

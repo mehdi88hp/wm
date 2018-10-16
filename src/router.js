@@ -2,12 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import auth from './middleware/auth'
 import Main from './views/Main.vue'
-import process from "../.eslintrc";
 
 Vue.use(Router);
 
 const router = new Router({
-    mode: 'history',
+    mode: 'hash',
     base: process.env.BASE_URL,
     routes: [
         {
@@ -109,7 +108,7 @@ function AuthMiddleware(to, next) {
 
     if (!localStorage.getItem('data')) {
         if (to.path !== '/login' && to.path !== '/login/'
-        && to.path !== '/sign-up' && to.path !== '/sign-up/') {
+        && to.path !== '/sign-up' && to.path !== '/sign-up/' && to.path !== '/' && to.path !== '') {
             return next('/login');
         }
     }

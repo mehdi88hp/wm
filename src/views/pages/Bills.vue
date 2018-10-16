@@ -42,7 +42,7 @@
                             </div>
 
                             <div class="row border border-success rounded mb-2 p-3 d-flex justify-content-center card-cash-info"
-                                 v-for="(credit, key) in $userData.credits_user"
+                                 v-for="(credit, key) in bills"
                                  :key="key">
 
                                 <div class="col-12 text-center">{{ credit.date + " ساعت " + credit.time }}</div>
@@ -87,8 +87,7 @@
                                                        v-model="amount"
                                                        type="number"
                                                        min="1"
-                                                       id="amount"
-                                                       v-on:input="Change()"/>
+                                                       id="amount"/>
                                             </div>
                                             <div class="col-5">
                                                 <div class="row">
@@ -152,6 +151,8 @@
         data() {
             return {
 
+                bills: [],
+
                 amount: '',
 
 
@@ -178,7 +179,7 @@
         methods: {
 
             LeadToPay: function () {
-                const url = this.$BaseUrl + "/api/v5/user/addToCredit?token=" + this.$TOKEN + "&amount=" + this.amount + "&OS=web-app";
+                const url = this.$ApiBaseUrl + "/api/v5/user/addToCredit?token=" + this.$TOKEN + "&amount=" + this.amount + "&OS=web-app";
                 window.open(url,"_self")
             },
 
@@ -196,11 +197,22 @@
             },
 
             toMoneyFormat: function (number) {
-                return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
+                // return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
+
+                const formatter = new Intl.NumberFormat('fa-IR', {
+                    style: 'currency',
+                    currency: 'IRR',
+                    minimumFractionDigits: 0
+                });
+
+                return formatter.format(number).replace("ریال", '');
             }
         },
         beforeMount: function () {
-
+            this.bills = this.$userData.credits_user;
+            this.bills.sort(function (a, b) {
+                return b.id - a.id;
+            });
         },
         mounted: function () {
         },

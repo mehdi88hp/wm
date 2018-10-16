@@ -10,7 +10,7 @@
 
         </div>
 
-        <div v-if="orders.length" class="row h-100 mt-5" dir="rtl">
+        <div v-if="orders.length" class="row h-auto pt-5" dir="rtl">
 
             <div class="col-lg-6 p-2" v-for="(order, index) in orders" v-bind:key="index">
                 <div class="card shadow shadow-sm card-hover-blue"
@@ -80,14 +80,18 @@
                                 </div>
                                 <div v-if="order_missionary" class="row mt-2">
                                     <div class="col-5">هزینه سفارش :</div>
-                                    <div id="order_info_modal_missionary" class="col-7 text-left">{{ toMoneyFormat(order_missionary) }}</div>
+                                    <div class="col-7 text-left">{{ toMoneyFormat(order_missionary) }}</div>
                                 </div>
-                                <div v-if="order_missionary && to_pay" class="row mt-2">
-                                    <div class="col-5">مبلغ مورد نیاز :</div>
-                                    <div id="order_info_modal_to_pay" class="col-7 text-left">{{ toMoneyFormat(to_pay) }}</div>
+                                <div v-if="!factor_payment_status.includes('پرداخت')" class="row mt-2">
+                                    <div class="col-5">موجودی حساب :</div>
+                                    <div class="col-7 text-left">{{ toMoneyFormat($userData.credit) }}</div>
                                 </div>
-                                <div v-if="order_missionary && to_pay" class="row d-flex justify-content-center mt-3">
-                                    <button class="btn btn-success" id="order_info_modal_payButton" @click="payOrder(order_number)">{{ payButtonText }}</button>
+                                <div v-if="!factor_payment_status.includes('پرداخت') && extra_needed_money !== 0" class="row mt-2">
+                                    <div class="col-5">مبلغ اضافی مورد نیاز :</div>
+                                    <div class="col-7 text-left">{{ toMoneyFormat(extra_needed_money) }}</div>
+                                </div>
+                                <div v-if="!factor_payment_status.includes('پرداخت') && factor_payment_status !== 'فاکتور صادر نشده'" class="row d-flex justify-content-center mt-3">
+                                    <button class="btn btn-success" @click="payOrder(order_number)">{{ payButtonText }}</button>
                                 </div>
 
                                 <transition name="fade" mode="out-in">
@@ -178,6 +182,8 @@
 <script>
 
 
+    import process from "../../../.eslintrc";
+
     export default {
         name: "login",
         data() {
@@ -196,7 +202,7 @@
                 modal_pickup: '',
                 factor_payment_status: '',
                 order_missionary: '',
-                to_pay: '',
+                extra_needed_money: '',
                 payButtonText: '',
 
                 isProgressActive: false,
@@ -246,7 +252,7 @@
                 this.modal_pickup = '';
                 this.factor_payment_status = '';
                 this.order_missionary = '';
-                this.to_pay = '';
+                this.extra_needed_money = '';
                 this.payButtonText = '';
 
                 this.modal_title = 'سفارش شماره ' + order['number_order'];
@@ -273,9 +279,9 @@
 
                 this.order_missionary = order['factor_missionary'];
 
-                this.to_pay = order['remaining_amount'];
-                this.payButtonText = this.toMoneyFormat(order['remaining_amount'])
-                    + ' افزایش اعتبار و پرداخت فاکتور';
+                this.extra_needed_money = order['remaining_amount'];
+                this.payButtonText = this.toMoneyFormat(this.order_missionary)
+                    + ' پرداخت فاکتور';
 
                 this.factors = order['factors'];
 
@@ -301,7 +307,14 @@
                                  this.$initData(function (response) {
                                      const modal = $("#confirm_modal");
                                      modal.modal('show');
-                                     THIS.orders = response.orders.reverse();
+                                     modal.on('hide.bs.modal', function () {
+
+                                         THIS.orders = response.orders;
+                                         THIS.orders.sort(function (a, b) {
+                                             return b.number_order - a.number_order;
+                                         });
+                                         $("#order_info_modal").modal('hide');
+                                     });
                                  });
 
 
@@ -337,12 +350,23 @@
 
 
             toMoneyFormat: function (number) {
-                return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
+                // return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
+
+                const formatter = new Intl.NumberFormat('fa-IR', {
+                    style: 'currency',
+                    currency: 'IRR',
+                    minimumFractionDigits: 0
+                });
+
+                return formatter.format(number).replace("ریال", '');
             }
         },
         beforeMount: function () {
 
-            this.orders = this.$userData['orders'].reverse();
+            this.orders = this.$userData['orders'];
+            this.orders.sort(function (a, b) {
+                return b.number_order - a.number_order;
+            });
 
 
         }

@@ -1,13 +1,10 @@
 // module.exports = {
 export default {
     root: true,
+    // root: false,
     env: {
         node: true,
         jquery: true,
-
-        BASE_URL: '/',
-        ApiBaseUrl: 'http://www.washmash.com/washmash_test/public',
-        // ApiBaseUrl: 'http://127.0.0.1:8000',
     },
     'extends': [
         'plugin:vue/essential',

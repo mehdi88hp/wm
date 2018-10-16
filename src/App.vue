@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
     export default {
         name: "App",
         props: {
@@ -18,18 +19,18 @@
 
         methods: {},
 
+        mounted() {},
         beforeMount() {
-
 
         },
         created() {
-            document.title = 'واش ماش';
-
-            var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-            link.type = 'image/x-icon';
-            link.rel = 'shortcut icon';
-            link.href = require('../src/assets/icon.png');
-            document.getElementsByTagName('head')[0].appendChild(link);
+            // document.title = 'واش ماش';
+            //
+            // var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+            // link.type = 'image/x-icon';
+            // link.rel = 'shortcut icon';
+            // link.href = require('../src/assets/icon.png');
+            // document.getElementsByTagName('head')[0].appendChild(link);
         }
 
     }

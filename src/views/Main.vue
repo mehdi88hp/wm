@@ -91,9 +91,9 @@
 
 
         <transition name="fade" mode="out-in">
-            <keep-alive>
+            <!--<keep-alive>-->
                 <router-view style="height: 94vh;"/>
-            </keep-alive>
+            <!--</keep-alive>-->
         </transition>
 
     </div>

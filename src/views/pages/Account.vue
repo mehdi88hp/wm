@@ -46,7 +46,7 @@
                                 <button class="btn btn-outline-danger col m-2" v-on:click="isEditing=!isEditing">ویرایش
                                     حساب
                                 </button>
-                                <button class="btn btn-outline-dark col m-2">افزایش موجودی</button>
+                                <button class="btn btn-outline-dark col m-2" @click="$router.push({path: '/dashboard/bills'})">افزایش موجودی</button>
                                 <button class="btn btn-outline-info col m-2" @click="$router.push({path: '/dashboard/addresses'})">آدرس های من</button>
                             </div>
                         </div>
@@ -345,7 +345,15 @@
 
 
             toMoneyFormat: function (number) {
-                return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
+                // return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
+
+                const formatter = new Intl.NumberFormat('fa-IR', {
+                    style: 'currency',
+                    currency: 'IRR',
+                    minimumFractionDigits: 0
+                });
+
+                return formatter.format(number).replace("ریال", '');
             }
         },
         beforeMount: function () {
