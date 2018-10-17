@@ -31,6 +31,21 @@
             // link.rel = 'shortcut icon';
             // link.href = require('../src/assets/icon.png');
             // document.getElementsByTagName('head')[0].appendChild(link);
+
+
+            // time schedule to refresh data
+            const THIS = this;
+            const loop = setInterval(function () {
+                if (!localStorage.getItem('data')) {
+                    clearInterval(loop);
+                    return;
+                }
+
+                THIS.$initData();
+
+
+            }, 30000);
+
         }
 
     }

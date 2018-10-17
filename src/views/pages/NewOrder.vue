@@ -71,6 +71,13 @@
                                             </label>
                                         </div>
                                     </div>
+
+                                    <transition name="fade" mode="out-in">
+                                        <div class="alert alert-warning small text-right text-justify mb-3"
+                                             v-if="!isHiddenAddressComment" dir="rtl">{{ AddressComment }}
+                                        </div>
+                                    </transition>
+
                                 </div>
                             </div>
 
@@ -512,6 +519,9 @@
                 orderServiceAllowed: false,
                 extraOptionsAllowed: false,
 
+                isHiddenAddressComment: true,
+                AddressComment: '',
+
                 isAddressChosen: false,
                 isPickupDateChosen: false,
                 isPickupTimeChosen: false,
@@ -607,6 +617,14 @@
             getRegion: function () {
                 this.$nextTick(function () {
 
+                    if (this.address.comment) {
+                        this.isHiddenAddressComment = false;
+                        this.AddressComment = this.address.comment;
+                    } else {
+                        this.isHiddenAddressComment = true;
+                        this.AddressComment = '';
+                    }
+
                     this.pickup_date = '-1';
                     this.pickup_time = '-1';
                     this.delivery_date = '-1';
@@ -637,6 +655,7 @@
                                 this.isProgressActive = false;
 
                                 if (parseInt(response.data.code) === 1) {
+
                                     this.pickup_dates = response.data.datas;
                                     this.isAddressChosen = true;
                                 } else {
