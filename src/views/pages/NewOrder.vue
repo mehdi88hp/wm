@@ -751,10 +751,26 @@
             Previous: function () {
                 if (this.Stage === 'order_service') {
                     this.Stage = 'setting';
+
                 } else if (this.Stage === 'extra_option') {
-                    this.Stage = 'order_service';
+                    if (this.orderServiceAllowed) {
+                        this.Stage = 'order_service';
+                    } else {
+                        this.Stage = 'setting';
+                    }
+
                 } else if (this.Stage === 'final') {
-                    this.Stage = 'extra_option';
+                    if (this.extraOptionsAllowed) {
+                        this.Stage = 'extra_option';
+                    } else {
+                        if (this.orderServiceAllowed) {
+                            this.Stage = 'order_service';
+                        } else {
+                            this.Stage = 'setting';
+                        }
+
+                    }
+
                 }
 
             },
