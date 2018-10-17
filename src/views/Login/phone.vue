@@ -48,7 +48,7 @@
 
 
     export default {
-        name: "login",
+        name: "phone",
         data() {
             return {
                 isBorderActive: true,

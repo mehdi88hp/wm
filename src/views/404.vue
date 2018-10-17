@@ -22,7 +22,7 @@
 
 
     export default {
-        name: "Main",
+        name: "404",
         props: {
             // component: String
         },

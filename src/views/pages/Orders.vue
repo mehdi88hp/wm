@@ -181,11 +181,8 @@
 
 <script>
 
-
-    import process from "../../../.eslintrc";
-
     export default {
-        name: "login",
+        name: "orders",
         data() {
             return {
                 data: [],

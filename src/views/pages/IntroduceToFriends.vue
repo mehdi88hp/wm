@@ -72,7 +72,7 @@
 
 <script>
     export default {
-        name: "new_order",
+        name: "introduce_to_friends",
         data() {
             return {}
         },

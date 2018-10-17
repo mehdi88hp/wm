@@ -37,7 +37,7 @@
 
 <script>
     export default {
-        name: "new_order",
+        name: "faq",
         data() {
             return {
 

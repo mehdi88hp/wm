@@ -74,10 +74,6 @@ const router = new Router({
                     path: 'call',
                     component: () => import('./views/pages/Call.vue')
                 },
-                {
-                    path: 'about',
-                    component: () => import('./views/pages/About.vue')
-                },
             ]
         },
 

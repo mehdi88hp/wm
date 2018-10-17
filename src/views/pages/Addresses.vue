@@ -88,14 +88,10 @@
                                                 <option value="تهران">تهران</option>
                                             </select>
 
-                                            <select class="col-12 form-control mb-4" v-model="zone" @change="Change()">
-                                                <option value="-1" selected disabled hidden>محله خود را انتخاب کنید
-                                                </option>
-                                                <option v-for="(zone, key) in $userData.cities" :key="zone+key"
-                                                        :value="zone">
-                                                    {{ zone }}
-                                                </option>
-                                            </select>
+                                            <searchable_select class="col-12 mb-4" :options="zones"
+                                                               :value="zone"
+                                                               :title="'محله خود را انتخاب کنید'"
+                                                               v-on:choose="zone = $event"/>
 
                                             <textarea class="col-12 form-control mb-4"
                                                       style="height: 50pt; min-height: 50pt; max-height: 50pt;"
@@ -198,8 +194,10 @@
 
 <script>
 
+    import Searchable_select from "../../components/SearchableSelect";
+
     export default {
-        name: "new_order",
+        name: "addresses",
         data() {
             return {
 
@@ -213,7 +211,7 @@
 
                 isEdit: false,
                 city: '-1',
-                zone: '-1',
+                zone: '',
                 address: '',
 
                 address_id: 0,
@@ -233,12 +231,27 @@
         },
         computed: {
 
+            zones() {
+                const options = [];
+                this.$userData.cities.forEach(function (option) {
+                    const row = [];
+                    row.key = option;
+                    row.value = option;
+
+                    options.push(row);
+                });
+
+                return options;
+            },
+
             groupedOrders() {
                 return this.chunk(this.orders, 2)
             },
         },
 
-        components: {},
+        components: {
+            Searchable_select
+        },
 
         methods: {
 
@@ -254,7 +267,7 @@
 
                 this.isEdit = false;
                 this.city = '-1';
-                this.zone = '-1';
+                this.zone = '';
                 this.address = '';
                 this.ShowAddressForm = true;
                 this.center = [51.3890, 35.6892];
@@ -293,7 +306,7 @@
                     this.isHiddenError = false;
                 }
 
-                if (this.zone === '-1') {
+                if (!this.zone) {
                     this.Error += "\n" + "- محله انتخاب نشده است";
                     this.isHiddenError = false;
                 }
@@ -342,8 +355,8 @@
                                 const THIS = this;
                                 this.$initData(function (data) {
 
-                                        THIS.addresses = data.addresses;
-                                        THIS.ShowAddressForm = false;
+                                    THIS.addresses = data.addresses;
+                                    THIS.ShowAddressForm = false;
                                 });
 
                             } else {

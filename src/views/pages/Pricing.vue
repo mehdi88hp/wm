@@ -65,7 +65,7 @@
 
 <script>
     export default {
-        name: "new_order",
+        name: "pricing",
         data() {
             return {
 

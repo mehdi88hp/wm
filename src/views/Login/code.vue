@@ -36,9 +36,18 @@
                             :disabled="!isCodeButtonActive">اعتبارسنجی
                     </button>
                 </div>
-                <button type="button" class="btn btn-link mb-5 mt-1" v-on:click="RequestActivationCode()">ارسال دوباره کد</button>
-                <button type="button" class="btn btn-link mb-5 mt-1" v-on:click="$parent.view = 'phoneForm'">تغییر شماره</button>
 
+                <div class="row d-flex justify-content-center">
+                    <button type="button" class="btn btn-link mb-2 mt-1" :class="{disabled: second_count_down}"
+                            v-on:click="RequestActivationCode()">
+                       {{ second_count_down }} کد فعال سازی را دریافت نکردم؟
+                    </button>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <button type="button" class="btn btn-link mb-5" v-on:click="$parent.view = 'phoneForm'">
+                        تغییر شماره
+                    </button>
+                </div>
             </form>
 
             <!-- the modal -->
@@ -77,9 +86,11 @@
     import Vue from 'vue'
 
     export default {
-        name: "login",
+        name: "code",
         data() {
             return {
+
+                second_count_down: 30,
 
                 doBounce: false,
                 isCodeBorderActive: true,
@@ -124,7 +135,6 @@
 
                 const code = this.convertNumbers2English(this.code);
                 const phone_num = this.convertNumbers2English(this.phone);
-
 
 
                 let formData = new FormData();
@@ -175,7 +185,6 @@
             },
 
 
-
             RequestActivationCode: function () {
 
                 this.isCodeButtonActive = false;
@@ -204,7 +213,9 @@
                                 this.$parent.view = 'codeForm';
                                 this.$nextTick(function () {
                                     $('#activate_code_resent_modal').modal('show');
-                                })
+                                });
+
+                                this.set_count_down();
 
                             } else {
                                 this.isCodeButtonActive = true;
@@ -220,7 +231,17 @@
                     );
             },
 
-
+            set_count_down: function () {
+                this.second_count_down = 30;
+                const THIS = this;
+                const interval = setInterval(function () {
+                    THIS.second_count_down--;
+                    if (THIS.second_count_down === 0) {
+                        THIS.second_count_down = '';
+                        clearInterval(interval);
+                    }
+                }, 1000);
+            },
 
 
             countWords: function (str) {
@@ -234,12 +255,14 @@
                 }).replace(/[\u06f0-\u06f9]/g, function (c) {
                     return c.charCodeAt(0) - 0x06f0;
                 });
-            }
+            },
 
         },
         beforeMount: function () {
             this.phone = localStorage.getItem('phone');
-        }
+
+            this.set_count_down();
+        },
     }
 </script>
 

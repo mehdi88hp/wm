@@ -93,14 +93,10 @@
 
                                 <div class="col-6">
 
-                                    <select class="col-12 form-control mb-4" v-model="zone" @change="Change()">
-                                        <option value="-1" selected disabled hidden>محله خود را انتخاب کنید
-                                        </option>
-                                        <option v-for="(zone, key) in $userData.cities" :key="zone+key"
-                                                :value="zone">
-                                            {{ zone }}
-                                        </option>
-                                    </select>
+                                    <searchable_select class="col-12 mb-4" :options="zones"
+                                                       :value="zone"
+                                                       :title="'محله خود را انتخاب کنید'"
+                                                       v-on:choose="zone = $event"/>
 
                                 </div>
 
@@ -219,9 +215,10 @@
 <script>
 
     import Vue from 'vue';
+    import Searchable_select from "../components/SearchableSelect";
 
     export default {
-        name: "new_order",
+        name: "sign_up",
         data() {
             return {
 
@@ -234,7 +231,7 @@
                 name: '',
                 last_name: '',
                 city: '-1',
-                zone: '-1',
+                zone: '',
                 address: '',
                 invite_code: '',
                 newPicFile: '',
@@ -252,9 +249,22 @@
                 loadMap: true,
             }
         },
-        computed: {},
+        computed: {
+            zones() {
+                const options = [];
+                this.$userData.cities.forEach(function (option) {
+                    const row = [];
+                    row.key = option;
+                    row.value = option;
 
-        components: {},
+                    options.push(row);
+                });
+
+                return options;
+            },
+        },
+
+        components: {Searchable_select},
 
         methods: {
 
@@ -279,7 +289,7 @@
                     this.isHiddenError = false;
                 }
 
-                if (this.zone === '-1') {
+                if (!this.zone) {
                     this.Error += "\n" + "- محله انتخاب نشده است";
                     this.isHiddenError = false;
                 }
