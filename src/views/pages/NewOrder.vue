@@ -13,7 +13,7 @@
                             <div class="btn btn-outline-info d-flex justify-content-center align-items-center"
                                  :key="1"
                                  v-if="Stage !== 'final'"
-                                 :class="{disabled : !isDeliveryTimeChosen || (!order_service && Stage === 'order_service')}"
+                                 :class="{disabled : !isDeliveryTimeChosen || (!order_service && Stage === 'order_service' && orderServiceAllowed)}"
                                  v-on:click="Next()">
                                 <i class="fas fa-2x fa-backward"></i>&nbsp;<span>مرحله بعد</span>
                             </div>
@@ -243,7 +243,7 @@
                             <transition name="fade" mode="out-in">
 
                                 <!-- choosing order service -->
-                                <div :key="1" v-if="Stage === 'order_service'">
+                                <div :key="1" v-if="Stage === 'order_service' && orderServiceAllowed">
 
                                     <div class="row">
                                         <h1 class="col-12 text-right">نوع سرویس سفارش</h1>
@@ -288,12 +288,12 @@
 
 
                                 </div>
-                                <div :key="2" v-if="Stage !== 'order_service'">
+                                <div :key="2" v-if="Stage !== 'order_service' || !orderServiceAllowed">
 
                                     <transition name="fade" mode="out-in">
 
                                         <!-- choosing extra option -->
-                                        <div :key="1" v-if="Stage === 'extra_option'">
+                                        <div :key="1" v-if="Stage === 'extra_option' && extraOptionsAllowed">
                                             <div class="row">
                                                 <h1 class="col-12 text-right">گزینه های اضافی سفارش</h1>
                                                 <p class="col-12 text-right text-justify mt-2">&emsp;محصولات مورد نظر و تعداد آن ها را تعیین کنید. سپس برروی «مرحله بعد» کلیک کنید&emsp;</p>
@@ -347,7 +347,7 @@
                                         </div>
 
                                         <!-- final approvement -->
-                                        <div :key="2" v-if="Stage !== 'extra_option'">
+                                        <div :key="2" v-if="Stage !== 'extra_option' || extraOptionsAllowed">
 
                                             <transition name="fade" mode="out-in">
                                                 <div class="row">
@@ -397,7 +397,7 @@
                                                             <div class="col-md-6 text-right">تاریخ و ساعت تحویل</div>
                                                         </div>
 
-                                                        <div class="row mb-3">
+                                                        <div v-if="orderServiceAllowed" class="row mb-3">
                                                             <div class="col-md-6 text-left">{{ order_service.title }}</div>
                                                             <div class="col-md-6 text-right">نوع سرویس سفارش</div>
                                                         </div>
@@ -421,14 +421,14 @@
                                                     </div>
                                                 </div>
 
-                                                <div v-if="getOrderExtraOption().length" class="row mt-3">
+                                                <div v-if="getOrderExtraOption().length && extraOptionsAllowed" class="row mt-4">
 
                                                     <div class="col-12 d-flex justify-content-center">
                                                         <h3>آیتم های اضافی</h3>
                                                     </div>
 
                                                     <table id="order_info_modal_table"
-                                                           class="table table-borderless table-hover align-self-center mt-4"
+                                                           class="table table-borderless table-hover align-self-center mt-2"
                                                            dir="rtl">
                                                         <thead>
                                                         <tr class="bg-dark text-white">
@@ -508,6 +508,9 @@
             return {
                 // Stage: 'final',
                 Stage: 'setting',
+
+                orderServiceAllowed: false,
+                extraOptionsAllowed: false,
 
                 isAddressChosen: false,
                 isPickupDateChosen: false,
@@ -716,9 +719,28 @@
 
             Next: function () {
                 if (this.Stage === 'setting') {
-                    this.Stage = 'order_service';
+                    if (this.orderServiceAllowed) {
+                        this.Stage = 'order_service';
+
+                    } else {
+                        if (this.extraOptionsAllowed) {
+                            this.Stage = 'extra_option';
+
+                        } else {
+                            this.Stage = 'final';
+
+                        }
+                    }
+
                 } else if (this.Stage === 'order_service') {
-                    this.Stage = 'extra_option';
+                    if (this.extraOptionsAllowed) {
+                        this.Stage = 'extra_option';
+
+                    } else {
+                        this.Stage = 'final';
+
+                    }
+
                 } else if (this.Stage === 'extra_option') {
                     this.Stage = 'final';
                 }
@@ -886,6 +908,14 @@
             }
         },
         beforeMount: function () {
+
+            this.orderServiceAllowed = this.$userData.register_order_settings.find(function (ros) {
+                return ros.id === 1;
+            }).enabled;
+
+            this.extraOptionsAllowed = this.$userData.register_order_settings.find(function (ros) {
+                return ros.id === 2;
+            }).enabled;
 
         },
         mounted: function () {

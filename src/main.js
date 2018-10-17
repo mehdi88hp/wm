@@ -22,8 +22,8 @@ import 'bootstrap'
 
 // DEFINING GLOBAL VARIABLES AND FUNCTIONS
 
-Vue.prototype.$ApiBaseUrl = 'http://www.washmash.com/washmash_test/public';
-// Vue.prototype.$ApiBaseUrl = 'http://127.0.0.1:8000';
+// Vue.prototype.$ApiBaseUrl = 'http://www.washmash.com/washmash_test/public';
+Vue.prototype.$ApiBaseUrl = 'http://127.0.0.1:8000';
 
 Vue.prototype.$userData = '';
 Vue.prototype.$TOKEN = '';
