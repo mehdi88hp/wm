@@ -6,9 +6,9 @@
 
             <form onsubmit="return false;">
                 <div class="form-group">
-                    <label for="code" class="col-12 text-right small">کد فعالسازی ارسال شده به
+                    <label for="codeField" class="col-12 text-right small">کد فعالسازی ارسال شده به
                         <label v-html="phone"></label> را وارد کنید</label>
-                    <input id="code"
+                    <input id="codeField"
                            type="text"
                            v-bind:oninput="checkCode()"
                            v-bind:class="{
@@ -86,7 +86,7 @@
     import Vue from 'vue'
 
     export default {
-        name: "code",
+        name: "codeForm",
         data() {
             return {
 

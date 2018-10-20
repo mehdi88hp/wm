@@ -67,7 +67,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse text-right" id="navbarSupportedContent">
+            <div class="navbar-collapse collapse show text-right" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active row align-items-center mx-1">
                         <!-- for lg and xl -->

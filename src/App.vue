@@ -41,7 +41,9 @@
                     return;
                 }
 
-                THIS.$initData();
+                THIS.$initData(function () {
+
+                });
 
 
             }, 30000);
@@ -53,7 +55,8 @@
 
 <style>
 
-    @import '../public/css/bootstrap.min.css';
+    @import "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css";
+    /*@import '../public/css/bootstrap.min.css';*/
     @import '../public/css/style.css';
     @import '../public/fontAwesome/css/all.css';
 
