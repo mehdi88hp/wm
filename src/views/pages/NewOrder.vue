@@ -1,33 +1,33 @@
 <template>
 
     <div class="container">
-        <div class="row h-auto d-flex justify-content-center py-5">
-            <div style="padding: 0;" class="card h-auto shadow shadow-sm col-12 col-lg-8 text-right">
+        <div class="row h-auto d-flex justify-content-center p-2 py-lg-5 px-lg-0">
+            <div style="padding: 0;" class="card h-auto shadow shadow-sm col-12 text-right">
 
                 <div class="card-header">
                     <!-- level controller button box -->
-                    <div class="row d-flex justify-content-between mx-1">
+                    <div class="row d-flex justify-content-between">
 
 
                         <transition name="fade" mode="out-in">
-                            <div class="btn btn-outline-info d-flex justify-content-center align-items-center"
+                            <div class="btn btn-sm btn-outline-info d-flex justify-content-center align-items-center"
                                  :key="1"
                                  v-if="Stage !== 'final'"
                                  :class="{disabled : !isDeliveryTimeChosen || (!order_service && Stage === 'order_service' && orderServiceAllowed)}"
                                  v-on:click="Next()">
                                 <i class="fas fa-2x fa-backward"></i>&nbsp;<span>مرحله بعد</span>
                             </div>
-                            <div class="btn btn-outline-success d-flex justify-content-center align-items-center"
+                            <div class="btn btn-sm btn-outline-success d-flex justify-content-center align-items-center"
                                  :key="2"
                                  :class="{disabled : isProgressActive}"
                                  v-if="Stage === 'final'"
                                  v-on:click="ConfirmOrder()">
-                                <i class="fas fa-2x fa-backward"></i>&nbsp;<span>تایید نهایی سفارش</span>
+                                <i class="fas fa-2x fa-backward"></i>&nbsp;<span>تایید نهایی</span>
                             </div>
                         </transition>
 
                         <transition name="fade" mode="out-in">
-                            <div class="btn btn-outline-danger d-flex justify-content-center align-items-center"
+                            <div class="btn btn-sm btn-outline-danger d-flex justify-content-center align-items-center"
                                  v-if="Stage !== 'setting'" v-on:click="Previous()">
                                 <span>مرحله قبل</span>&nbsp;<i class="fas fa-2x fa-forward"></i>
                             </div>
@@ -44,7 +44,7 @@
                         <!-- main features of order -->
                         <div :key="1" v-if="Stage === 'setting'">
                             <div class="row">
-                                <h1 class="col-12 text-right">تنظیمات سفارش</h1>
+                                <div class="col-12 text-right h3">تنظیمات سفارش</div>
                                 <p class="col-12 text-right text-justify mt-2">&emsp;مشخصات اولیه سفارش خود را وارد کنید. سپس برروی «مرحله بعد» کلیک کنید&emsp;</p>
                             </div>
 
@@ -186,13 +186,14 @@
 
                             <!-- check coupon -->
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-lg-2 d-none d-lg-block">
                                     <button class="col-12 btn btn-outline-info"
                                             :class="{disabled: !coupon}" @click="checkCoupon()">
                                         ثبت
                                     </button>
                                 </div>
-                                <div class="col-md-10">
+
+                                <div class="col-12 col-lg-10 mb-2 mb-lg-0">
                                     <div class="input-group">
                                         <input type="text" class="form-control text-center"
                                                placeholder="کد تخفیف خود را وارد کنید"
@@ -205,6 +206,13 @@
                                                   id="coupon-label">کد تخفیف</span>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div class="col-12 d-block d-lg-none">
+                                    <button class="col-12 btn btn-outline-info"
+                                            :class="{disabled: !coupon}" @click="checkCoupon()">
+                                        ثبت
+                                    </button>
                                 </div>
 
                             </div>
@@ -253,7 +261,7 @@
                                 <div :key="1" v-if="Stage === 'order_service' && orderServiceAllowed">
 
                                     <div class="row">
-                                        <h1 class="col-12 text-right">نوع سرویس سفارش</h1>
+                                        <div class="col-12 text-right h3">نوع سرویس سفارش</div>
                                         <p class="col-12 text-right text-justify mt-2">&emsp;از لیست زیر نوع سرویس سفارش خود را وارد کنید. سپس برروی «مرحله بعد» کلیک کنید&emsp;</p>
                                     </div>
 
@@ -265,31 +273,41 @@
                                          class="card col-12 border border-info mb-3"
                                          :class="{'card-order-service' : order_service !== order_service_row, 'card-order-service-clicked' : order_service === order_service_row}"
                                          :key="key"
-                                         v-on:click="selectOrderService('order_service_row'+key, order_service_row)" order_service_el>
+                                         v-on:click="selectOrderService('order_service_row'+key, order_service_row)"
+                                         order_service_el>
 
                                         <div class="card-body text-right">
 
-                                            <div class="row">
-                                                <div class="col-4">
-                                                    <p class="card-text col-12" v-if="order_service_row.fixed_price"><span>هزینه ثابت :‌ </span>&emsp;<span>{{ order_service_row.fixed_price }}</span>
+
+                                                <div class="row">
+                                                    <div class="col-9 col-lg-11">
+                                                        <h5 class="card-title">{{ order_service_row.title }}</h5>
+                                                        <p class="card-text">{{ order_service_row.description }}</p>
+                                                    </div>
+                                                    <div class="col-3 col-lg-1 p-0">
+                                                        <img :src="order_service_row.icon"
+                                                             class="img-fluid m-0"
+                                                             style="height: 100%"
+                                                             alt="user pic"
+                                                             id="userPic_img"
+                                                             height="100%"
+                                                             width="100%">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+
+                                                </div>
+                                                <div class="row mt-3" dir="rtl">
+                                                    <p class="card-text mx-2"
+                                                       v-if="order_service_row.fixed_price">
+                                                        <span>هزینه ثابت :‌ </span>&emsp;<span>{{ order_service_row.fixed_price }}</span>
                                                     </p>
-                                                    <p class="card-text col-12" v-if="order_service_row.variable_price">
+                                                    <p class="card-text mx-2"
+                                                       v-if="order_service_row.variable_price">
                                                         <span>هزینه متغیر :‌ </span>&emsp;<span>{{ order_service_row.variable_price }}</span>
                                                     </p>
                                                 </div>
-                                                <div class="col-6">
-                                                    <h5 class="card-title">{{ order_service_row.title }}</h5>
-                                                    <p class="card-text">{{ order_service_row.description }}</p>
-                                                </div>
-                                                <div class="col-2 p-0">
-                                                    <img :src="order_service_row.icon"
-                                                         class="img-fluid m-0"
-                                                         alt="user pic"
-                                                         id="userPic_img"
-                                                         height="100%"
-                                                         width="100%">
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </div>
 
@@ -302,7 +320,7 @@
                                         <!-- choosing extra option -->
                                         <div :key="1" v-if="Stage === 'extra_option' && extraOptionsAllowed">
                                             <div class="row">
-                                                <h1 class="col-12 text-right">گزینه های اضافی سفارش</h1>
+                                                <div class="col-12 text-right h3">گزینه های اضافی سفارش</div>
                                                 <p class="col-12 text-right text-justify mt-2">&emsp;محصولات مورد نظر و تعداد آن ها را تعیین کنید. سپس برروی «مرحله بعد» کلیک کنید&emsp;</p>
                                             </div>
 
@@ -376,7 +394,7 @@
                                             </transition>
 
                                             <div class="row">
-                                                <h1 class="col-12 text-right">تایید مشخصات سفارش</h1>
+                                                <div class="col-12 text-right h3">تایید سفارش</div>
                                                 <p class="col-12 text-right text-justify mt-2">&emsp;مشخصات سفارش را با دقت بررسی کرده و سپس برروی تایید نهایی سفارش کلیک کنید&emsp;</p>
                                             </div>
 
@@ -384,43 +402,52 @@
 
                                             <div class="container">
                                                 <div class="row">
-                                                    <div class="col-12 border border-info rounded p-3">
-                                                        <div class="row mb-3">
-                                                            <div class="col-md-9 text-right">
+                                                    <div class="col-12 border border-info rounded px-3" dir="rtl">
+
+                                                        <div class="row order-detail-row">
+                                                            <div class="col-md-3 text-center text-lg-right font-weight-bold">آدرس دریافت</div>
+                                                            <div class="col-md-9 text-center text-lg-left">
                                                                 {{ address.city + ' - ' + address.neighbourhood + ' - ' + address.address }}
                                                             </div>
-                                                            <div class="col-md-3 text-right">آدرس دریافت</div>
                                                         </div>
 
-                                                        <div class="row mb-3">
-                                                            <div class="col-md-6 text-left">
+                                                        <div class="dropdown-divider"></div>
+
+                                                        <div class="row order-detail-row">
+                                                            <div class="col-md-6 text-center text-lg-right font-weight-bold">تاریخ و ساعت دریافت</div>
+                                                            <div class="col-md-6 text-center text-lg-left">
                                                                 {{ pickup_date.date_pickup + ' | ' + show_time(pickup_time.time) }}
                                                             </div>
-                                                            <div class="col-md-6 text-right">تاریخ و ساعت دریافت</div>
                                                         </div>
 
-                                                        <div class="row mb-3">
-                                                            <div class="col-md-6 text-left">{{ delivery_date.date + ' | ' + show_time(delivery_time) }}</div>
-                                                            <div class="col-md-6 text-right">تاریخ و ساعت تحویل</div>
+                                                        <div class="dropdown-divider"></div>
+
+                                                        <div class="row order-detail-row">
+                                                            <div class="col-md-6 text-center text-lg-right font-weight-bold">تاریخ و ساعت تحویل</div>
+                                                            <div class="col-md-6 text-center text-lg-left">{{ delivery_date.date + ' | ' + show_time(delivery_time) }}</div>
                                                         </div>
 
-                                                        <div v-if="orderServiceAllowed" class="row mb-3">
-                                                            <div class="col-md-6 text-left">{{ order_service.title }}</div>
-                                                            <div class="col-md-6 text-right">نوع سرویس سفارش</div>
+                                                        <div v-if="orderServiceAllowed" class="dropdown-divider"></div>
+
+                                                        <div v-if="orderServiceAllowed" class="row order-detail-row">
+                                                            <div class="col-md-6 text-center text-lg-right font-weight-bold">نوع سرویس سفارش</div>
+                                                            <div class="col-md-6 text-center text-lg-left">{{ order_service.title }}</div>
                                                         </div>
 
-                                                        <div v-if="couponCode" class="row">
-                                                            <div class="col-md-6 text-left">{{ couponCode }}</div>
-                                                            <div class="col-md-6 text-right">کد تخفیف ثبت شده</div>
-                                                        </div>
+                                                        <div v-if="couponCode" class="dropdown-divider"></div>
 
+                                                        <div v-if="couponCode" class="row order-detail-row">
+                                                            <div class="col-md-6 text-center text-lg-right font-weight-bold">کد تخفیف ثبت شده</div>
+                                                            <div class="col-md-6 text-center text-lg-left">{{ couponCode }}</div>
+                                                        </div>
 
                                                         <div v-if="description" class="row d-flex justify-content-center">
-                                                            <div class="col-11 border border-dark rounded my-3 p-3">
+                                                            <div class="col-11 border border-dark rounded my-3 p-3 order-detail-row">
                                                                 <div class="row">
-                                                                    <div class="col-md-6 text-right">{{ description }}
+                                                                    <div class="col-md-6 text-center text-lg-right font-weight-bold">توضیحات سفارش</div>
+                                                                    <div class="col-md-6 text-center text-lg-right text-justify">
+                                                                        {{ description }}
                                                                     </div>
-                                                                    <div class="col-md-6 text-right">توضیحات سفارش</div>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1023,6 +1050,28 @@
     .fa-minus {
        cursor: pointer;
     }
+
+    .dropdown-divider {
+        margin: 0;
+    }
+
+    .order-detail-row {
+        color: black;
+        background-color: transparent;
+        padding: 20px 0;
+        border-radius: 5px;
+        -o-transition:.5s;
+        -ms-transition:.5s;
+        -moz-transition:.5s;
+        -webkit-transition:.5s;
+        transition:.5s;
+    }
+    .order-detail-row:hover {
+        color: white;
+        background-color: red;
+        transform: scale(1.01, 1.07);
+    }
+
 
 
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="vh-100 vw-100 text-right">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light py-0 px-2 shadow-sm sticky-top" dir="rtl">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-0 px-2 shadow-sm sticky-top d-flex justify-content-between" dir="rtl">
 
             <!--<a class="navbar-brand float-right d-lg-none d-xl-none" href="#">واش ماش</a>-->
 
@@ -17,6 +17,10 @@
                 </button>
                 <transition name="fade">
                     <div v-if="dropDown_opened" class="dropdown-content">
+                        <a v-on:click="$router.push({ path: '/dashboard/orders' })">
+                            <i class="fas fa-tshirt"></i>&nbsp;&nbsp;<span>سفارشات من</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
                         <a v-on:click="$router.push({ path: '/dashboard/account' })">
                             <i class="far fa-user"></i>&nbsp;&nbsp;<span>حساب کاربری</span>
                         </a>
@@ -60,33 +64,37 @@
                 </transition>
             </div>
 
+            <button v-on:click="$router.push({ path: '/dashboard/new-order' })"
+                    class="btn btn-info align-self-center ml-3">
+                <i class="fas fa-plus"></i>&nbsp;&nbsp;<span>سفارش جدید</span></button>
 
-            <button class="navbar-toggler float-right ml-3" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="navbar-collapse collapse show text-right" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active row align-items-center mx-1">
-                        <!-- for lg and xl -->
-                        <button v-on:click="$router.push({ path: '/dashboard/orders' })"
-                                class="btn btn-light btn-sm mb-3 mb-lg-0 mb-xl-0 d-none d-lg-block">
-                            <span>سفارشات من</span></button>
+            <!--<button class="navbar-toggler float-right ml-3" type="button" data-toggle="collapse"-->
+                    <!--data-target="#navbarSupportedContent"-->
+                    <!--aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">-->
+                <!--<span class="navbar-toggler-icon"></span>-->
+            <!--</button>-->
 
-                        <!-- for sm and md -->
-                        <a class="nav-link d-lg-none" v-on:click="$router.push({ path: '/dashboard/orders' })">
-                            <div class="">سفارشات من</div>
-                        </a>
-                    </li>
-                    <li class="nav-item row align-items-center mx-1">
-                        <button v-on:click="$router.push({ path: '/dashboard/new-order' })"
-                                class="btn btn-info btn-sm mb-3 mb-lg-0 mb-xl-0">
-                            <i class="fas fa-plus"></i>&nbsp;&nbsp;<span>سفارش جدید</span></button>
-                    </li>
-                </ul>
-            </div>
+            <!--<div class="navbar-collapse collapse text-right" id="navbarSupportedContent">-->
+                <!--<ul class="navbar-nav mr-auto">-->
+                    <!--<li class="nav-item active row align-items-center mx-1">-->
+                        <!--&lt;!&ndash; for lg and xl &ndash;&gt;-->
+                        <!--<button v-on:click="$router.push({ path: '/dashboard/orders' })"-->
+                                <!--class="btn btn-light btn-sm mb-3 mb-lg-0 mb-xl-0 d-none d-lg-block">-->
+                            <!--<span>سفارشات من</span></button>-->
+
+                        <!--&lt;!&ndash; for sm and md &ndash;&gt;-->
+                        <!--<a class="nav-link d-lg-none" v-on:click="$router.push({ path: '/dashboard/orders' })">-->
+                            <!--<div class="">سفارشات من</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
+                    <!--<li class="nav-item row align-items-center mx-1">-->
+                        <!--<button v-on:click="$router.push({ path: '/dashboard/new-order' })"-->
+                                <!--class="btn btn-info btn-sm mb-3 mb-lg-0 mb-xl-0">-->
+                            <!--<i class="fas fa-plus"></i>&nbsp;&nbsp;<span>سفارش جدید</span></button>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</div>-->
         </nav>
 
 
