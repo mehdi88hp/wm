@@ -1,12 +1,11 @@
 <template>
 
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-8">
+    <div class="row d-flex justify-content-center">
+        <div class="col-10 col-md-8">
 
             <form onsubmit="return false;">
                 <div class="form-group">
-                    <label for="codeField" class="col-12 text-right small">کد فعالسازی ارسال شده به
+                    <label for="codeField" class="col-12 text-center text-justify small">کد فعالسازی ارسال شده به
                         <label v-html="phone"></label> را وارد کنید</label>
                     <input id="codeField"
                            type="text"
@@ -51,21 +50,25 @@
             </form>
 
             <!-- the modal -->
-            <div class="modal" id="activate_code_resent_modal" tabindex="-1" role="dialog" dir="rtl">
+            <div class="modal" id="activate_code_resent_modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title w-100 text-right">پیام</h5>
-                            <button type="button" class="close flex-shrink-1" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                        <div class="p-3 border-bottom">
+                            <div class="row">
+                                <div class="col-12  d-flex justify-content-between">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h5 class="modal-title text-right" id="order_info_modal_Title">پیام</h5>
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-body">
                             <div class="d-block text-center">
                                 <h5>کد تایید به شماره <label v-html="phone"></label> دوباره ارسال شد</h5>
                             </div>
                         </div>
-                        <div class="modal-footer">
+                        <div class="modal-footer d-flex justify-content-center">
                             <button type="button" class="btn btn-danger" data-dismiss="modal">باشه</button>
                         </div>
                     </div>
@@ -74,7 +77,6 @@
 
 
         </div>
-        <div class="col"></div>
     </div>
 
 </template>
@@ -160,6 +162,7 @@
                                 // todo Handle to SingUp Page if user in new
                                 if (!response.data.user_exists) {
 
+                                    localStorage.setItem('cities', JSON.stringify(response.data.cities));
                                     localStorage.setItem('phone', phone_num);
                                     this.$router.push({path: '/sign-up'});
 

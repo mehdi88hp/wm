@@ -10,28 +10,29 @@
 
         </div>
 
-        <div v-if="orders.length" class="row h-auto pt-5" dir="rtl">
+        <div v-if="orders.length" class="row h-auto p-2 px-lg-0 py-lg-5" dir="rtl">
 
             <div class="col-lg-6 p-2" v-for="(order, index) in orders" v-bind:key="index">
                 <div class="card shadow shadow-sm card-hover-blue"
                      @click='HandleModal(order)'>
                     <div class="card-body">
-                        <div class="clearfix">
-                            <div class="h5 float-right">سفارش شماره {{ order['number_order'] }}</div>
-                            <div class="col-6 float-left text-left">{{ order['order_status'] }}</div>
+                        <div class="d-flex justify-content-between">
+                            <div class="h5">سفارش {{ order['number_order'] }}</div>
+                            <div>{{ order['order_status'] }}</div>
                         </div>
                         <div class="container mt-2">
                             <div class="row">
-                                <div class="col-3">دریافت :</div>
-                                <div class="col-9 text-center">{{ order['date_pickup_user'] + " ساعت " +
+                                <div class="col-lg-3 text-center text-lg-right font-weight-bold">دریافت :</div>
+                                <div class="col-lg-9 text-center">{{ order['date_pickup_user'] + " ساعت " +
                                     order['time_pickup_user'].split(':')[0] + "تا" +
                                     order['time_pickup_user'].split(':')[1] }}
                                 </div>
                             </div>
 
                             <div class="row">
-                                <div class="col-3">تحویل :</div>
-                                <div class="col-9 text-center">{{ order['date_delivery_user'] + " ساعت " +
+                                <div class="col-lg-3 text-center text-lg-right font-weight-bold mt-3 mt-lg-0">تحویل :
+                                </div>
+                                <div class="col-lg-9 text-center">{{ order['date_delivery_user'] + " ساعت " +
                                     order['time_delivery_user'].split(':')[0] + "تا" +
                                     order['time_delivery_user'].split(':')[1] }}
                                 </div>
@@ -49,11 +50,15 @@
              aria-labelledby="order_info_modal_Title" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close col-1" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h5 class="modal-title col-11 text-right" id="order_info_modal_Title">{{ modal_title }}</h5>
+                    <div class="p-3 border-bottom">
+                        <div class="row">
+                            <div class="col-12  d-flex justify-content-between">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h5 class="modal-title text-right" id="order_info_modal_Title">{{ modal_title }}</h5>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
 
@@ -61,13 +66,23 @@
                         <div class="card border border-dark">
                             <div class="card-body" dir="rtl">
                                 <div class="row">
-                                    <div class="col-3">دریافت :</div>
-                                    <div id="order_info_modal_pickup" class="col-9 text-left">{{ pickup_info }}</div>
+                                    <div class="col-lg-3 text-center text-lg-right font-weight-bold mb-2 mb-lg-0">تاریخ
+                                        و ساعت دریافت :
+                                    </div>
+                                    <div id="order_info_modal_pickup" class="col-lg-9 text-center text-lg-left">
+                                        {{ pickup_info }}
+                                    </div>
                                 </div>
 
+                                <div class="dropdown-divider"></div>
+
                                 <div class="row">
-                                    <div class="col-3">تحویل :</div>
-                                    <div id="order_info_modal_delivery" class="col-9 text-left">{{ delivery_info }}</div>
+                                    <div class="col-lg-3 text-center text-lg-right font-weight-bold mb-2 mb-lg-0">تاریخ
+                                        و ساعت تحویل :
+                                    </div>
+                                    <div id="order_info_modal_delivery" class="col-lg-9 text-center text-lg-left">
+                                        {{ delivery_info }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -75,28 +90,60 @@
                         <div class="card border border-dark mt-3">
                             <div class="card-body" dir="rtl">
                                 <div class="row">
-                                    <div class="col-5">وضعیت فاکتور :</div>
-                                    <div id="order_info_modal_factor_status" class="col-7 text-left">{{ factor_payment_status }}</div>
+                                    <div class="col-lg-5 text-center text-lg-right font-weight-bold mb-2 mb-lg-0">وضعیت
+                                        فاکتور :
+                                    </div>
+                                    <div class="col-lg-7 text-center text-lg-left">{{ factor_payment_status }}</div>
                                 </div>
-                                <div v-if="order_missionary" class="row mt-2">
-                                    <div class="col-5">هزینه سفارش :</div>
-                                    <div class="col-7 text-left">{{ toMoneyFormat(order_missionary) }}</div>
+
+                                <div v-if="order_missionary" class="dropdown-divider"></div>
+
+                                <div v-if="order_missionary" class="row">
+                                    <div class="col-lg-5 text-center text-lg-right font-weight-bold mb-2 mb-lg-0">هزینه
+                                        سفارش :
+                                    </div>
+                                    <div class="col-lg-7  text-center text-lg-left">
+                                        {{ toMoneyFormat(order_missionary) }}
+                                    </div>
                                 </div>
-                                <div v-if="!factor_payment_status.includes('پرداخت')" class="row mt-2">
-                                    <div class="col-5">موجودی حساب :</div>
-                                    <div class="col-7 text-left">{{ toMoneyFormat($userData.credit) }}</div>
+
+                                <div v-if="!factor_payment_status.includes('پرداخت')" class="dropdown-divider"></div>
+
+                                <div v-if="!factor_payment_status.includes('پرداخت')" class="row">
+                                    <div class="col-lg-5 text-center text-lg-right font-weight-bold mb-2 mb-lg-0">موجودی
+                                        حساب :
+                                    </div>
+                                    <div class="col-lg-7  text-center text-lg-left">
+                                        {{ toMoneyFormat($userData.credit) }}
+                                    </div>
                                 </div>
-                                <div v-if="!factor_payment_status.includes('پرداخت') && extra_needed_money !== 0" class="row mt-2">
-                                    <div class="col-5">مبلغ اضافی مورد نیاز :</div>
-                                    <div class="col-7 text-left">{{ toMoneyFormat(extra_needed_money) }}</div>
+
+                                <div v-if="!factor_payment_status.includes('پرداخت') && extra_needed_money !== 0"
+                                     class="dropdown-divider"></div>
+
+                                <div v-if="!factor_payment_status.includes('پرداخت') && extra_needed_money !== 0"
+                                     class="row">
+                                    <div class="col-lg-5 text-center text-lg-right font-weight-bold mb-2 mb-lg-0">مبلغ
+                                        اضافی مورد نیاز :
+                                    </div>
+                                    <div class="col-lg-7  text-center text-lg-left">
+                                        {{ toMoneyFormat(extra_needed_money) }}
+                                    </div>
                                 </div>
-                                <div v-if="!factor_payment_status.includes('پرداخت') && factor_payment_status !== 'فاکتور صادر نشده'" class="row d-flex justify-content-center mt-3">
-                                    <button class="btn btn-success" @click="payOrder(order_number)">{{ payButtonText }}</button>
+
+                                <div v-if="!factor_payment_status.includes('پرداخت') && factor_payment_status !== 'فاکتور صادر نشده'"
+                                     class="dropdown-divider"></div>
+
+                                <div v-if="!factor_payment_status.includes('پرداخت') && factor_payment_status !== 'فاکتور صادر نشده'"
+                                     class="row d-flex justify-content-center mt-3">
+                                    <button class="btn btn-success" @click="payOrder(order_number)">
+                                        {{ payButtonText }}
+                                    </button>
                                 </div>
 
                                 <transition name="fade" mode="out-in">
                                     <div class="row">
-                                        <div class="col-12">
+                                        <div class="col-lg-12">
                                             <div v-if="isProgressActive" class="progress mt-3">
                                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
                                                      role="progressbar" aria-valuenow="75" aria-valuemin="0"
@@ -132,7 +179,7 @@
                                 </tr>
                                 </thead>
 
-                                <tbody>
+                                <tbody style="word-break:break-all;">
                                 <tr v-for="(factor, index) in factors" v-bind:key="index">
                                     <td>{{ index+1 }}</td>
                                     <td>{{ factor['title'] }}</td>
@@ -153,21 +200,25 @@
         </div>
 
         <!-- the modal -->
-        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog" dir="rtl">
+        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title w-100 text-right">پیام تایید</h5>
-                        <button type="button" class="close flex-shrink-1" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    <div class="p-3 border-bottom">
+                        <div class="row">
+                            <div class="col-12  d-flex justify-content-between">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h5 class="modal-title text-right">پیام تایید</h5>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
                         <div class="d-block text-center">
                             <h5>پرداخت با موفقیت انجام شد</h5>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer d-flex justify-content-center">
                         <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
                     </div>
                 </div>
@@ -206,7 +257,6 @@
 
                 isHiddenError: true,
                 Error: '',
-
 
 
             }
@@ -293,29 +343,29 @@
                 this.isProgressActive = true;
                 this.isHiddenError = true;
 
-                this.$API.get('/api/v5/user/payForOrder?token='+this.$TOKEN+'&order_id='+order_id)
+                this.$API.get('/api/v5/user/payForOrder?token=' + this.$TOKEN + '&order_id=' + order_id)
                     .then(
                         (response) => {
                             this.isProgressActive = false;
 
-                             if (parseInt(response.data.code) === 1) {
+                            if (parseInt(response.data.code) === 1) {
 
-                                 const THIS = this;
-                                 this.$initData(function (response) {
-                                     const modal = $("#confirm_modal");
-                                     modal.modal('show');
-                                     modal.on('hide.bs.modal', function () {
+                                const THIS = this;
+                                this.$initData(function (response) {
+                                    const modal = $("#confirm_modal");
+                                    modal.modal('show');
+                                    modal.on('hide.bs.modal', function () {
 
-                                         THIS.orders = response.orders;
-                                         THIS.orders.sort(function (a, b) {
-                                             return b.number_order - a.number_order;
-                                         });
-                                         $("#order_info_modal").modal('hide');
-                                     });
-                                 });
+                                        THIS.orders = response.orders;
+                                        THIS.orders.sort(function (a, b) {
+                                            return b.number_order - a.number_order;
+                                        });
+                                        $("#order_info_modal").modal('hide');
+                                    });
+                                });
 
 
-                             } else if (parseInt(response.data.code) === 0) {
+                            } else if (parseInt(response.data.code) === 0) {
 
                                 if (Object.keys(response.data.msg)[0] === 'token') {
 

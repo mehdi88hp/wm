@@ -1,18 +1,15 @@
 <template>
 
-    <div class="vh-100 vw-100 bg">
+    <div class="vw-100 vh-100 bg">
 
         <div class="container">
-            <div class="row align-items-center vh-100">
-                <div class="col"></div>
+            <div class="row vh-100 d-flex justify-content-center align-items-start align-items-md-center p-2 p-lg-0">
                 <div class="col-lg-6 shadow p-3 mb-5 bg-white rounded">
                     <!-- the logo -->
-                    <div class="row">
-                        <div class="col"></div>
-                        <div class="col-10 mt-5">
-                            <img class="mw-100 mh-100" src="../../assets/logo.png" width="1000">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-12 col-md-10 mt-md-5">
+                            <img class="col-12 img-fluid" src="../../assets/logo.png">
                         </div>
-                        <div class="col"></div>
                     </div>
 
                     <div class="row mt-5 mb-3"><h4 class="flex-fill text-center">ورود / ثبت نام</h4></div>
@@ -31,7 +28,6 @@
                     </div>
 
                 </div>
-                <div class="col"></div>
             </div>
         </div>
 

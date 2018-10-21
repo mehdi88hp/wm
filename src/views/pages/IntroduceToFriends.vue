@@ -1,15 +1,16 @@
 <template>
 
     <div class="container">
-        <div class="row h-100 d-flex justify-content-center py-5 align-items-center">
-            <div class="card h-auto shadow shadow-sm col-12 col-lg-8 text-right">
+        <div class="row h-auto d-flex justify-content-center p-2 px-lg-0 py-lg-5">
+            <div class="card h-auto shadow shadow-sm col-12 col-lg-8 p-0 p-md-2 text-right">
 
-                <div class="card-body" dir="rtl">
+                <div class="card-body pt-1 pt-md-2 px-1" dir="rtl">
+                <div class="px-3">
 
 
-                    <div class="row p-3 bg-info text-white rounded shadow-sm d-flex justify-content-between">
+                    <div class="row p-3 bg-info text-white rounded shadow-sm">
                         <i class="col-1 fas fa-2x fa-share-alt align-self-center"></i>
-                        <div class="col-11 text-right align-self-center text-center text-justify" dir="rtl">
+                        <div class="col-10 col-md-11 text-right align-self-center text-center text-justify" dir="rtl">
                             واش ماش را به دوستان خود معرفی کنید و اعتبار هدیه دریافت کنید. برای این کار کد زیر را به
                             دوستان خود بدهید تا هنگام ثبت نام آن را در محل کد معرف خود وارد کنند.
                         </div>
@@ -18,7 +19,7 @@
                     <div class="row mt-5 d-flex justify-content-center">
 
                         <div style="height: 10%;" v-ripple @click="handleCopy()"
-                             class="col-4 card-code rounded border border-danger p-3 d-flex justify-content-between align-items-center"
+                             class="col-10 col-md-4 card-code rounded border border-danger p-3 d-flex justify-content-between align-items-center"
                              data-toggle="popover" data-content="در بریده دان ذخیره شد">
 
                             <i class="fas fa-2x fa-copy"></i>
@@ -31,9 +32,9 @@
 
                     <div class="row mt-5 mb-3 d-flex justify-content-center">
 
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                        <div class="col-8 col-lg-6">
+                            <div class="row d-flex justify-content-between">
+                                <div class="d-flex justify-content-center align-items-center">
                                     <a :href="'https://telegram.me/share/url?url=&text='+$userData.tell_friends"
                                        target="_blank">
                                         <i class="fab fa-3x fa-telegram align-self-center"></i>
@@ -44,13 +45,13 @@
                                 <!--<i class="fab fa-3x fa-instagram align-self-center"></i>-->
                                 <!--</a>-->
                                 <!--</div>-->
-                                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                <div class="d-flex justify-content-center align-items-center">
                                     <a :href="'https://www.facebook.com/sharer/sharer.php?u='+$userData.tell_friends"
                                        target="_blank">
                                         <i class="fab fa-3x fa-facebook align-self-center"></i>
                                     </a>
                                 </div>
-                                <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                <div class="d-flex justify-content-center align-items-center">
                                     <a :href="'https://twitter.com/home?status='+$userData.tell_friends"
                                        target="_blank">
                                         <i class="fab fa-3x fa-twitter align-self-center"></i>
@@ -60,6 +61,7 @@
 
                         </div>
                     </div>
+                </div>
                 </div>
 
             </div>

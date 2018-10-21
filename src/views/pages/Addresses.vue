@@ -1,30 +1,35 @@
 <template>
 
     <div class="container">
-        <div class="row h-auto d-flex justify-content-center py-5">
-            <div class="card h-auto shadow shadow-sm col-12 col-lg-10 text-right">
+        <div class="row h-auto d-flex justify-content-center p-2 px-md-0 py-md-5">
+            <div class="card h-auto shadow shadow-sm col-12 col-md-10 p-0 p-md-2 text-right">
 
-                <div class="card-body" dir="rtl">
+                <div class="card-body pt-1 pt-md-2 px-1" dir="rtl">
 
 
                     <transition name="fade" mode="out-in">
 
-                        <div :key="1" v-if="!ShowAddressForm">
+                        <div class="mx-3" :key="1" v-if="!ShowAddressForm">
                             <div class="row mb-4">
                                 <div class="card bg-dark h-auto shadow-sm col-12 text-white">
 
                                     <div class="card-body py-3 px-0">
-                                        <div class="row balance-card d-flex justify-content-between">
+                                        <div class="row balance-card d-md-flex justify-content-md-between">
 
-                                            <div class="row mx-3">
+                                            <div class="col-12 col-md-8">
                                                 <div class="col-12 text-right font-weight-bold d-flex justify-content-start">
                                                     <i class="fas fa-2x fa-map-marked-alt"></i>
                                                     &nbsp;
                                                     <span class="align-self-center">آدرس های من</span>
                                                 </div>
                                             </div>
-                                            <div class="d-flex justify-content-center align-items-center mx-3">
-                                                <div class="btn btn-outline-info btn-lg"
+
+                                            <div class="col-12 d-flex justify-content-center d-block d-md-none my-2">
+                                                <div class="col-10 dropdown-divider"></div>
+                                            </div>
+
+                                            <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
+                                                <div class="btn btn-outline-info"
                                                      @click="New()">
                                                     ثبت آدرس جدید
                                                 </div>
@@ -57,14 +62,18 @@
                                 <div class="card-body py-3 px-0">
                                     <div class="row">
 
-                                        <div class="col-8 text-right font-weight-bold d-flex justify-content-start">
+                                        <div class="col-md-8 text-right font-weight-bold d-flex justify-content-start">
                                             <i class="far fa-2x fa-edit"></i>
                                             &nbsp;
                                             <span class="align-self-center">اطلاعات را وارد نمونده و سپس برروی گزینه ثبت کلیک کنید</span>
                                         </div>
 
-                                        <div class="col-4">
-                                            <div class="row d-flex justify-content-end ml-3">
+                                        <div class="col-12 d-flex justify-content-center d-block d-md-none my-2">
+                                            <div class="col-10 dropdown-divider"></div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="row d-flex justify-content-center justify-content-md-end ml-md-3 mt-3 mt-md-0">
                                                 <button class="col-4 btn btn-secondary" @click="Cancel()">لغو</button>
                                                 <div class="col-1"></div>
                                                 <button class="col-4 btn btn-warning" @click="SendData()">ثبت</button>
@@ -78,10 +87,9 @@
 
                             <div class="row pt-3">
 
-                                <div class="col-lg-6 px-2">
-                                    <div style="height: 300pt;" class="container">
+                                <div class="col-md-6 px-2">
+                                    <div class="container">
 
-                                        <div class="row">
                                             <select class="col-12 form-control mb-4" v-model="city" @change="Change()">
                                                 <option value="-1" selected disabled hidden>شهر خود را انتخاب کنید
                                                 </option>
@@ -98,7 +106,6 @@
                                                       v-model="address"
                                                       placeholder="آدرس را وارد کنید"
                                                       @input="Change()"></textarea>
-                                        </div>
 
                                         <transition name="fade" mode="out-in">
                                             <div v-if="isProgressActive" class="progress">
@@ -117,9 +124,9 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
 
-                                    <vl-map class="col-12" id="map"
+                                    <vl-map class="col-12 m-0 p-0 shadow shadow-lg border" id="map"
                                             style="height: 300pt;"
                                             :load-tiles-while-animating="true"
                                             :load-tiles-while-interacting="true"
@@ -165,21 +172,25 @@
 
 
         <!-- the modal -->
-        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog" dir="rtl">
+        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title w-100 text-right">پیام تایید</h5>
-                        <button type="button" class="close flex-shrink-1" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    <div class="p-3 border-bottom">
+                        <div class="row">
+                            <div class="col-12  d-flex justify-content-between">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h5 class="modal-title text-right" id="order_info_modal_Title">پیام تایید</h5>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
                         <div class="d-block text-center">
                             <h5>سفارش شما با موفقیت ثبت شد. منتظر تایید سفارش از سوی کارشناسان واش-ماش باشید</h5>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer d-flex justify-content-center">
                         <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
                     </div>
                 </div>
@@ -347,7 +358,6 @@
                     })
                     .then(
                         (response) => {
-                            this.isProgressActive = false;
                             console.log(response.data);
                             if (parseInt(response.data.code) === 1) {
 
@@ -377,6 +387,9 @@
                                 }
 
                             }
+
+                            this.isProgressActive = false;
+
                         }, (error) => {
                             this.isProgressActive = false;
                             console.log(error);

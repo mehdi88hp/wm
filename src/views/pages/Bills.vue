@@ -1,35 +1,40 @@
 <template>
 
     <div class="container">
-        <div class="row h-auto d-flex justify-content-center py-5">
-            <div class="card h-auto shadow shadow-sm col-12 col-lg-8 text-right">
+        <div class="row h-auto d-flex justify-content-center p-2 px-md-0 py-md-5">
+            <div class="card h-auto shadow shadow-sm col-12 col-md-8 p-0 p-md-2 text-right">
 
-                <div class="card-body" dir="rtl">
+                <div class="card-body pt-1 pt-md-2 px-1" dir="rtl">
 
 
                     <transition name="fade" mode="out-in">
 
-                        <div :key="1" v-if="!IncreaseBalance">
+                        <div class="px-3" :key="1" v-if="!IncreaseBalance">
                             <div class="row mb-4">
                                 <div class="card bg-dark h-auto shadow-sm col-12 text-white">
 
                                     <div class="card-body py-3 px-0">
                                         <div class="row balance-card">
-                                            <div class="col-9">
+                                            <div class="col-md-9">
                                                 <div class="row">
-                                                    <div class="col-6 text-right font-weight-bold d-flex justify-content-start">
+                                                    <div class="col-md-6 text-right font-weight-bold d-flex justify-content-start">
                                                         <i class="fas fa-2x fa-file-invoice-dollar"></i>
                                                         &nbsp;
                                                         <span class="align-self-center">اعتبار فعلی :</span>
                                                     </div>
-                                                    <div class="col-6 text-left font-weight-bold align-self-center">
+                                                    <div class="col-md-6 text-left font-weight-bold align-self-center mt-2 mt-md-0">
                                                         {{ toMoneyFormat($userData.credit/10) }}
                                                         تومان
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-3 d-flex justify-content-center align-items-center">
-                                                <div class="btn btn-outline-info btn-lg"
+
+                                            <div class="col-12 d-flex justify-content-center d-block d-md-none my-2">
+                                                <div class="col-10 dropdown-divider"></div>
+                                            </div>
+
+                                            <div class="col-md-3 d-flex justify-content-center align-items-center">
+                                                <div class="btn btn-outline-info"
                                                      @click="IncreaseBalance=true">
                                                     افزایش اعتبار
                                                 </div>
@@ -41,7 +46,7 @@
                                 </div>
                             </div>
 
-                            <div class="row border border-success rounded mb-2 p-3 d-flex justify-content-center card-cash-info"
+                            <div v-if="bills.length" class="row border border-success rounded mb-2 p-3 d-flex justify-content-center card-cash-info"
                                  v-for="(credit, key) in bills"
                                  :key="key">
 
@@ -55,6 +60,8 @@
                                     }}
                                 </div>
                             </div>
+
+                            <div v-if="!bills.length" class="h5 col-12 text-info mt-4 text-center">شما هیچ صورتحسابی ندارید !</div>
 
                         </div>
 
@@ -81,29 +88,36 @@
                                     <div class="container form-group">
                                         <div class="row align-items-center">
 
-                                            <div class="col-7 px-1">
+                                            <div class="col-md-7 px-1">
                                                 <input class="col-12 form-control text-info align-self-center"
                                                        placeholder="مبلغ را وارد کنید"
                                                        v-model="amount"
                                                        type="number"
                                                        min="1"
+                                                       step="1"
                                                        id="amount"/>
                                             </div>
-                                            <div class="col-5">
+                                            <div class="col-md-5 mt-3 mt-md-0">
                                                 <div class="row">
                                                     <div class="col-6 px-1">
-                                                        <div class="col-12 btn btn-lg btn-outline-success"
+                                                        <div class="col-12 btn btn-outline-success"
                                                              @click="LeadToPay()">افزایش
                                                         </div>
                                                     </div>
                                                     <div class="col-6 px-1">
-                                                        <div class="col-12 btn btn-lg btn-outline-danger"
+                                                        <div class="col-12 btn btn-outline-danger"
                                                              @click="IncreaseBalance = false; amount = '';">لغو
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <transition name="fade" mode="out-in">
+                                            <div class="alert alert-danger small text-right like-pre mt-3 pb-0"
+                                                 v-if="!isHiddenError">{{ Error }}
+                                            </div>
+                                        </transition>
                                     </div>
                                 </div>
                             </div>
@@ -113,29 +127,6 @@
 
                 </div>
 
-            </div>
-        </div>
-
-
-        <!-- the modal -->
-        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog" dir="rtl">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title w-100 text-right">پیام تایید</h5>
-                        <button type="button" class="close flex-shrink-1" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="d-block text-center">
-                            <h5>سفارش شما با موفقیت ثبت شد. منتظر تایید سفارش از سوی کارشناسان واش-ماش باشید</h5>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -179,8 +170,18 @@
         methods: {
 
             LeadToPay: function () {
-                const url = this.$ApiBaseUrl + "/api/v5/user/addToCredit?token=" + this.$TOKEN + "&amount=" + this.amount + "&OS=web-app";
-                window.open(url,"_self")
+
+                this.isHiddenError = true;
+
+                if (!this.amount || parseInt(this.amount) < 1000) {
+                    this.Error = 'مبلغ وارد شده کمتر از حد مجاز (۱۰۰۰ ریال) است';
+                    this.isHiddenError = false;
+
+                } else {
+
+                    const url = this.$ApiBaseUrl + "/api/v5/user/addToCredit?token=" + this.$TOKEN + "&amount=" + this.amount + "&OS=web-app";
+                    window.open(url, "_self")
+                }
             },
 
             show_time: function (time) {

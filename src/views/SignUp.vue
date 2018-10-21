@@ -1,26 +1,32 @@
 <template>
 
     <div class="container vh-100">
-        <div class="row vh-100 d-flex justify-content-center py-5">
-            <div class="card shadow shadow-sm col-12 text-right align-self-center mt-5">
+        <div class="row vh-100 d-flex justify-content-center p-2 px-md-0 py-md-5">
+            <div class="card shadow shadow-sm col-12 text-right align-self-start align-self-md-center mt-md-5">
 
                 <div class="card-body" dir="rtl">
 
 
-                    <div class="card bg-info h-auto shadow-sm col-12 text-white">
+                    <div class="card bg-info h-auto shadow-sm col-12 text-white mb-3 mb-md-0">
 
                         <div class="card-body py-3 px-0">
                             <div class="row">
 
-                                <div class="col-8 text-right font-weight-bold d-flex justify-content-start">
+                                <div class="col-md-8 text-right font-weight-bold d-flex justify-content-start">
                                     <i class="far fa-2x fa-edit"></i>
                                     &nbsp;
-                                    <span class="align-self-center font-weight-bold">ثبت نام</span>
+                                    <span class="align-self-center">ثبت نام</span>
                                 </div>
 
-                                <div class="col-4">
-                                    <div class="row d-flex justify-content-end ml-2">
-                                        <button class="col-4 btn btn-secondary" @click="$router.push({path: '/login'})">لغو</button>
+                                <div class="col-12 d-flex justify-content-center d-block d-md-none my-2">
+                                    <div class="col-10 dropdown-divider"></div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="row d-flex justify-content-center justify-content-md-end ml-md-3">
+                                        <button class="col-4 btn btn-secondary" @click="$router.push({path: '/login'})">
+                                            لغو
+                                        </button>
                                         <div class="col-1"></div>
                                         <button class="col-4 btn btn-warning" @click="SendData()">ثبت</button>
                                     </div>
@@ -32,18 +38,15 @@
                     </div>
 
 
-                    <div style="margin-top: -175pt" class="row not-clickable">
+                    <div class="row not-clickable d-flex justify-content-center img-user-pic-sign-up">
 
-                        <div class="col-2"></div>
-                        <div class="col-8 d-flex justify-content-center">
+                        <div class="col-12 col-md-8 d-flex justify-content-center">
                             <div id="img_div_holder">
                                 <!-- photo pick button -->
 
                                 <img id="pickPhoto" src='../assets/camera_icon.jpg'
                                      class="img-fluid rounded-circle m-0 border border-white bg-dark clickable"
                                      alt="user pic"
-                                     width="800"
-                                     height="800"
                                      onclick="document.getElementById('userPickPhotoFile').click()">
 
                                 <div id="userPicHolder" class="bg-white rounded-circle shadow-lg p-2">
@@ -58,7 +61,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-2"></div>
 
                     </div>
 
@@ -66,16 +68,16 @@
                     <div class="row mt-4">
                         <div class="col-lg-8">
 
-                            <div class="row mb-5">
+                            <div class="row mb-3 mb-lg-0">
 
-                                <div class="col-6">
+                                <div class="col-md-6">
                                     <input class="col-12 form-control mb-4" type="text" v-model="name"
                                            @input="Change()"
                                            placeholder="نام"/>
 
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-md-6">
 
                                     <input class="col-12 form-control mb-4" type="text" v-model="last_name"
                                            @input="Change()"
@@ -83,7 +85,7 @@
 
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-md-6">
                                     <select class="col-12 form-control mb-4" v-model="city" @change="Change()">
                                         <option value="-1" selected disabled hidden>شهر خود را انتخاب کنید
                                         </option>
@@ -91,7 +93,7 @@
                                     </select>
                                 </div>
 
-                                <div class="col-6">
+                                <div class="col-md-6">
 
                                     <searchable_select class="col-12 mb-4" :options="zones"
                                                        :value="zone"
@@ -109,7 +111,7 @@
                                 </div>
 
                                 <div class="col-12 d-flex justify-content-center">
-                                    <div class="col-4">
+                                    <div class="col-8 col-lg-4">
                                         <input class="form-control text-center" type="text" v-model="invite_code"
                                                placeholder="کد معرف (اختیاری)"/>
                                     </div>
@@ -141,8 +143,8 @@
 
                         </div>
 
-                        <div class="col-lg-4">
-                            <vl-map class="col-12" id="map"
+                        <div class="col-lg-4 px-0">
+                            <vl-map class="col-12 m-0 p-0 shadow shadow-lg border" id="map"
                                     style="height: 300pt;"
                                     :load-tiles-while-animating="true"
                                     :load-tiles-while-interacting="true"
@@ -185,21 +187,25 @@
 
 
         <!-- the modal -->
-        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog" dir="rtl">
+        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title w-100 text-right">پیام تایید</h5>
-                        <button type="button" class="close flex-shrink-1" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    <div class="p-3 border-bottom">
+                        <div class="row">
+                            <div class="col-12  d-flex justify-content-between">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h5 class="modal-title text-right" id="order_info_modal_Title">پیام تایید</h5>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
                         <div class="d-block text-center">
                             <h5>سفارش شما با موفقیت ثبت شد. منتظر تایید سفارش از سوی کارشناسان واش-ماش باشید</h5>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer d-flex justify-content-center">
                         <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
                     </div>
                 </div>
@@ -252,13 +258,15 @@
         computed: {
             zones() {
                 const options = [];
-                this.$userData.cities.forEach(function (option) {
-                    const row = [];
-                    row.key = option;
-                    row.value = option;
 
-                    options.push(row);
-                });
+                if (localStorage.getItem('cities'))
+                    JSON.parse(localStorage.getItem('cities')).forEach(function (option) {
+                        const row = [];
+                        row.key = option;
+                        row.value = option;
+
+                        options.push(row);
+                    });
 
                 return options;
             },
@@ -373,7 +381,9 @@
             },
 
             setImageSrc: function (img) {
-                document.getElementById("userPic_img").src = img;
+                if (img !== null) {
+                    document.getElementById("userPic_img").src = img;
+                }
             },
 
             LoadPic: function () {

@@ -258,7 +258,7 @@
                             <transition name="fade" mode="out-in">
 
                                 <!-- choosing order service -->
-                                <div :key="1" v-if="Stage === 'order_service' && orderServiceAllowed">
+                                <div :key="3" v-if="Stage === 'order_service' && orderServiceAllowed">
 
                                     <div class="row">
                                         <div class="col-12 text-right h3">نوع سرویس سفارش</div>
@@ -313,12 +313,12 @@
 
 
                                 </div>
-                                <div :key="2" v-if="Stage !== 'order_service' || !orderServiceAllowed">
+                                <div :key="4" v-if="Stage !== 'order_service' || !orderServiceAllowed">
 
                                     <transition name="fade" mode="out-in">
 
                                         <!-- choosing extra option -->
-                                        <div :key="1" v-if="Stage === 'extra_option' && extraOptionsAllowed">
+                                        <div :key="5" v-if="Stage === 'extra_option' && extraOptionsAllowed">
                                             <div class="row">
                                                 <div class="col-12 text-right h3">گزینه های اضافی سفارش</div>
                                                 <p class="col-12 text-right text-justify mt-2">&emsp;محصولات مورد نظر و تعداد آن ها را تعیین کنید. سپس برروی «مرحله بعد» کلیک کنید&emsp;</p>
@@ -372,7 +372,7 @@
                                         </div>
 
                                         <!-- final approvement -->
-                                        <div :key="2" v-if="Stage !== 'extra_option' || extraOptionsAllowed">
+                                        <div :key="6" v-if="Stage !== 'extra_option' || extraOptionsAllowed">
 
                                             <transition name="fade" mode="out-in">
                                                 <div class="row">
@@ -508,21 +508,26 @@
 
 
         <!-- the modal -->
-        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog" dir="rtl">
+        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title w-100 text-right">پیام تایید</h5>
-                        <button type="button" class="close flex-shrink-1" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+
+                    <div class="p-3 border-bottom">
+                        <div class="row">
+                            <div class="col-12  d-flex justify-content-between">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h5 class="modal-title text-right" id="order_info_modal_Title">پیام تایید</h5>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
                         <div class="d-block text-center">
                             <h5>سفارش شما با موفقیت ثبت شد. منتظر تایید سفارش از سوی کارشناسان واش-ماش باشید</h5>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer d-flex justify-content-center">
                         <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
                     </div>
                 </div>

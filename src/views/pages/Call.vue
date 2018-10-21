@@ -1,15 +1,16 @@
 <template>
 
     <div class="container">
-        <div class="row h-100 d-flex justify-content-center py-5 align-items-center">
-            <div class="card h-auto shadow shadow-sm col-12 col-lg-8 text-right">
+        <div class="row h-auto d-flex justify-content-center p-2 px-lg-0 py-lg-5">
+            <div class="card h-auto shadow shadow-sm col-12 col-lg-8 p-0 p-md-2 text-right">
 
-                <div class="card-body" dir="rtl">
+                <div class="card-body pt-1 pt-md-2 px-1" dir="rtl">
+                <div class="px-3" dir="rtl">
 
 
                     <div class="row p-3 bg-info text-white rounded shadow-sm d-flex justify-content-between">
-                        <i class="fas fa-2x fa-headset align-self-center"></i>
-                        <div class="col-11 text-right align-self-center text-center text-justify" dir="rtl">
+                        <i class="col-1 fas fa-2x fa-headset align-self-center"></i>
+                        <div class="col-10 col-md-11 text-right align-self-center text-center text-justify" dir="rtl">
                             برای تماس با واش ماش می توانید از راه های زیر اقدام کنید. مرکز پشتیبانی تلفنی از ساعت ۸ الی ۲۰ فعال می باشد
                         </div>
                     </div>
@@ -18,10 +19,10 @@
 
                         <a id="card-phone" style="height: 10%;" v-ripple @click="handleCopy('00982122599005')"
                            data-toggle="popover" data-content="در بریده دان ذخیره شد"
-                           class="col-5 card-code rounded p-3 d-flex justify-content-between align-items-center card-telegram">
+                           class="col-8 col-lg-5 card-code rounded p-3 d-flex justify-content-between align-items-center card-telegram">
 
                             <i class="fas fa-2x fa-phone telegram"></i>
-                            <div class="col-12">
+                            <div class="col-11">
                                 <div class="text-center telegram" dir="ltr">00982122599005</div>
                             </div>
                         </a>
@@ -33,10 +34,10 @@
 
                         <a style="height: 10%;" v-ripple
                            href="mailto:support@washmash.com"
-                           class="col-5 card-code rounded p-3 d-flex justify-content-between align-items-center card-instagram">
+                           class="col-8 col-lg-5 card-code rounded p-3 d-flex justify-content-between align-items-center card-instagram">
 
                             <i class="fas fa-2x fa-envelope instagram"></i>
-                            <div class="col-12">
+                            <div class="col-11">
                                 <div class="text-center instagram" dir="ltr">support@washmash.com</div>
                             </div>
                         </a>
@@ -44,6 +45,7 @@
                     </div>
 
 
+                </div>
                 </div>
 
             </div>

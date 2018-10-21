@@ -1,8 +1,7 @@
 <template>
 
-    <div class="row">
-        <div class="col"></div>
-        <div class="col-8">
+    <div class="row d-flex justify-content-center">
+        <div class="col-10 col-md-8">
 
             <form onsubmit="return false;">
                 <div class="form-group">
@@ -38,7 +37,6 @@
             </form>
 
         </div>
-        <div class="col"></div>
     </div>
 
 </template>

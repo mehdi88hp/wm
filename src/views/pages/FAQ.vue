@@ -2,9 +2,9 @@
 
     <div class="container">
 
-        <div class="row h-auto d-flex justify-content-center py-5">
+        <div class="row h-auto d-flex justify-content-center p-2 px-lg-0 py-lg-5">
 
-            <div class="accordion col-12 col-lg-8" id="accordion" dir="rtl">
+            <div class="accordion col-12 col-lg-8 px-0" id="accordion" dir="rtl">
 
                 <div v-for="(faq, key) in $userData.FAQ" :key="key">
 

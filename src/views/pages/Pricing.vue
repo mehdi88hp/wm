@@ -1,10 +1,10 @@
 <template>
 
     <div class="container">
-        <div class="row h-auto d-flex justify-content-center py-5">
+        <div class="row h-auto d-flex justify-content-center p-2 px-lg-0 py-lg-5">
             <div class="card h-auto shadow shadow-sm col-12 col-lg-8 text-right">
 
-                <div class="card-body" dir="rtl">
+                <div class="card-body p-2" dir="rtl">
 
                     <div class="row">
                         <div class="col">
@@ -43,7 +43,7 @@
                                 <th>قیمت (ریال)</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody style="word-break:break-all;">
                             <tr v-for="(service, key) in services" :key="key">
                                 <td>{{ service.title }}</td>
                                 <td>{{ service.service }}</td>

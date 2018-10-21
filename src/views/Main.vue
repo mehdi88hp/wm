@@ -1,6 +1,6 @@
 <template>
     <div class="vh-100 vw-100 text-right">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light py-0 px-2 shadow-sm sticky-top d-flex justify-content-between" dir="rtl">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-md-0 px-2 shadow-sm sticky-top d-flex justify-content-between" dir="rtl">
 
             <!--<a class="navbar-brand float-right d-lg-none d-xl-none" href="#">واش ماش</a>-->
 

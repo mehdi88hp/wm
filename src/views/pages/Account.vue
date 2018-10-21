@@ -1,8 +1,8 @@
 <template>
 
     <div class="container">
-        <div class="row h-100 d-flex justify-content-center">
-            <div class="card shadow shadow-sm align-self-center col-8">
+        <div class="row h-auto d-flex justify-content-center p-2 p-lg-0">
+            <div style="margin-top: 125pt;" class="card shadow shadow-sm col-12 col-lg-8 mb-2">
                 <div class="card-body" dir="rtl">
 
                     <div style="margin-top: -125pt" class="row d-flex justify-content-center">
@@ -38,22 +38,26 @@
                             <div class="row col-12">
                                 <h1 class="col-12">{{ $userData.name + " " + $userData.last_name }}</h1>
                             </div>
-                            <div class="row col-8 mt-4">
-                                <h5 class="col-6">موجودی اکانت : </h5>
-                                <h5 class="col-6">{{ toMoneyFormat($userData.credit/10) }} تومان</h5>
+                            <div class="row col-12 col-lg-8 mt-4">
+                                <h5 class="col-lg-6">موجودی اکانت : </h5>
+                                <h5 class="col-lg-6">{{ toMoneyFormat($userData.credit/10) }} تومان</h5>
                             </div>
                             <div class="row col-12 mt-4">
                                 <button class="btn btn-outline-danger col m-2" v-on:click="isEditing=!isEditing">ویرایش
                                     حساب
                                 </button>
-                                <button class="btn btn-outline-dark col m-2" @click="$router.push({path: '/dashboard/bills'})">افزایش موجودی</button>
-                                <button class="btn btn-outline-info col m-2" @click="$router.push({path: '/dashboard/addresses'})">آدرس های من</button>
+                                <button class="btn btn-outline-dark col m-2"
+                                        @click="$router.push({path: '/dashboard/bills'})">افزایش موجودی
+                                </button>
+                                <button class="btn btn-outline-info col m-2"
+                                        @click="$router.push({path: '/dashboard/addresses'})">آدرس های من
+                                </button>
                             </div>
                         </div>
 
 
-                        <div v-bind:key="2" v-else class="row text-center d-flex justify-content-center mt-5">
-                            <div class="form-group col-10">
+                        <div v-bind:key="2" v-else class="row text-center d-flex justify-content-center mt-3 mt-md-5">
+                            <div class="form-group col-12 col-md-10 px-0">
 
                                 <transition name="fade" mode="out-in">
                                     <div class="alert alert-danger small text-right like-pre"
@@ -61,14 +65,14 @@
                                     </div>
                                 </transition>
 
-                                <div class="row col-12 align-items-center mt-3">
+                                <div class="row col-12 px-0 align-items-center mt-3">
                                     <label for="name" class="col-4 text-right">نام</label>
                                     <input placeholder="نام خود را وارد کنید" v-model="name" type="text" id="name"
                                            class="form-control col-8 text-info"
                                            v-on:input="Change()"/>
                                 </div>
 
-                                <div class="row col-12 align-items-center mt-3">
+                                <div class="row col-12 px-0 align-items-center mt-3">
                                     <label for="last_name" class="col-4 text-right">نام خانوادگی</label>
                                     <input placeholder="نام خانوادگی خود را وارد کنید (optional)" v-model="last_name"
                                            type="text"
@@ -77,21 +81,21 @@
                                 </div>
 
                                 <!--<div class="row col-12 align-items-center mt-3">-->
-                                    <!--<label for="password" class="col-4 text-right">رمز فعلی</label>-->
-                                    <!--<input placeholder="رمز عبور فعلی خود را وارد کنید" v-model="password"-->
-                                           <!--type="password"-->
-                                           <!--id="password"-->
-                                           <!--class="form-control col-8 text-info"-->
-                                           <!--v-on:input="Change()"/>-->
+                                <!--<label for="password" class="col-4 text-right">رمز فعلی</label>-->
+                                <!--<input placeholder="رمز عبور فعلی خود را وارد کنید" v-model="password"-->
+                                <!--type="password"-->
+                                <!--id="password"-->
+                                <!--class="form-control col-8 text-info"-->
+                                <!--v-on:input="Change()"/>-->
                                 <!--</div>-->
 
                                 <!--<div class="row col-12 align-items-center mt-3">-->
-                                    <!--<label for="password_new" class="col-4 text-right">رمز جدید</label>-->
-                                    <!--<input placeholder="رمز عبور جدید را وارد کنید" v-model="password_new"-->
-                                           <!--type="password"-->
-                                           <!--id="password_new"-->
-                                           <!--class="form-control col-8 text-info"-->
-                                           <!--v-on:input="Change()"/>-->
+                                <!--<label for="password_new" class="col-4 text-right">رمز جدید</label>-->
+                                <!--<input placeholder="رمز عبور جدید را وارد کنید" v-model="password_new"-->
+                                <!--type="password"-->
+                                <!--id="password_new"-->
+                                <!--class="form-control col-8 text-info"-->
+                                <!--v-on:input="Change()"/>-->
                                 <!--</div>-->
 
                                 <transition name="fade" mode="out-in">
@@ -102,12 +106,12 @@
                                     </div>
                                 </transition>
 
-                                <div class="row col-12 align-items-center mt-5 d-flex justify-content-end">
-                                    <div class="row col-6">
-                                        <button class="btn btn-outline-success col m-2" v-on:click="SendData()">ذخیره
+                                <div class="row col-12 align-items-center mt-5 d-flex justify-content-center">
+                                    <div class="row d-flex justify-content-between">
+                                        <button class="btn btn-outline-success mx-2" v-on:click="SendData()">ذخیره
                                             اطلاعات
                                         </button>
-                                        <button class="btn btn-outline-danger col m-2"
+                                        <button class="btn btn-outline-danger mx-2"
                                                 v-on:click="CancelEdit()">لغو
                                         </button>
                                     </div>
@@ -125,21 +129,25 @@
 
 
         <!-- the modal -->
-        <div class="modal" id="not_image_modal" tabindex="-1" role="dialog" dir="rtl">
+        <div class="modal" id="not_image_modal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title w-100 text-right">خطا</h5>
-                        <button type="button" class="close flex-shrink-1" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    <div class="p-3 border-bottom">
+                        <div class="row">
+                            <div class="col-12  d-flex justify-content-between">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                <h5 class="modal-title text-right" id="order_info_modal_Title">خطا</h5>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-body">
                         <div class="d-block text-center">
                             <h5>فایل انتخاب شده تصویر نیست</h5>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer d-flex justify-content-center">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">متوجه شدم</button>
                     </div>
                 </div>
@@ -267,7 +275,7 @@
                                 if (Object.keys(response.data.msg)[0] === 'token') {
 
                                     localStorage.removeItem('data');
-                                    this.$router.push({ path: '/login' });
+                                    this.$router.push({path: '/login'});
 
                                 } else {
                                     console.log(response.data.msg);

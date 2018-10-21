@@ -1,15 +1,17 @@
 <template>
 
     <div class="container">
-        <div class="row h-100 d-flex justify-content-center py-5 align-items-center">
-            <div class="card h-auto shadow shadow-sm col-12 col-lg-8 text-right">
+        <div class="row h-auto d-flex justify-content-center p-2 px-lg-0 py-lg-5">
+            <div class="card h-auto shadow shadow-sm col-12 col-lg-8 p-0 p-md-2 text-right">
 
-                <div class="card-body" dir="rtl">
+                <div class="card-body pt-1 pt-md-2 px-1" dir="rtl">
+
+                <div class="px-3">
 
 
                     <div class="row p-3 bg-info text-white rounded shadow-sm d-flex justify-content-between">
-                        <i class="fas fa-2x fa-stream align-self-center"></i>
-                        <div class="col-11 text-right align-self-center text-right text-justify" dir="rtl">
+                        <i class="col-1 fas fa-2x fa-stream align-self-center"></i>
+                        <div class="col-10 col-md-11 text-right align-self-center text-right text-justify" dir="rtl">
                             واش ماش را در شبکه های اجتماعی محبوب دنبال کنید
                         </div>
                     </div>
@@ -17,7 +19,7 @@
                     <div class="row mt-5 d-flex justify-content-center">
 
                         <a style="height: 10%;" v-ripple href="https://t.me/WASHMASHAPP"
-                           class="col-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-telegram">
+                           class="col-10 col-lg-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-telegram">
 
                             <i class="fab fa-2x fa-telegram telegram"></i>
                             <div class="col-12">
@@ -31,7 +33,7 @@
 
 
                         <a style="height: 10%;" v-ripple href="http://www.instagram.com/WASHMASHAPP"
-                           class="col-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-instagram">
+                           class="col-10 col-lg-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-instagram">
 
                             <i class="fab fa-2x fa-instagram instagram"></i>
                             <div class="col-12">
@@ -44,7 +46,7 @@
                     <div class="row mt-4 d-flex justify-content-center">
 
                         <a style="height: 10%;" v-ripple href="http://www.facebook.com/WASHMASHAPP"
-                           class="col-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-facebook">
+                           class="col-10 col-lg-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-facebook">
 
                             <i class="fab fa-2x fa-facebook facebook"></i>
                             <div class="col-12">
@@ -57,7 +59,7 @@
                     <div class="row mt-4 mb-5 d-flex justify-content-center">
 
                         <a style="height: 10%;" v-ripple href="https://twitter.com/WASHMASHAPP"
-                           class="col-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-twitter">
+                           class="col-10 col-lg-4 card-code rounded p-3 d-flex justify-content-between align-items-center card-twitter">
 
                             <i class="fab fa-2x fa-twitter twitter"></i>
                             <div class="col-12">
@@ -68,6 +70,7 @@
                     </div>
 
 
+                </div>
                 </div>
 
             </div>

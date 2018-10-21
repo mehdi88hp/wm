@@ -55,8 +55,8 @@
 
 <style>
 
-    @import "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css";
-    /*@import '../public/css/bootstrap.min.css';*/
+    /*@import "https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css";*/
+    @import '../public/css/bootstrap.min.css';
     @import '../public/css/style.css';
     @import '../public/fontAwesome/css/all.css';
 
