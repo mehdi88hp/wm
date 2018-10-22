@@ -154,9 +154,9 @@
                     })
                     .then(
                         (response) => {
-                            console.log(response);
+                            // console.log(response);
                             this.$parent.isProgressActive = false;
-                            console.log(response.data);
+                            // console.log(response.data);
                             if (parseInt(response.data.code) === 1) {
 
                                 // todo Handle to SingUp Page if user in new
@@ -211,7 +211,7 @@
                     })
                     .then(
                         (response) => {
-                            console.log(response);
+                            // console.log(response);
                             this.$parent.isProgressActive = false;
                             if (parseInt(response.data.code) === 1) {
 

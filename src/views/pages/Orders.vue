@@ -1,7 +1,7 @@
 <template>
 
     <div class="container">
-        <div v-if="!orders.length" class="row h-100 d-flex justify-content-center">
+        <div v-if="!Array.isArray(this.orders) || !this.orders.length" class="row h-100 d-flex justify-content-center">
             <div class="col-md-8 text-center align-self-center">
                 <h1>شما تاکنون هیچ سفارشی ثبت نکرده اید</h1>
                 <button v-on:click="$router.push({ path: '/dashboard/new-order' })" class="btn btn-info btn-lg mt-5">
@@ -10,7 +10,7 @@
 
         </div>
 
-        <div v-if="orders.length" class="row h-auto p-2 px-lg-0 py-lg-5" dir="rtl">
+        <div v-if="Array.isArray(this.orders) && this.orders.length" class="row h-auto p-2 px-lg-0 py-lg-5" dir="rtl">
 
             <div class="col-lg-6 p-2" v-for="(order, index) in orders" v-bind:key="index">
                 <div class="card shadow shadow-sm card-hover-blue"
@@ -167,7 +167,8 @@
                             <!--<h5 class="col-12 text-center">فاکتورها</h5>-->
 
                             <table id="order_info_modal_table"
-                                   class="table table-borderless table-hover align-self-center mt-2 mx-1" dir="rtl">
+                                   class="table table-striped table-hover" style="table-layout:fixed; width:100%;"
+                                   dir="rtl">
                                 <thead>
                                 <tr class="bg-dark text-white">
                                     <th>#</th>
@@ -185,7 +186,7 @@
                                     <td>{{ factor['title'] }}</td>
                                     <td>{{ factor['service'] }}</td>
                                     <td style="word-break:keep-all;">{{ toMoneyFormat(factor['price']) }}</td>
-                                    <td>{{ factor['number'] }}</td>
+                                    <td>{{ toMoneyFormat(factor['number']) }}</td>
                                     <td style="word-break:keep-all;">{{ toMoneyFormat(factor['total']) }}</td>
                                 </tr>
                                 </tbody>
@@ -373,7 +374,7 @@
                                     this.$router.push({path: '/login'});
 
                                 } else {
-                                    console.log(response.data.msg);
+                                    // console.log(response.data.msg);
                                     this.Error = '';
                                     const THIS = this;
                                     Object.values(response.data.msg).forEach(function (error_message) {
@@ -411,9 +412,11 @@
         beforeMount: function () {
 
             this.orders = this.$userData['orders'];
-            this.orders.sort(function (a, b) {
-                return b.number_order - a.number_order;
-            });
+            if (Array.isArray(this.orders) && this.orders.length) {
+                this.orders.sort(function (a, b) {
+                    return b.number_order - a.number_order;
+                });
+            }
 
 
         }

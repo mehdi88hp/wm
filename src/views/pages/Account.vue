@@ -233,7 +233,7 @@
                 // formData.append('password', this.password);
                 // formData.append('new_password', this.password_new);
                 if (this.newPicFile) {
-                    console.log(this.newPicFile);
+                    // console.log(this.newPicFile);
                     formData.append('pic', this.newPicFile);
                 }
 
@@ -250,7 +250,7 @@
                     .then(
                         (response) => {
                             this.isProgressActive = false;
-                            console.log(response.data);
+                            // console.log(response.data);
                             if (parseInt(response.data.code) === 1) {
                                 const new_data = this.$userData;
                                 new_data.name = this.name;
@@ -278,7 +278,7 @@
                                     this.$router.push({path: '/login'});
 
                                 } else {
-                                    console.log(response.data.msg);
+                                    // console.log(response.data.msg);
                                     this.Error = '';
                                     const THIS = this;
                                     Object.values(response.data.msg).forEach(function (error_message) {
@@ -314,11 +314,15 @@
             },
 
             LoadPic: function () {
-                if (this.$userData.image) {
-                    this.setImageSrc(this.$userData.image);
-                } else {
-                    this.setImageSrc(require('../../assets/userPic.png'));
-                }
+                this.setImageSrc(require('../../assets/userPic.png'));
+                const THIS = this;
+                const pic = this.$userData.image;
+                this.imageExists(pic, function (exists) {
+                    if (exists) {
+                        THIS.setImageSrc(pic);
+                    }
+                });
+
             },
 
             HandleNewPic: function () {
@@ -345,6 +349,17 @@
                 };
 
                 reader.readAsDataURL(selectedFile);
+            },
+
+            imageExists: function (url, callback) {
+                const img = new Image();
+                img.onload = function () {
+                    callback(true);
+                };
+                img.onerror = function () {
+                    callback(false);
+                };
+                img.src = url;
             },
 
             countWords: function (str) {

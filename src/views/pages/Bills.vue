@@ -46,7 +46,8 @@
                                 </div>
                             </div>
 
-                            <div v-if="bills.length" class="row border border-success rounded mb-2 p-3 d-flex justify-content-center card-cash-info"
+                            <div v-if="Array.isArray(this.bills) && this.bills.length"
+                                 class="row border border-success rounded mb-2 p-3 d-flex justify-content-center card-cash-info"
                                  v-for="(credit, key) in bills"
                                  :key="key">
 
@@ -61,7 +62,9 @@
                                 </div>
                             </div>
 
-                            <div v-if="!bills.length" class="h5 col-12 text-info mt-4 text-center">شما هیچ صورتحسابی ندارید !</div>
+                            <div v-if="!Array.isArray(this.bills) || !this.bills.length"
+                                 class="h5 col-12 text-info mt-4 text-center">شما هیچ صورتحسابی ندارید !
+                            </div>
 
                         </div>
 
@@ -211,9 +214,12 @@
         },
         beforeMount: function () {
             this.bills = this.$userData.credits_user;
-            this.bills.sort(function (a, b) {
-                return b.id - a.id;
-            });
+
+            if (Array.isArray(this.bills) && this.bills.length) {
+                this.bills.sort(function (a, b) {
+                    return b.id - a.id;
+                });
+            }
         },
         mounted: function () {
         },

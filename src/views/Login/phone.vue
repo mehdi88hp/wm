@@ -109,7 +109,7 @@
                     })
                     .then(
                         (response) => {
-                            console.log(response);
+                            // console.log(response);
                             this.$parent.isProgressActive = false;
                             if (parseInt(response.data.code) === 1) {
 

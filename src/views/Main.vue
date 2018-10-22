@@ -1,13 +1,14 @@
 <template>
     <div class="vh-100 vw-100 text-right">
-        <nav id="navBar" class="navbar navbar-expand-lg navbar-light bg-light py-md-0 px-2 shadow-sm sticky-top d-flex justify-content-between"
+        <nav id="navBar"
+             class="navbar navbar-expand-lg navbar-light bg-light py-md-0 px-2 shadow-sm sticky-top d-flex justify-content-between"
              dir="rtl">
 
             <!--<a class="navbar-brand float-right d-lg-none d-xl-none" href="#">واش ماش</a>-->
 
             <div class="dropdown openDropDown">
                 <div id="dropBtn" v-on:click="ShowDropdown()"
-                        class="dropBtn openDropDown row align-items-center mr-0 nav-items-height clickable">
+                     class="dropBtn openDropDown row align-items-center mr-0 nav-items-height clickable">
                     <img id="userPic" v-bind:src="userPic"
                          class="rounded-circle bg-dark openDropDown float-right not-clickable user-pic-Main" height="40"
                          width="40"/>
@@ -99,12 +100,13 @@
             <!--</div>-->
         </nav>
 
-
-        <transition name="fade" mode="out-in">
-            <!--<keep-alive>-->
-            <router-view id="main_router_view"/>
-            <!--</keep-alive>-->
-        </transition>
+        <div class="vw-100" style="overflow: hidden; overflow-y: auto;">
+            <transition name="fade" mode="out-in">
+                <!--<keep-alive>-->
+                <router-view id="main_router_view"/>
+                <!--</keep-alive>-->
+            </transition>
+        </div>
 
     </div>
 </template>
@@ -128,18 +130,6 @@
         },
 
         methods: {
-
-            CalculateHeight: function () {
-                this.$nextTick(function () {
-
-                    const windowHeight = $(window).height();
-                    const navHeight = $('#navBar').height();
-
-                    $('#router-view').height(windowHeight - navHeight);
-
-                });
-
-            },
 
             ShowDropdown: function () {
                 const before = this.dropDown_opened;
@@ -182,7 +172,20 @@
                 localStorage.removeItem('data');
                 localStorage.setItem('logging-out', 'true');
                 this.$router.push({path: '/login'});
-            }
+            },
+
+
+            imageExists: function (url, callback) {
+                const img = new Image();
+                img.onload = function () {
+                    callback(true);
+                };
+                img.onerror = function () {
+                    callback(false);
+                };
+                img.src = url;
+            },
+
         },
 
         beforeMount() {
@@ -191,15 +194,19 @@
                 this.$router.push({path: '/dashboard/new-order'});
             }
 
-            if (this.$userData['image']) {
-                this.userPic = this.$userData['image'];
-            } else {
-                this.userPic = require('../assets/userPic.png');
-            }
+
+            this.userPic = require('../assets/userPic.png');
+            const THIS = this;
+            const pic = this.$userData.image;
+            this.imageExists(pic, function (exists) {
+                if (exists) {
+                    THIS.userPic = pic;
+                }
+            });
+
 
         },
         created() {
-            // this.CalculateHeight();
             document.addEventListener('click', this.documentClick);
         },
         destroyed() {

@@ -37,6 +37,25 @@
 
                     </div>
 
+                    <div class="row">
+                        <div class="col-12 mt-3">
+                            <transition name="fade" mode="out-in">
+                                <div v-if="isProgressActive && isMobile" class="progress col-12 mb-3">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                         role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                                         aria-valuemax="100"
+                                         style="width: 100%"></div>
+                                </div>
+                            </transition>
+
+                            <transition name="fade" mode="out-in">
+                                <div class="col-12 alert alert-danger small text-right like-pre mb-3"
+                                     v-if="!isHiddenError && isMobile">{{ Error }}
+                                </div>
+                            </transition>
+                        </div>
+                    </div>
+
 
                     <div class="row not-clickable d-flex justify-content-center img-user-pic-sign-up">
 
@@ -69,6 +88,24 @@
                         <div class="col-lg-8">
 
                             <div class="row mb-3 mb-lg-0">
+
+
+                                <div class="col-12">
+                                    <transition name="fade" mode="out-in">
+                                        <div v-if="isProgressActive && !isMobile" class="progress col-12 mb-3">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                                 role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                                                 aria-valuemax="100"
+                                                 style="width: 100%"></div>
+                                        </div>
+                                    </transition>
+
+                                    <transition name="fade" mode="out-in">
+                                        <div class="col-12 alert alert-danger small text-right like-pre mb-3"
+                                             v-if="!isHiddenError && !isMobile">{{ Error }}
+                                        </div>
+                                    </transition>
+                                </div>
 
                                 <div class="col-md-6">
                                     <input class="col-12 form-control mb-4" type="text" v-model="name"
@@ -122,21 +159,6 @@
                                         قوانین و مقررات را خوانده ام و می پذیرم
                                     </button>
                                 </div>
-
-                                <transition name="fade" mode="out-in">
-                                    <div v-if="isProgressActive" class="progress col-12 mt-3">
-                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-                                             role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                             aria-valuemax="100"
-                                             style="width: 100%"></div>
-                                    </div>
-                                </transition>
-
-                                <transition name="fade" mode="out-in">
-                                    <div class="col-12 alert alert-danger small text-right like-pre mt-3"
-                                         v-if="!isHiddenError">{{ Error }}
-                                    </div>
-                                </transition>
 
                             </div>
 
@@ -249,6 +271,8 @@
 
                 isProgressActive: false,
 
+                isMobile: false,
+
                 isHiddenError: true,
                 Error: '',
 
@@ -340,7 +364,7 @@
                     .then(
                         (response) => {
                             this.isProgressActive = false;
-                            console.log(response.data);
+                            // console.log(response.data);
                             if (parseInt(response.data.code) === 1) {
 
                                 // request to refresh data
@@ -356,7 +380,7 @@
                                     this.$router.push({path: '/login'});
 
                                 } else {
-                                    console.log(response.data.msg);
+                                    // console.log(response.data.msg);
                                     this.Error = '';
                                     const THIS = this;
                                     Object.values(response.data.msg).forEach(function (error_message) {
@@ -448,9 +472,14 @@
                 this.$router.push({path: '/login'});
 
             }
+
+            this.isMobile = (screen.width <= 992);
+            console.log(screen.width);
+            console.log(this.isMobile);
         },
         mounted: function () {
             this.LoadPic();
+
         },
         created: function () {
 

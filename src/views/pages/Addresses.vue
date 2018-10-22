@@ -90,25 +90,8 @@
                                 <div class="col-md-6 px-2">
                                     <div class="container">
 
-                                            <select class="col-12 form-control mb-4" v-model="city" @change="Change()">
-                                                <option value="-1" selected disabled hidden>شهر خود را انتخاب کنید
-                                                </option>
-                                                <option value="تهران">تهران</option>
-                                            </select>
-
-                                            <searchable_select class="col-12 mb-4" :options="zones"
-                                                               :value="zone"
-                                                               :title="'محله خود را انتخاب کنید'"
-                                                               v-on:choose="zone = $event"/>
-
-                                            <textarea class="col-12 form-control mb-4"
-                                                      style="height: 50pt; min-height: 50pt; max-height: 50pt;"
-                                                      v-model="address"
-                                                      placeholder="آدرس را وارد کنید"
-                                                      @input="Change()"></textarea>
-
                                         <transition name="fade" mode="out-in">
-                                            <div v-if="isProgressActive" class="progress">
+                                            <div v-if="isProgressActive" class="progress mb-3">
                                                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
                                                      role="progressbar" aria-valuenow="75" aria-valuemin="0"
                                                      aria-valuemax="100"
@@ -117,10 +100,30 @@
                                         </transition>
 
                                         <transition name="fade" mode="out-in">
-                                            <div class="alert alert-danger small text-right like-pre"
+                                            <div class="alert alert-danger small text-right like-pre mb-3"
                                                  v-if="!isHiddenError">{{ Error }}
                                             </div>
                                         </transition>
+
+
+                                        <select class="col-12 form-control mb-4" v-model="city" @change="Change()">
+                                            <option value="-1" selected disabled hidden>شهر خود را انتخاب کنید
+                                            </option>
+                                            <option value="تهران">تهران</option>
+                                        </select>
+
+                                        <searchable_select class="col-12 mb-4" :options="zones"
+                                                           :value="zone"
+                                                           :title="'محله خود را انتخاب کنید'"
+                                                           v-on:choose="zone = $event"/>
+
+                                        <textarea class="col-12 form-control mb-4"
+                                                  style="height: 50pt; min-height: 50pt; max-height: 50pt;"
+                                                  v-model="address"
+                                                  placeholder="آدرس را وارد کنید"
+                                                  @input="Change()"></textarea>
+
+
                                     </div>
                                 </div>
 
@@ -358,7 +361,7 @@
                     })
                     .then(
                         (response) => {
-                            console.log(response.data);
+                            // console.log(response.data);
                             if (parseInt(response.data.code) === 1) {
 
                                 // request to refresh data
@@ -376,7 +379,7 @@
                                     this.$router.push({path: '/login'});
 
                                 } else {
-                                    console.log(response.data.msg);
+                                    // console.log(response.data.msg);
                                     this.Error = '';
                                     const THIS = this;
                                     Object.values(response.data.msg).forEach(function (error_message) {

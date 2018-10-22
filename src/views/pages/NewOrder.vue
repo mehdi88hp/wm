@@ -640,7 +640,7 @@
                         }, (error) => {
                             this.hasValidCoupon = false;
                             this.isProgressActiveCoupon = true;
-                            console.log(error)
+                            // console.log(error)
                         }
                     );
 
@@ -707,7 +707,7 @@
                                 }
                             }, (error) => {
                                 this.isProgressActive = true;
-                                console.log(error)
+                                // console.log(error)
                             }
                         );
 
@@ -937,7 +937,7 @@
                                     this.$router.push({path: '/login'});
 
                                 } else {
-                                    console.log(response.data.msg);
+                                    // console.log(response.data.msg);
                                     this.Error = '';
                                     const THIS = this;
                                     Object.values(response.data.msg).forEach(function (error_message) {
@@ -1071,11 +1071,11 @@
         -webkit-transition:.5s;
         transition:.5s;
     }
-    .order-detail-row:hover {
-        color: white;
-        background-color: red;
-        transform: scale(1.01, 1.07);
-    }
+    /*.order-detail-row:hover {*/
+        /*color: white;*/
+        /*background-color: red;*/
+        /*transform: scale(1.01, 1.07);*/
+    /*}*/
 
 
 

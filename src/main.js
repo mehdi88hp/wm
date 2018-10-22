@@ -22,8 +22,8 @@ import 'bootstrap'
 
 // DEFINING GLOBAL VARIABLES AND FUNCTIONS
 
-// Vue.prototype.$ApiBaseUrl = 'http://www.washmash.com/washmash_test/public';
-Vue.prototype.$ApiBaseUrl = 'http://127.0.0.1:8000';
+Vue.prototype.$ApiBaseUrl = 'http://www.washmash.com/washmash_test/public';
+// Vue.prototype.$ApiBaseUrl = 'http://127.0.0.1:8000';
 
 Vue.prototype.$userData = '';
 Vue.prototype.$TOKEN = '';
@@ -48,7 +48,7 @@ Vue.prototype.$initData = function (callBack) {
         .then(
             (response) => {
                 if (parseInt(response.data.code) === 1) {
-                    console.log(response.data);
+                    // console.log(response.data);
                     Vue.prototype.$userData = response.data;
                     localStorage.setItem('data', JSON.stringify(response.data));
                     callBack(response.data);
