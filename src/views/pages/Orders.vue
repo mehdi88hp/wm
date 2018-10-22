@@ -167,7 +167,7 @@
                             <!--<h5 class="col-12 text-center">فاکتورها</h5>-->
 
                             <table id="order_info_modal_table"
-                                   class="table table-borderless table-hover align-self-center mt-2" dir="rtl">
+                                   class="table table-borderless table-hover align-self-center mt-2 mx-1" dir="rtl">
                                 <thead>
                                 <tr class="bg-dark text-white">
                                     <th>#</th>
@@ -184,9 +184,9 @@
                                     <td>{{ index+1 }}</td>
                                     <td>{{ factor['title'] }}</td>
                                     <td>{{ factor['service'] }}</td>
-                                    <td>{{ factor['price'] }}</td>
+                                    <td style="word-break:keep-all;">{{ toMoneyFormat(factor['price']) }}</td>
                                     <td>{{ factor['number'] }}</td>
-                                    <td>{{ factor['total'] }}</td>
+                                    <td style="word-break:keep-all;">{{ toMoneyFormat(factor['total']) }}</td>
                                 </tr>
                                 </tbody>
                             </table>

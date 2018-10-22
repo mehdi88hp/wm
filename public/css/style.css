@@ -24,6 +24,15 @@ body {
     font-style: normal;
 }
 
+
+* {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 input, input:before, input:after {
     -webkit-user-select: initial;
     -khtml-user-select: initial;
@@ -31,6 +40,17 @@ input, input:before, input:after {
     -ms-user-select: initial;
     user-select: initial;
 }
+
+
+textarea, textarea:before, textarea:after {
+    -webkit-user-select: initial;
+    -khtml-user-select: initial;
+    -moz-user-select: initial;
+    -ms-user-select: initial;
+    user-select: initial;
+}
+
+
 
 *:focus {
     outline: 0;
@@ -99,11 +119,37 @@ input, input:before, input:after {
 }
 
 
+@media(min-width:0px){
+    /*xs*/
+    .user-pic-Main {
+        margin-top: -5px;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 15px;
+        font-size: 15px;
+        text-decoration: none;
+        display: block;
+    }
+}
 @media(min-width:576px){
     /*sm*/
+
 }
 @media(min-width:768px){
     /*md*/
+    .user-pic-Main {
+        margin-top: 0;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 10px;
+        font-size: 12px;
+        text-decoration: none;
+        display: block;
+    }
 }
 @media(min-width:992px){
     /*lg*/
@@ -152,15 +198,6 @@ a:hover {
     cursor: pointer;
 }
 
-
-.dropdown-content a {
-    color: black;
-    padding: 10px;
-    font-size: 12px;
-    text-decoration: none;
-    display: block;
-}
-
 .dropdown-content a:hover {
     cursor: pointer;
 }
@@ -185,7 +222,7 @@ a:hover {
     }
 
     .dropBtn:hover {
-        background-color: #a8a8a8;
+        /*background-color: #a8a8a8;*/
     }
 }
 

@@ -190,6 +190,8 @@
 
             RequestActivationCode: function () {
 
+                this.isCodeHiddenError = true;
+
                 this.isCodeButtonActive = false;
                 this.$parent.isProgressActive = true;
 

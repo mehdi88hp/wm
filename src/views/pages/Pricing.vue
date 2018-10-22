@@ -48,7 +48,7 @@
                                 <td>{{ service.title }}</td>
                                 <td>{{ service.service }}</td>
                                 <td>{{ service.gender }}</td>
-                                <td>{{ toMoneyFormat(service.price) }}</td>
+                                <td style="word-break:keep-all;">{{ toMoneyFormat(service.price) }}</td>
                             </tr>
                             </tbody>
                         </table>

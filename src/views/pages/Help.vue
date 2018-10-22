@@ -4,7 +4,7 @@
 
         <div class="row h-100 d-flex justify-content-center p-2 px-lg-0 py-lg-5">
 
-            <div id="carouselIndicators" class="carousel slide align-self-center w-100 h-100 shadow-lg" data-ride="carousel">
+            <div id="carouselIndicators" class="carousel slide align-self-center w-auto h-100 shadow-lg" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselIndicators" data-slide-to="1"></li>
@@ -12,56 +12,32 @@
                     <li data-target="#carouselIndicators" data-slide-to="3"></li>
                 </ol>
                 <div class="carousel-inner h-100">
-                    <div class="carousel-item active w-100 h-100">
-                        <div class="row">
-                            <div class="col"></div>
-                            <img class="col d-none rounded-circle"
-                                 src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/PZSxGIZ/cinematic-bg-3-loopable-background_nl6buhlfg__F0000.png"
-                                 alt="Third slide">
-                            <div class="col"></div>
-                        </div>
-                        <div class="carousel-caption">
-                            <h3 class="mb-3">واش ماش</h3>
-                            <p class="text-justify text-center mb-5" dir="rtl">بعد از نصب برنامه واش ماش و عضویت در آن می توانید سفارش خود را ثبت کنید. در این مرحله مشخصات سفارش را وارد می کنید.</p>
+                    <div class="carousel-item active w-auto h-100">
+                        <div class="w-auto h-100 px-0">
+                            <img class="img-fluid h-100 w-auto" width="600" height="1024"
+                                 src="../../assets/help1.jpg"
+                                 alt="First slide">
                         </div>
                     </div>
-                    <div class="carousel-item w-100 h-100">
-                        <div class="row">
-                            <div class="col"></div>
-                            <img class="col d-none rounded-circle"
-                                 src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/PZSxGIZ/cinematic-bg-3-loopable-background_nl6buhlfg__F0000.png"
-                                 alt="Third slide">
-                            <div class="col"></div>
-                        </div>
-                        <div class="carousel-caption">
-                            <h3 class="mb-3">جمع آوری ها</h3>
-                            <p class="text-justify text-center mb-5" dir="rtl">واش ماشی ها در روز و ساعتی که مشخص کرده اید به درب منزل و یا محل کار شما می آیند و کیسه مخصوص واش ماش حاوی البسه و سایر را از شما دریافت می کنند.</p>
+                    <div class="carousel-item w-auto h-100">
+                        <div class="w-auto h-100 px-0">
+                            <img class="img-fluid h-100 w-auto" width="600" height="1024"
+                                 src="../../assets/help2.jpg"
+                                 alt="Second slide">
                         </div>
                     </div>
-                    <div class="carousel-item w-100 h-100">
-                        <div class="row">
-                            <div class="col"></div>
-                            <img class="col d-none rounded-circle align-self-center"
-                                 src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/PZSxGIZ/cinematic-bg-3-loopable-background_nl6buhlfg__F0000.png"
+                    <div class="carousel-item w-auto h-100">
+                        <div class="w-auto h-100 px-0">
+                            <img class="img-fluid h-100 w-auto" width="600" height="1024"
+                                 src="../../assets/help3.jpg"
                                  alt="Third slide">
-                            <div class="col"></div>
-                        </div>
-                        <div class="carousel-caption">
-                            <h3 class="mb-3">شستشو از ما</h3>
-                            <p class="text-justify text-center mb-5" dir="rtl">خدمات درخواستی روی البسه و سایر طبق دستورالعمل مشخصه روی هر یک از آن ها با دقت و کیفیت بالا توسط پیشرفته ترین دستگاه های روز دنیا و مرغوبترین مواد شوینده انجام می شود.</p>
                         </div>
                     </div>
-                    <div class="carousel-item w-100 h-100">
-                        <div class="row">
-                            <div class="col"></div>
-                            <img class="col d-none rounded-circle align-self-center"
-                                 src="https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/PZSxGIZ/cinematic-bg-3-loopable-background_nl6buhlfg__F0000.png"
-                                 alt="Third slide">
-                            <div class="col"></div>
-                        </div>
-                        <div class="carousel-caption">
-                            <h3 class="mb-3">تحویل رایگان ما</h3>
-                            <p class="text-justify text-center mb-5" dir="rtl">واش ماشی ها در روز و ساعتی که مشخص کرده اید به درس منزل و یا محل کار شما می آیند و البسه و سایر شسته و آماده را تحویل شما می دهند. شما می توانید هزینه را بصورت نقدی، توسط دستگاه pos، آنلاین و یا از طریق حساب مجازی خود در واش ماش پرداخت نمایید.</p>
+                    <div class="carousel-item w-auto h-100">
+                        <div class="w-auto h-100 px-0">
+                            <img class="img-fluid h-100 w-auto" width="600" height="1024"
+                                 src="../../assets/help4.jpg"
+                                 alt="Forth slide">
                         </div>
                     </div>
                 </div>

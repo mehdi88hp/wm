@@ -1,18 +1,20 @@
 <template>
     <div class="vh-100 vw-100 text-right">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light py-md-0 px-2 shadow-sm sticky-top d-flex justify-content-between" dir="rtl">
+        <nav id="navBar" class="navbar navbar-expand-lg navbar-light bg-light py-md-0 px-2 shadow-sm sticky-top d-flex justify-content-between"
+             dir="rtl">
 
             <!--<a class="navbar-brand float-right d-lg-none d-xl-none" href="#">واش ماش</a>-->
 
             <div class="dropdown openDropDown">
                 <button id="dropBtn" v-on:click="ShowDropdown()"
-                        class="dropBtn openDropDown row align-items-center mr-0 nav-items-height">
+                        class="dropBtn openDropDown row align-items-center mr-0 nav-items-height clickable">
                     <img id="userPic" v-bind:src="userPic"
-                         class="rounded-circle bg-dark openDropDown float-right" height="40" width="40"/>
-                    <div id="menu" class="float-left align-items-center mr-3">
-                        <div class="bar bar1"></div>
-                        <div class="bar bar2"></div>
-                        <div class="bar bar3"></div>
+                         class="rounded-circle bg-dark openDropDown float-right not-clickable user-pic-Main" height="40"
+                         width="40"/>
+                    <div id="menu" class="float-left align-items-center mr-3 not-clickable">
+                        <div class="bar bar1 not-clickable"></div>
+                        <div class="bar bar2 not-clickable"></div>
+                        <div class="bar bar3 not-clickable"></div>
                     </div>
                 </button>
                 <transition name="fade">
@@ -65,42 +67,42 @@
             </div>
 
             <button v-on:click="$router.push({ path: '/dashboard/new-order' })"
-                    class="btn btn-info align-self-center ml-3">
+                    class="btn btn-sm btn-info align-self-center ml-3">
                 <i class="fas fa-plus"></i>&nbsp;&nbsp;<span>سفارش جدید</span></button>
 
 
             <!--<button class="navbar-toggler float-right ml-3" type="button" data-toggle="collapse"-->
-                    <!--data-target="#navbarSupportedContent"-->
-                    <!--aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">-->
-                <!--<span class="navbar-toggler-icon"></span>-->
+            <!--data-target="#navbarSupportedContent"-->
+            <!--aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">-->
+            <!--<span class="navbar-toggler-icon"></span>-->
             <!--</button>-->
 
             <!--<div class="navbar-collapse collapse text-right" id="navbarSupportedContent">-->
-                <!--<ul class="navbar-nav mr-auto">-->
-                    <!--<li class="nav-item active row align-items-center mx-1">-->
-                        <!--&lt;!&ndash; for lg and xl &ndash;&gt;-->
-                        <!--<button v-on:click="$router.push({ path: '/dashboard/orders' })"-->
-                                <!--class="btn btn-light btn-sm mb-3 mb-lg-0 mb-xl-0 d-none d-lg-block">-->
-                            <!--<span>سفارشات من</span></button>-->
+            <!--<ul class="navbar-nav mr-auto">-->
+            <!--<li class="nav-item active row align-items-center mx-1">-->
+            <!--&lt;!&ndash; for lg and xl &ndash;&gt;-->
+            <!--<button v-on:click="$router.push({ path: '/dashboard/orders' })"-->
+            <!--class="btn btn-light btn-sm mb-3 mb-lg-0 mb-xl-0 d-none d-lg-block">-->
+            <!--<span>سفارشات من</span></button>-->
 
-                        <!--&lt;!&ndash; for sm and md &ndash;&gt;-->
-                        <!--<a class="nav-link d-lg-none" v-on:click="$router.push({ path: '/dashboard/orders' })">-->
-                            <!--<div class="">سفارشات من</div>-->
-                        <!--</a>-->
-                    <!--</li>-->
-                    <!--<li class="nav-item row align-items-center mx-1">-->
-                        <!--<button v-on:click="$router.push({ path: '/dashboard/new-order' })"-->
-                                <!--class="btn btn-info btn-sm mb-3 mb-lg-0 mb-xl-0">-->
-                            <!--<i class="fas fa-plus"></i>&nbsp;&nbsp;<span>سفارش جدید</span></button>-->
-                    <!--</li>-->
-                <!--</ul>-->
+            <!--&lt;!&ndash; for sm and md &ndash;&gt;-->
+            <!--<a class="nav-link d-lg-none" v-on:click="$router.push({ path: '/dashboard/orders' })">-->
+            <!--<div class="">سفارشات من</div>-->
+            <!--</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item row align-items-center mx-1">-->
+            <!--<button v-on:click="$router.push({ path: '/dashboard/new-order' })"-->
+            <!--class="btn btn-info btn-sm mb-3 mb-lg-0 mb-xl-0">-->
+            <!--<i class="fas fa-plus"></i>&nbsp;&nbsp;<span>سفارش جدید</span></button>-->
+            <!--</li>-->
+            <!--</ul>-->
             <!--</div>-->
         </nav>
 
 
         <transition name="fade" mode="out-in">
             <!--<keep-alive>-->
-                <router-view style="height: 94vh;"/>
+            <router-view id="router-view" style="height: 94vh;"/>
             <!--</keep-alive>-->
         </transition>
 
@@ -126,6 +128,18 @@
         },
 
         methods: {
+
+            CalculateHeight: function () {
+                this.$nextTick(function () {
+
+                    const windowHeight = $(window).height();
+                    const navHeight = $('#navBar').height();
+
+                    $('#router-view').height(windowHeight - navHeight);
+
+                });
+
+            },
 
             ShowDropdown: function () {
                 const before = this.dropDown_opened;
@@ -185,6 +199,7 @@
 
         },
         created() {
+            // this.CalculateHeight();
             document.addEventListener('click', this.documentClick);
         },
         destroyed() {
