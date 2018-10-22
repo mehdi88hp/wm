@@ -3,7 +3,7 @@
     <div class="vw-100 vh-100 bg">
 
         <div class="container">
-            <div class="row vh-100 d-flex justify-content-center align-items-start align-items-md-center p-2 p-lg-0">
+            <div class="row vh-100 d-flex justify-content-center align-items-center p-2 p-lg-0">
                 <div class="col-lg-6 shadow p-3 mb-5 bg-white rounded">
                     <!-- the logo -->
                     <div class="row d-flex justify-content-center">

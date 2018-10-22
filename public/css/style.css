@@ -33,16 +33,7 @@ body {
     user-select: none;
 }
 
-input, input:before, input:after {
-    -webkit-user-select: initial;
-    -khtml-user-select: initial;
-    -moz-user-select: initial;
-    -ms-user-select: initial;
-    user-select: initial;
-}
-
-
-textarea, textarea:before, textarea:after {
+input, textarea {
     -webkit-user-select: initial;
     -khtml-user-select: initial;
     -moz-user-select: initial;
@@ -122,15 +113,24 @@ textarea, textarea:before, textarea:after {
 @media(min-width:0px){
     /*xs*/
     .user-pic-Main {
-        margin-top: -5px;
+        /*margin-top: -5px;*/
+        margin-top: 0;
     }
 
     .dropdown-content a {
         color: black;
-        padding: 15px;
+        padding: 10px;
         font-size: 15px;
         text-decoration: none;
         display: block;
+    }
+
+    #main_router_view {
+        height: 91vh;
+    }
+
+    #navBar {
+        height: 9vh;
     }
 }
 @media(min-width:576px){
@@ -144,11 +144,15 @@ textarea, textarea:before, textarea:after {
     }
 
     .dropdown-content a {
-        color: black;
-        padding: 10px;
         font-size: 12px;
-        text-decoration: none;
-        display: block;
+    }
+
+    #main_router_view {
+        height: 94vh;
+    }
+
+    #navBar {
+        height: 6vh;
     }
 }
 @media(min-width:992px){

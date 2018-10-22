@@ -6,7 +6,7 @@
             <!--<a class="navbar-brand float-right d-lg-none d-xl-none" href="#">واش ماش</a>-->
 
             <div class="dropdown openDropDown">
-                <button id="dropBtn" v-on:click="ShowDropdown()"
+                <div id="dropBtn" v-on:click="ShowDropdown()"
                         class="dropBtn openDropDown row align-items-center mr-0 nav-items-height clickable">
                     <img id="userPic" v-bind:src="userPic"
                          class="rounded-circle bg-dark openDropDown float-right not-clickable user-pic-Main" height="40"
@@ -16,7 +16,7 @@
                         <div class="bar bar2 not-clickable"></div>
                         <div class="bar bar3 not-clickable"></div>
                     </div>
-                </button>
+                </div>
                 <transition name="fade">
                     <div v-if="dropDown_opened" class="dropdown-content">
                         <a v-on:click="$router.push({ path: '/dashboard/orders' })">
@@ -102,7 +102,7 @@
 
         <transition name="fade" mode="out-in">
             <!--<keep-alive>-->
-            <router-view id="router-view" style="height: 94vh;"/>
+            <router-view id="main_router_view"/>
             <!--</keep-alive>-->
         </transition>
 
