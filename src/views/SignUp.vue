@@ -400,10 +400,6 @@
 
             },
 
-            getKeyByValue: function (object, value) {
-                return Object.keys(object).find(key => object[key] === value);
-            },
-
             setImageSrc: function (img) {
                 if (img !== null) {
                     document.getElementById("userPic_img").src = img;
@@ -444,23 +440,6 @@
                 const win = window.open(url, '_blank');
                 win.focus();
             },
-
-            countWords: function (str) {
-                return str.trim().split('').length;
-            },
-
-
-            toMoneyFormat: function (number) {
-                // return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
-
-                const formatter = new Intl.NumberFormat('fa-IR', {
-                    style: 'currency',
-                    currency: 'IRR',
-                    minimumFractionDigits: 0
-                });
-
-                return formatter.format(number).replace("ریال", '');
-            }
         },
 
 

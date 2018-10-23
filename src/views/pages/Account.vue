@@ -166,7 +166,6 @@
         name: "account",
         data() {
             return {
-                // userPic: '',
                 newPicFile: '',
                 userPicWidth: '',
                 userPicHeight: '',
@@ -184,14 +183,9 @@
             }
         },
         computed: {
-            groupedOrders() {
-                return this.chunk(this.orders, 2)
-            },
         },
 
         components: {
-            // 'phoneForm': () => import('./phone.vue'),
-            // 'codeForm': () => import('./code.vue')
         },
 
         methods: {
@@ -362,10 +356,6 @@
                 img.src = url;
             },
 
-            countWords: function (str) {
-                return str.trim().split('').length;
-            },
-
 
             toMoneyFormat: function (number) {
                 // return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
@@ -400,24 +390,6 @@
         width: 200pt;
         height: 200pt;
     }
-
-    /*#userPicHolder*/
-    /*{*/
-    /*width: 200pt;*/
-    /*height: 200pt;*/
-    /*overflow: hidden;*/
-    /*position: relative;*/
-    /*margin-top: -125pt;*/
-    /*}*/
-    /*#userPic_img {*/
-    /*left: -100%;*/
-    /*right: -100%;*/
-    /*top: -100%;*/
-    /*bottom: -100%;*/
-    /*margin: auto;*/
-    /*min-height: 100%;*/
-    /*min-width: 100%;*/
-    /*}*/
 
     *:focus {
         outline: 0;
@@ -458,11 +430,5 @@
         color: white;
         background-color: #92ccff;
     }
-
-    /*.card-header:hover {*/
-    /*cursor: pointer;*/
-    /*transition: background .2s ease-in;*/
-    /*background-color: rgba(158, 227, 248, 0.7);*/
-    /*}*/
 
 </style>

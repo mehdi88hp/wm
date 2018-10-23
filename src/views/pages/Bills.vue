@@ -159,15 +159,9 @@
             }
         },
         computed: {
-
-            groupedOrders() {
-                return this.chunk(this.orders, 2)
-            },
         },
 
         components: {
-            // 'phoneForm': () => import('./phone.vue'),
-            // 'codeForm': () => import('./code.vue')
         },
 
         methods: {
@@ -187,18 +181,6 @@
                 }
             },
 
-            show_time: function (time) {
-                const array = time.split(' : ');
-                return "ساعت " + array[0] + " تا " + array[1];
-            },
-
-            getKeyByValue: function (object, value) {
-                return Object.keys(object).find(key => object[key] === value);
-            },
-
-            countWords: function (str) {
-                return str.trim().split('').length;
-            },
 
             toMoneyFormat: function (number) {
                 // return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)

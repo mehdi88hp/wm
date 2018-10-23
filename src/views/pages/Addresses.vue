@@ -257,10 +257,6 @@
 
                 return options;
             },
-
-            groupedOrders() {
-                return this.chunk(this.orders, 2)
-            },
         },
 
         components: {
@@ -402,56 +398,19 @@
 
             },
 
-            getKeyByValue: function (object, value) {
-                return Object.keys(object).find(key => object[key] === value);
-            },
-
-            countWords: function (str) {
-                return str.trim().split('').length;
-            },
-
-            toMoneyFormat: function (number) {
-                // return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
-
-                const formatter = new Intl.NumberFormat('fa-IR', {
-                    style: 'currency',
-                    currency: 'IRR',
-                    minimumFractionDigits: 0
-                });
-
-                return formatter.format(number).replace("ریال", '');
-            }
         },
         beforeMount: function () {
 
         },
         mounted: function () {
-            this.$nextTick(function () {
-                initMap();
-            })
+
         },
         created: function () {
 
         }
     };
 
-    function initMap() {
-        // new Map({
-        //     target: 'map',
-        //     layers: [
-        //         new TileLayer({
-        //             source: new XYZSource({
-        //                 url: 'http://tile.stamen.com/terrain/{z}/{x}/{y}.jpg'
-        //             })
-        //         })
-        //     ],
-        //     view: new View({
-        //         center: [0, 0],
-        //         zoom: 2
-        //     })
-        // });
 
-    }
 </script>
 
 
@@ -459,7 +418,6 @@
 
     *:focus {
         outline: 0;
-        /*color: rgba(255, 77, 45, 0.26);*/
     }
 
     .card-cash-info {

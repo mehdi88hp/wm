@@ -41,26 +41,16 @@
         data() {
             return {
 
-                sort: 'men',
             }
         },
         computed: {
 
-            groupedOrders() {
-                return this.chunk(this.orders, 2)
-            },
         },
 
         components: {
-            // 'phoneForm': () => import('./phone.vue'),
-            // 'codeForm': () => import('./code.vue')
         },
 
         methods: {
-
-            toMoneyFormat: function (number) {
-                return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
-            }
         },
         beforeMount: function () {
 
@@ -75,31 +65,6 @@
 
     *:focus {
         outline: 0;
-    }
-
-    .card-sort {
-        color: #138496;
-        background-color: #ffffff;
-        -o-transition: .5s;
-        -ms-transition: .5s;
-        -moz-transition: .5s;
-        -webkit-transition: .5s;
-        transition: .5s;
-    }
-
-    .card-sort:hover {
-        cursor: pointer;
-        color: #ffffff;
-        background-color: #138496;
-    }
-
-    .card-sort-clicked {
-        color: #ffffff;
-        background-color: #138496;
-    }
-
-    .card-sort-clicked:hover {
-        cursor: pointer;
     }
 
     hr {

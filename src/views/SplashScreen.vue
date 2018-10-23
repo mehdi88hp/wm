@@ -24,7 +24,6 @@
         name: "SplashScreen",
         data() {
             return {
-                // dynamicComponent: 'active-component'
             }
         },
         methods: {
@@ -54,10 +53,6 @@
 <style scoped>
     @import '../../public/css/bootstrap.min.css';
 
-    #loader {
-        position: absolute;
-        top: 40%;
-    }
 
     .LOGO {
         -o-transition: .3s;

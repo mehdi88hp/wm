@@ -24,7 +24,6 @@
     export default {
         name: "404",
         props: {
-            // component: String
         },
         data() {
             return {}

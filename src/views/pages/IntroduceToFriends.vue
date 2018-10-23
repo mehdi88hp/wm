@@ -80,14 +80,9 @@
         },
         computed: {
 
-            groupedOrders() {
-                return this.chunk(this.orders, 2)
-            },
         },
 
         components: {
-            // 'phoneForm': () => import('./phone.vue'),
-            // 'codeForm': () => import('./code.vue')
         },
 
         methods: {
@@ -100,10 +95,6 @@
                         $('.card-code').popover('hide');
                     });
                 }, 2000);
-            },
-
-            toMoneyFormat: function (number) {
-                return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
             },
 
             copyToClipboard: function (text) {
@@ -125,9 +116,6 @@
             },
         },
         beforeMount: function () {
-            this.services = this.$userData.services.filter(function (service) {
-                return service.gender === 'مردانه';
-            });
         },
         mounted: function () {
             this.$nextTick(function () {

@@ -79,15 +79,9 @@
             }
         },
         computed: {
-
-            groupedOrders() {
-                return this.chunk(this.orders, 2)
-            },
         },
 
         components: {
-            // 'phoneForm': () => import('./phone.vue'),
-            // 'codeForm': () => import('./code.vue')
         },
 
         methods: {

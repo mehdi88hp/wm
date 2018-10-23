@@ -955,11 +955,6 @@
             },
 
 
-            countWords: function (str) {
-                return str.trim().split('').length;
-            },
-
-
             toMoneyFormat: function (number) {
                 // return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
 

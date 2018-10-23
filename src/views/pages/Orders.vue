@@ -263,16 +263,9 @@
             }
         },
         computed: {
-            groupedOrders() {
-                return this.chunk(this.orders, 2)
-                // returns a nested array:
-                // [[article, article, article], [article, article, article], ...]
-            },
         },
 
         components: {
-            // 'phoneForm': () => import('./phone.vue'),
-            // 'codeForm': () => import('./code.vue')
         },
 
         methods: {
@@ -443,11 +436,5 @@
         color: white;
         background-color: #92ccff;
     }
-
-    /*.card-header:hover {*/
-    /*cursor: pointer;*/
-    /*transition: background .2s ease-in;*/
-    /*background-color: rgba(158, 227, 248, 0.7);*/
-    /*}*/
 
 </style>

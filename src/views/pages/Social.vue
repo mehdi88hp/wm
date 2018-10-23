@@ -88,62 +88,18 @@
             return {}
         },
         computed: {
-
-            groupedOrders() {
-                return this.chunk(this.orders, 2)
-            },
         },
 
         components: {
-            // 'phoneForm': () => import('./phone.vue'),
-            // 'codeForm': () => import('./code.vue')
         },
 
         methods: {
 
-            handleCopy: function () {
-                this.copyToClipboard(this.$userData.tell_friends);
-                const THIS = this;
-                setTimeout(function () {
-                    THIS.$nextTick(function () {
-                        $('.card-code').popover('hide');
-                    });
-                }, 2000);
-            },
-
-            toMoneyFormat: function (number) {
-                return new Intl.NumberFormat('fa', {maximumSignificantDigits: 3}).format(number)
-            },
-
-            copyToClipboard: function (text) {
-                if (document.queryCommandSupported && document.queryCommandSupported("copy")) {
-                    var textarea = document.createElement("textarea");
-                    textarea.textContent = text;
-                    textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in MS Edge.
-                    document.body.appendChild(textarea);
-                    textarea.select();
-                    try {
-                        return document.execCommand("copy");  // Security exception may be thrown by some browsers.
-                    } catch (ex) {
-                        console.warn("Copy to clipboard failed.", ex);
-                        return false;
-                    } finally {
-                        document.body.removeChild(textarea);
-                    }
-                }
-            },
         },
         beforeMount: function () {
-            this.services = this.$userData.services.filter(function (service) {
-                return service.gender === 'مردانه';
-            });
         },
         mounted: function () {
-            this.$nextTick(function () {
-                $(function () {
-                    $('[data-toggle="popover"]').popover();
-                });
-            })
+
         },
     }
 </script>
