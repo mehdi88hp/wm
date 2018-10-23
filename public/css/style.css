@@ -111,30 +111,6 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
 
 @media(min-width:0px){
     /*xs*/
-    .user-pic-Main {
-        /*margin-top: -5px;*/
-        margin-top: 0;
-    }
-
-    .dropdown {
-        /*margin-top: -20pt;*/
-    }
-
-    .dropdown-content a {
-        color: black;
-        padding:10px;
-        font-size: 14px;
-        text-decoration: none;
-        display: block;
-    }
-
-    #main_router_view {
-        height: 91vh;
-    }
-
-    #navBar {
-        height: 9vh;
-    }
 }
 @media(min-width:576px){
     /*sm*/
@@ -142,21 +118,6 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
 }
 @media(min-width:768px){
     /*md*/
-    .user-pic-Main {
-        margin-top: 0;
-    }
-
-    .dropdown-content a {
-        font-size: 12px;
-    }
-
-    #main_router_view {
-        height: 94vh;
-    }
-
-    #navBar {
-        height: 6vh;
-    }
 }
 @media(min-width:992px){
     /*lg*/
@@ -174,63 +135,10 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
 }
 
 
-.dropBtn {
-    background-color: transparent;
-    color: white;
-    padding: 5px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
 
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-
-.dropdown-content {
-    margin-right: 30px;
-    right: 0;
-    /*display: none;*/
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 230px;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    z-index: 1;
-}
 
 a:hover {
     cursor: pointer;
-}
-
-.dropdown-content a:hover {
-    cursor: pointer;
-}
-
-.bar {
-    width: 3px;
-    height: 3px;
-    background-color: #333;
-    margin: 3px 0;
-    transition: 0.4s;
-}
-
-
-
-@media (hover: hover) {
-    .dropdown:hover .dropdown-content {
-        /*display: block;*/
-    }
-
-    .dropdown-content a:hover {
-        background-color: #f1f1f1
-    }
-
-    .dropBtn:hover {
-        /*background-color: #a8a8a8;*/
-    }
 }
 
 

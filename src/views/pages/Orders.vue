@@ -1,7 +1,7 @@
 <template>
 
     <div class="container">
-        <div v-if="!Array.isArray(this.orders) || !this.orders.length" class="row h-100 d-flex justify-content-center">
+        <div v-if="!Array.isArray(orders) || !orders.length" class="row h-100 d-flex justify-content-center">
             <div class="col-md-8 text-center align-self-center">
                 <h1>شما تاکنون هیچ سفارشی ثبت نکرده اید</h1>
                 <button v-on:click="$router.push({ path: '/dashboard/new-order' })" class="btn btn-info btn-lg mt-5">
@@ -10,7 +10,7 @@
 
         </div>
 
-        <div v-if="Array.isArray(this.orders) && this.orders.length" class="row h-auto p-2 px-lg-0 py-lg-5" dir="rtl">
+        <div v-if="Array.isArray(orders) && orders.length" class="row h-auto p-2 px-lg-0 py-lg-5" dir="rtl">
 
             <div class="col-lg-6 p-2" v-for="(order, index) in orders" v-bind:key="index">
                 <div class="card shadow shadow-sm card-hover-blue"

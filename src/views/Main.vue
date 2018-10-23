@@ -1,21 +1,19 @@
 <template>
     <div class="vh-100 vw-100 text-right">
-        <nav id="navBar"
-             class="navbar navbar-expand-lg navbar-light bg-light py-md-0 px-2 shadow-sm d-flex justify-content-between"
+        <div id="navBar"
+             class="w-100 h-auto bg-light py-0 px-2 shadow-sm d-flex justify-content-between align-items-center sticky-top"
              dir="rtl">
 
-            <!--<a class="navbar-brand float-right d-lg-none d-xl-none" href="#">واش ماش</a>-->
-
-            <div class="dropdown openDropDown">
+            <div class="dropdown h-auto mr-3">
                 <div id="dropBtn" v-on:click="ShowDropdown()"
-                     class="dropBtn openDropDown row align-items-center mr-0 nav-items-height clickable">
+                     class="dropBtn row align-items-center nav-items-height clickable h-auto">
                     <img id="userPic" v-bind:src="userPic"
-                         class="rounded-circle bg-dark openDropDown float-right not-clickable user-pic-Main" height="40"
+                         class="rounded-circle bg-dark float-right not-clickable user-pic-Main" height="40"
                          width="40"/>
                     <div id="menu" class="float-left align-items-center mr-3 not-clickable">
-                        <div class="bar bar1 not-clickable"></div>
-                        <div class="bar bar2 not-clickable"></div>
-                        <div class="bar bar3 not-clickable"></div>
+                        <div class="row bar bar1 not-clickable"></div>
+                        <div class="row bar bar2 not-clickable"></div>
+                        <div class="row bar bar3 not-clickable"></div>
                     </div>
                 </div>
                 <transition name="fade">
@@ -68,42 +66,16 @@
             </div>
 
             <button v-on:click="$router.push({ path: '/dashboard/new-order' })"
-                    class="btn btn-sm btn-info align-self-center ml-3">
+                    class="btn btn-sm btn-info">
                 <i class="fas fa-plus"></i>&nbsp;&nbsp;<span>سفارش جدید</span></button>
 
 
-            <!--<button class="navbar-toggler float-right ml-3" type="button" data-toggle="collapse"-->
-            <!--data-target="#navbarSupportedContent"-->
-            <!--aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">-->
-            <!--<span class="navbar-toggler-icon"></span>-->
-            <!--</button>-->
+        </div>
 
-            <!--<div class="navbar-collapse collapse text-right" id="navbarSupportedContent">-->
-            <!--<ul class="navbar-nav mr-auto">-->
-            <!--<li class="nav-item active row align-items-center mx-1">-->
-            <!--&lt;!&ndash; for lg and xl &ndash;&gt;-->
-            <!--<button v-on:click="$router.push({ path: '/dashboard/orders' })"-->
-            <!--class="btn btn-light btn-sm mb-3 mb-lg-0 mb-xl-0 d-none d-lg-block">-->
-            <!--<span>سفارشات من</span></button>-->
-
-            <!--&lt;!&ndash; for sm and md &ndash;&gt;-->
-            <!--<a class="nav-link d-lg-none" v-on:click="$router.push({ path: '/dashboard/orders' })">-->
-            <!--<div class="">سفارشات من</div>-->
-            <!--</a>-->
-            <!--</li>-->
-            <!--<li class="nav-item row align-items-center mx-1">-->
-            <!--<button v-on:click="$router.push({ path: '/dashboard/new-order' })"-->
-            <!--class="btn btn-info btn-sm mb-3 mb-lg-0 mb-xl-0">-->
-            <!--<i class="fas fa-plus"></i>&nbsp;&nbsp;<span>سفارش جدید</span></button>-->
-            <!--</li>-->
-            <!--</ul>-->
-            <!--</div>-->
-        </nav>
-
-        <div class="vw-100" style="overflow: hidden; overflow-y: auto;">
+        <div id="main_router_view_container" style="overflow-y: scroll;">
             <transition name="fade" mode="out-in">
                 <!--<keep-alive>-->
-                <router-view id="main_router_view"/>
+                <router-view id="main_router_view" style="height: 100%"/>
                 <!--</keep-alive>-->
             </transition>
         </div>
@@ -128,6 +100,13 @@
                 userPic: '',
             }
         },
+
+        // watch: {
+        //     $route (to, from) {
+        //         console.log('aaaa');
+        //         this.setViewHeight();
+        //     }
+        // },
 
         methods: {
 
@@ -186,6 +165,17 @@
                 img.src = url;
             },
 
+
+            setViewHeight: function () {
+                const window_height = window.innerHeight;
+                const nav_height = $('#navBar').height();
+                $('#main_router_view_container').height(window_height - nav_height);
+            }
+
+        },
+
+        mounted() {
+
         },
 
         beforeMount() {
@@ -208,6 +198,19 @@
         },
         created() {
             document.addEventListener('click', this.documentClick);
+
+
+            this.$nextTick(function () {
+                this.setViewHeight();
+            });
+
+
+            window.onresize = function () {
+                this.setViewHeight();
+
+            };
+
+
         },
         destroyed() {
             document.removeEventListener('click', this.documentClick);
@@ -221,6 +224,110 @@
 
     *:focus {
         outline: 0;
+    }
+
+    .dropBtn {
+        background-color: transparent;
+        color: white;
+        padding: 5px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown {
+        /*position: relative;*/
+        /*display: inline-block;*/
+    }
+
+    .dropdown-content {
+        margin-right: 30px;
+        right: 0;
+        /*display: none;*/
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 230px;
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a:hover {
+        cursor: pointer;
+    }
+
+    .bar {
+        width: 3px;
+        height: 3px;
+        background-color: #333;
+        margin: 3px 0;
+        transition: 0.4s;
+    }
+
+    @media (hover: hover) {
+        .dropdown:hover .dropdown-content {
+            /*display: block;*/
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1
+        }
+
+        .dropBtn:hover {
+            /*background-color: #a8a8a8;*/
+        }
+    }
+
+    @media (min-width: 0px) {
+        /*xs*/
+        .dropdown {
+            /*margin-top: -20pt;*/
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 10px;
+            font-size: 14px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /*#main_router_view {*/
+        /*height: 91vh;*/
+        /*}*/
+        /*#navBar {*/
+        /*height: 9vh;*/
+        /*}*/
+    }
+
+    @media (min-width: 576px) {
+        /*sm*/
+
+    }
+
+    @media (min-width: 768px) {
+        /*md*/
+        .user-pic-Main {
+            margin-top: 0;
+        }
+
+        .dropdown-content a {
+            font-size: 12px;
+        }
+
+        /*#main_router_view {*/
+        /*height: 94vh;*/
+        /*}*/
+        /*#navBar {*/
+        /*height: 6vh;*/
+        /*}*/
+    }
+
+    @media (min-width: 992px) {
+        /*lg*/
+    }
+
+    @media (min-width: 1200px) {
+        /*xl*/
     }
 
     .nav-items-height {
