@@ -72,6 +72,10 @@
                 sort: 'men',
 
                 services: [],
+
+                men_list: [],
+                women_list: [],
+                home_list: [],
             }
         },
         computed: {
@@ -91,17 +95,38 @@
             doSort: function (sort) {
                 this.sort = sort;
                 if (sort === 'men') {
-                    this.services = this.$userData.services.filter(function (service) {
-                        return service.gender === 'مردانه';
-                    });
+                    if (Array.isArray(this.men_list) && this.men_list.length) {
+                        this.services = this.men_list;
+
+                    } else {
+                        this.services = this.men_list = this.$userData.services.filter(function (service) {
+                            return service.gender === 'مردانه';
+                        }).slice(0,11);
+
+                    }
+
                 } else if (sort === 'women') {
-                    this.services = this.$userData.services.filter(function (service) {
-                        return service.gender === 'زنانه';
-                    });
+                    if (Array.isArray(this.women_list) && this.women_list.length) {
+                        this.services = this.women_list;
+
+                    } else {
+                        this.services = this.women_list = this.$userData.services.filter(function (service) {
+                            return service.gender === 'زنانه';
+                        }).slice(0,11);
+
+                    }
+
                 } else if (sort === 'home') {
-                    this.services = this.$userData.services.filter(function (service) {
-                        return service.gender === 'منسوجات خانگی';
-                    });
+                    if (Array.isArray(this.home_list) && this.home_list.length) {
+                        this.services = this.home_list;
+
+                    } else {
+                        this.services = this.home_list = this.$userData.services.filter(function (service) {
+                            return service.gender === 'منسوجات خانگی';
+                        }).slice(0,11);
+
+                    }
+
                 }
             },
 
@@ -118,9 +143,9 @@
             }
         },
         beforeMount: function () {
-            this.services = this.$userData.services.filter(function (service) {
+            this.services = this.men_list = this.$userData.services.filter(function (service) {
                 return service.gender === 'مردانه';
-            });
+            }).slice(0,11);
         },
         mounted: function () {
         },

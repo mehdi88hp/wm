@@ -474,8 +474,6 @@
             }
 
             this.isMobile = (screen.width <= 992);
-            console.log(screen.width);
-            console.log(this.isMobile);
         },
         mounted: function () {
             this.LoadPic();

@@ -218,9 +218,9 @@
                             </div>
 
                             <transition name="fade" mode="out-in">
-                                <div v-if="isProgressActiveCoupon"  class="row">
+                                <div v-if="isProgressActiveCoupon" :key="1" class="row">
                                     <div class="col-12">
-                                        <div class="progress mb-2">
+                                        <div class="progress mt-3">
                                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
                                                  role="progressbar" aria-valuenow="75" aria-valuemin="0"
                                                  aria-valuemax="100"
@@ -228,10 +228,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </transition>
 
-                            <transition name="fade" mode="out-in">
-                                <div class="alert small text-right text-justify mt-2"
+                                <div class="alert small text-right text-justify mt-3" :key="2"
                                      :class="{'alert-danger': !hasValidCoupon, 'alert-success': hasValidCoupon}"
                                      v-if="!isHiddenErrorCoupon" dir="rtl">
                                     {{ ErrorCoupon }}
@@ -640,7 +638,7 @@
                         }, (error) => {
                             this.hasValidCoupon = false;
                             this.isProgressActiveCoupon = true;
-                            // console.log(error)
+                            console.log(error)
                         }
                     );
 

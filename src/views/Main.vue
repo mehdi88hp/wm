@@ -1,7 +1,7 @@
 <template>
     <div class="vh-100 vw-100 text-right">
         <nav id="navBar"
-             class="navbar navbar-expand-lg navbar-light bg-light py-md-0 px-2 shadow-sm sticky-top d-flex justify-content-between"
+             class="navbar navbar-expand-lg navbar-light bg-light py-md-0 px-2 shadow-sm d-flex justify-content-between"
              dir="rtl">
 
             <!--<a class="navbar-brand float-right d-lg-none d-xl-none" href="#">واش ماش</a>-->
