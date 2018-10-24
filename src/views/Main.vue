@@ -8,7 +8,7 @@
                 <div id="dropBtn" v-on:click="ShowDropdown()"
                      class="dropBtn row align-items-center nav-items-height clickable h-auto">
                     <img id="userPic" v-bind:src="userPic"
-                         class="rounded-circle bg-dark float-right not-clickable user-pic-Main" height="40"
+                         class="rounded-circle bg-dark float-right not-clickable user-pic-Main shadow" height="40"
                          width="40"/>
                     <div id="menu" class="float-left align-items-center mr-3 not-clickable">
                         <div class="row bar bar1 not-clickable"></div>
@@ -72,7 +72,7 @@
 
         </div>
 
-        <div id="main_router_view_container" style="overflow-y: scroll;">
+        <div id="main_router_view_container">
             <transition name="fade" mode="out-in">
                 <!--<keep-alive>-->
                 <router-view id="main_router_view" style="height: 100%"/>
@@ -91,22 +91,21 @@
 
     export default {
         name: "Main",
-        props: {
-            // component: String
-        },
+        props: {},
         data() {
             return {
                 dropDown_opened: false,
                 userPic: '',
+                windowHeight: 0,
             }
         },
 
-        // watch: {
-        //     $route (to, from) {
-        //         console.log('aaaa');
-        //         this.setViewHeight();
-        //     }
-        // },
+        watch: {
+            // windowHeight(newHeight, oldHeight) {
+            windowHeight() {
+                this.setViewHeight();
+            }
+        },
 
         methods: {
 
@@ -167,16 +166,28 @@
 
 
             setViewHeight: function () {
-                const window_height = window.innerHeight;
-                const nav_height = $('#navBar').height();
-                $('#main_router_view_container').height(window_height - nav_height);
-            }
+                this.$nextTick(function () {
+                    const window_height = window.innerHeight;
+                    const nav_height = $('#navBar').height();
+
+                    const main_router_view_container = $('#main_router_view_container');
+                    main_router_view_container.height(window_height - nav_height);
+                    // main_router_view_container.top(nav_height);
+                });
+            },
 
         },
 
         mounted() {
 
+            this.$nextTick(() => {
+                window.addEventListener('resize', () => {
+                    this.windowHeight = window.innerHeight;
+                });
+            });
+
         },
+
 
         beforeMount() {
 
@@ -199,21 +210,18 @@
         created() {
             document.addEventListener('click', this.documentClick);
 
-
-            this.$nextTick(function () {
-                this.setViewHeight();
-            });
-
-
-            window.onresize = function () {
-                this.setViewHeight();
-
-            };
+            this.setViewHeight();
 
 
         },
         destroyed() {
             document.removeEventListener('click', this.documentClick);
+
+            this.$nextTick(() => {
+                window.removeEventListener('resize', () => {
+                    this.windowHeight = window.innerHeight;
+                });
+            });
         }
 
     }
@@ -276,6 +284,23 @@
             /*background-color: #a8a8a8;*/
         }
     }
+
+
+
+    #main_router_view_container {
+        overflow-x: hidden;
+        overflow-y: auto;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+
+    #main_router_view {
+        /*position: relative;*/
+    }
+
+
 
     @media (min-width: 0px) {
         /*xs*/

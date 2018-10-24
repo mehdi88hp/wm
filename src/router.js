@@ -8,6 +8,10 @@ Vue.use(Router);
 const router = new Router({
     mode: 'hash',
     base: process.env.BASE_URL,
+    link: {
+        rel: 'icon',
+        href: './assets/favicon.png'
+    },
     routes: [
         {
             path: '/',
@@ -28,6 +32,13 @@ const router = new Router({
             path: '/dashboard',
             name: 'dashboard',
             component: Main,
+
+            meta: {
+                title: 'QQQQ',
+                metaTags: [
+
+                ]
+            },
 
             children: [
                 {
@@ -104,7 +115,7 @@ function AuthMiddleware(to, next) {
 
     if (!localStorage.getItem('data')) {
         if (to.path !== '/login' && to.path !== '/login/'
-        && to.path !== '/sign-up' && to.path !== '/sign-up/' && to.path !== '/' && to.path !== '') {
+            && to.path !== '/sign-up' && to.path !== '/sign-up/' && to.path !== '/' && to.path !== '') {
             return next('/login');
         }
     }

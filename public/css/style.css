@@ -15,6 +15,8 @@ html, body {
 
 body {
     background: rgb(130, 130, 130);
+    /*background: #72b6d1;*/
+    /*"theme_color": "#4DBA87"*/
 }
 
 * {
@@ -22,7 +24,6 @@ body {
     font-weight: normal;
     font-style: normal;
 }
-
 
 *, *:before, *:after {
     -webkit-user-select: none;
@@ -39,8 +40,6 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
     -ms-user-select: initial;
     user-select: initial;
 }
-
-
 
 *:focus {
     outline: 0;
@@ -79,13 +78,12 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
 }
 
 .not-clickable {
-    pointer-events:none;
+    pointer-events: none;
 }
 
 .clickable {
-    pointer-events:auto;
+    pointer-events: auto;
 }
-
 
 /* width */
 ::-webkit-scrollbar {
@@ -108,24 +106,27 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
     background: #138597;
 }
 
-
-@media(min-width:0px){
+@media (min-width: 0px) {
     /*xs*/
 }
-@media(min-width:576px){
+
+@media (min-width: 576px) {
     /*sm*/
 
 }
-@media(min-width:768px){
+
+@media (min-width: 768px) {
     /*md*/
 }
-@media(min-width:992px){
+
+@media (min-width: 992px) {
     /*lg*/
     .img-user-pic-sign-up {
         margin-top: -175pt
     }
 }
-@media(min-width:1200px){
+
+@media (min-width: 1200px) {
     /*xl*/
 }
 
@@ -134,60 +135,51 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
     background: rgb(218, 218, 218);
 }
 
-
-
-
 a:hover {
     cursor: pointer;
 }
-
-
 
 .like-pre {
     white-space: pre-wrap;
     word-wrap: break-word;
 }
 
-
-
-
-
-
 .fade-enter-active {
     transition: opacity .5s;
 }
+
 .fade-leave-active {
     transition: opacity .5s;
 }
+
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */
 {
     opacity: 0;
 }
 
-
-
-
 .slide-fade-enter-active {
     transition: all .3s frames(4);
 }
+
 .slide-fade-leave-active {
     transition: all .3s;
 }
+
 .slide-fade-enter, .slide-fade-leave-to
-    /* .slide-fade-leave-active for <2.1.8 */ {
+    /* .slide-fade-leave-active for <2.1.8 */
+{
     transform: translateX(500px);
     opacity: 0;
 }
 
-
-
-
 .flip-enter-active {
     transition: all .2s cubic-bezier(0.55, 0.085, 0.68, 0.53);
 }
+
 .flip-leave-active {
     transition: all .25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
 .flip-enter, .flip-leave-to {
     transform: scaleY(0) translateZ(0);
     opacity: 0;

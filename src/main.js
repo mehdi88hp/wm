@@ -51,7 +51,10 @@ Vue.prototype.$initData = function (callBack) {
                     // console.log(response.data);
                     Vue.prototype.$userData = response.data;
                     localStorage.setItem('data', JSON.stringify(response.data));
-                    callBack(response.data);
+
+                    if (typeof callBack === 'function') {
+                        callBack(response.data);
+                    }
                 }
             }, (error) => {
                 console.log(error);
