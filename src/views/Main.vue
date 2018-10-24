@@ -172,8 +172,25 @@
 
                     const main_router_view_container = $('#main_router_view_container');
                     main_router_view_container.height(window_height - nav_height);
-                    // main_router_view_container.top(nav_height);
+
+                    const activeElement = document.activeElement;
+                    const inputs = ['input', 'textarea'];
+
+                    if (activeElement && inputs.indexOf(activeElement.tagName.toLowerCase()) !== -1) {
+                        activeElement.focus();
+                        console.log('hey !');
+                    }
                 });
+            },
+
+
+            focusToElementOnKeyboardOpen: function (e) {
+                setTimeout(function () {
+                    if (e.target.tagName.toLowerCase() === "input" || e.target.tagName.toLowerCase() === "textarea") {
+                        e.target.scrollIntoView();
+                    }
+                }, 500);
+
             },
 
         },
@@ -212,10 +229,15 @@
 
             this.setViewHeight();
 
+            document.addEventListener('focusin', this.focusToElementOnKeyboardOpen);
+
 
         },
         destroyed() {
             document.removeEventListener('click', this.documentClick);
+
+
+            document.removeEventListener('focusin', this.focusToElementOnKeyboardOpen);
 
             this.$nextTick(() => {
                 window.removeEventListener('resize', () => {
@@ -285,8 +307,6 @@
         }
     }
 
-
-
     #main_router_view_container {
         overflow-x: hidden;
         overflow-y: auto;
@@ -299,8 +319,6 @@
     #main_router_view {
         /*position: relative;*/
     }
-
-
 
     @media (min-width: 0px) {
         /*xs*/
