@@ -159,7 +159,6 @@
                             // console.log(response.data);
                             if (parseInt(response.data.code) === 1) {
 
-                                // todo Handle to SingUp Page if user in new
                                 if (!response.data.user_exists) {
 
                                     localStorage.setItem('cities', JSON.stringify(response.data.cities));

@@ -49,8 +49,6 @@
         computed: {},
 
         watch: {
-            // todo watch p_container width to reCalculate array
-
             pagesCount() {
                 this.CalculatePages();
             },

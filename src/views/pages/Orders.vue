@@ -10,7 +10,7 @@
 
         </div>
 
-        <div v-if="pagesLength > 1" class="row d-flex justify-content-center mx-2 mt-3 mb-1">
+        <div v-if="pagesLength > 1" class="row d-flex justify-content-center px-2 pt-3 pb-1">
             <div class="col-12 col-md-6 bg-light rounded shadow-lg p-0">
                 <pagination class="my-2 mx-1" dir="rtl"
                         :pagesCount="pagesLength"

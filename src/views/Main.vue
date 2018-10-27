@@ -1,7 +1,9 @@
 <template>
     <div class="vh-100 vw-100 text-right">
+
+
         <div id="navBar"
-             class="w-100 h-auto bg-light py-0 px-2 shadow-sm d-flex justify-content-between align-items-center sticky-top"
+             class="h-auto w-100 bg-light py-0 px-2 shadow-sm d-flex justify-content-between align-items-center sticky-top"
              dir="rtl">
 
             <div class="dropdown h-auto mr-3">
@@ -10,56 +12,72 @@
                     <img id="userPic" v-bind:src="userPic"
                          class="rounded-circle bg-dark float-right not-clickable user-pic-Main shadow" height="40"
                          width="40"/>
-                    <div id="menu" class="float-left align-items-center mr-3 not-clickable">
+                    <div id="menu" class="float-left align-items-center mr-3 not-clickable"
+                         :class="{ change: dropDown_opened }">
                         <div class="row bar bar1 not-clickable"></div>
                         <div class="row bar bar2 not-clickable"></div>
                         <div class="row bar bar3 not-clickable"></div>
                     </div>
                 </div>
                 <transition name="fade">
-                    <div v-if="dropDown_opened" class="dropdown-content">
-                        <a v-on:click="$router.push({ path: '/dashboard/orders' })">
-                            <i class="fas fa-tshirt"></i>&nbsp;&nbsp;<span>سفارشات من</span>
+                    <div v-if="dropDown_opened && !isMobileDevice" class="dropdown-content">
+                        <a v-on:click="$router.push({ path: '/dashboard/orders' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="fas fa-tshirt col-1"></i>&nbsp;&nbsp;<span class="col-11">سفارشات من</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/account' })">
-                            <i class="far fa-user"></i>&nbsp;&nbsp;<span>حساب کاربری</span>
+                        <a v-on:click="$router.push({ path: '/dashboard/account' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="far fa-user col-1"></i>&nbsp;&nbsp;<span class="col-11">حساب کاربری</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/addresses' })">
-                            <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;<span>آدرس های من</span>
+                        <a v-on:click="$router.push({ path: '/dashboard/addresses' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="fas fa-map-marker-alt col-1"></i>&nbsp;&nbsp;<span
+                                class="col-11">آدرس های من</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/bills' })">
-                            <i class="fas fa-concierge-bell"></i>&nbsp;&nbsp;<span>صورت حساب ها</span>
+                        <a v-on:click="$router.push({ path: '/dashboard/bills' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="fas fa-concierge-bell col-1"></i>&nbsp;&nbsp;<span
+                                class="col-11">صورت حساب ها</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/pricing' })">
-                            <i class="fas fa-dollar-sign"></i>&nbsp;&nbsp;<span>قیمت خدمات</span>
+                        <a v-on:click="$router.push({ path: '/dashboard/pricing' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="fas fa-dollar-sign col-1"></i>&nbsp;&nbsp;<span class="col-11">قیمت خدمات</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/faq' })">
-                            <i class="far fa-question-circle"></i>&nbsp;&nbsp;<span>سوالات متداول</span>
+                        <a v-on:click="$router.push({ path: '/dashboard/faq' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="far fa-question-circle col-1"></i>&nbsp;&nbsp;<span
+                                class="col-11">سوالات متداول</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/help' })">
-                            <i class="fas fa-info"></i>&nbsp;&nbsp;<span>راهنما</span>
+                        <a v-on:click="$router.push({ path: '/dashboard/help' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="fas fa-info col-1"></i>&nbsp;&nbsp;<span class="col-11">راهنما</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/introduce_to_friends' })">
-                            <i class="fas fa-share-alt-square"></i>&nbsp;&nbsp;<span>معرفی به دوستان</span>
+                        <a v-on:click="$router.push({ path: '/dashboard/introduce_to_friends' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="fas fa-share-alt-square col-1"></i>&nbsp;&nbsp;<span class="col-11">معرفی به دوستان</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/social' })">
-                            <i class="fab fa-facebook-square"></i>&nbsp;&nbsp;<span>شبکه های اجتماعی</span>
+                        <a v-on:click="$router.push({ path: '/dashboard/social' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="fab fa-facebook-square col-1"></i>&nbsp;&nbsp;<span class="col-11">شبکه های اجتماعی</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="$router.push({ path: '/dashboard/call' })">
-                            <i class="fas fa-phone-square"></i>&nbsp;&nbsp;<span>تماس با واش ماش</span>
+                        <a v-on:click="$router.push({ path: '/dashboard/call' })"
+                           class="d-flex justify-content-center align-items-center">
+                            <i class="fas fa-phone-square col-1"></i>&nbsp;&nbsp;<span
+                                class="col-11">تماس با واش ماش</span>
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a v-on:click="logOut()">
-                            <i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;<span>خروج از حساب</span>
+                        <a v-on:click="logOut()" class="d-flex justify-content-center align-items-center">
+                            <i class="fas fa-sign-out-alt col-1"></i>&nbsp;&nbsp;<span
+                                class="col-11">خروج از حساب</span>
                         </a>
                     </div>
                 </transition>
@@ -69,10 +87,67 @@
                     class="btn btn-sm btn-info">
                 <i class="fas fa-plus"></i>&nbsp;&nbsp;<span>سفارش جدید</span></button>
 
-
         </div>
 
-        <div id="main_router_view_container">
+        <div id="mySideNav" class="sideNav" :class="{ 'sideNav-opened': dropDown_opened && isMobileDevice }" dir="rtl">
+            <a v-on:click="$router.push({ path: '/dashboard/orders' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-tshirt col-1"></i>&nbsp;&nbsp;<span class="col-11">سفارشات من</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="$router.push({ path: '/dashboard/account' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="far fa-user col-1"></i>&nbsp;&nbsp;<span class="col-11">حساب کاربری</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="$router.push({ path: '/dashboard/addresses' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-map-marker-alt col-1"></i>&nbsp;&nbsp;<span class="col-11">آدرس های من</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="$router.push({ path: '/dashboard/bills' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-concierge-bell col-1"></i>&nbsp;&nbsp;<span class="col-11">صورت حساب ها</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="$router.push({ path: '/dashboard/pricing' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-dollar-sign col-1"></i>&nbsp;&nbsp;<span class="col-11">قیمت خدمات</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="$router.push({ path: '/dashboard/faq' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="far fa-question-circle col-1"></i>&nbsp;&nbsp;<span class="col-11">سوالات متداول</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="$router.push({ path: '/dashboard/help' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-info col-1"></i>&nbsp;&nbsp;<span class="col-11">راهنما</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="$router.push({ path: '/dashboard/introduce_to_friends' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-share-alt-square col-1"></i>&nbsp;&nbsp;<span class="col-11">معرفی به دوستان</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="$router.push({ path: '/dashboard/social' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="fab fa-facebook-square col-1"></i>&nbsp;&nbsp;<span class="col-11">شبکه های اجتماعی</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="$router.push({ path: '/dashboard/call' })"
+               class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-phone-square col-1"></i>&nbsp;&nbsp;<span class="col-11">تماس با واش ماش</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a v-on:click="logOut()" class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-sign-out-alt col-1"></i>&nbsp;&nbsp;<span class="col-11">خروج از حساب</span>
+            </a>
+        </div>
+
+
+        <div id="main_router_view_container"
+             :style="[dropDown_opened ? {'overflow-y': 'hidden', 'margin-right': '5px'} : {'overflow-y': 'auto'}]">
             <transition name="fade" mode="out-in">
                 <!--<keep-alive>-->
                 <router-view id="main_router_view" style="height: 100%"/>
@@ -97,6 +172,7 @@
                 dropDown_opened: false,
                 userPic: '',
                 windowHeight: 0,
+                isMobileDevice: false,
             }
         },
 
@@ -110,16 +186,9 @@
         methods: {
 
             ShowDropdown: function () {
-                const before = this.dropDown_opened;
+                this.isMobileDevice = window.innerWidth < 576;
                 this.dropDown_opened = !this.dropDown_opened;
-                const after = this.dropDown_opened;
 
-                if (before && !after) {
-                    $('#menu').removeClass('change');
-                }
-                if (!before && after) {
-                    $('#menu').addClass('change');
-                }
             },
             documentClick: function (event) {
                 if (!document.getElementById('dropBtn').contains(event.target)) {
@@ -256,6 +325,54 @@
         outline: 0;
     }
 
+    .sideNav {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 2;
+        right: 0;
+        background-color: #111;
+        overflow-x: hidden;
+
+        -o-transition: .5s ease;
+        -ms-transition: .5s ease;
+        -moz-transition: .5s ease;
+        -webkit-transition: .5s ease;
+        transition: .5s ease;
+    }
+
+    .sideNav-opened {
+        width: 250px;
+    }
+
+    .sideNav a {
+        min-width: 250px;
+        padding: 10px;
+        text-decoration: none;
+        font-size: 13px;
+        color: #818181;
+        display: block;
+        -o-transition: .3s ease;
+        -ms-transition: .3s ease;
+        -moz-transition: .3s ease;
+        -webkit-transition: .3s ease;
+        transition: .3s ease;
+    }
+
+    .sideNav a:hover {
+        color: #f1f1f1;
+    }
+
+    @media screen and (max-height: 450px) {
+        .sideNav {
+            padding-top: 15px;
+        }
+
+        .sideNav a {
+            font-size: 18px;
+        }
+    }
+
     .dropBtn {
         background-color: transparent;
         color: white;
@@ -263,11 +380,6 @@
         font-size: 16px;
         border: none;
         cursor: pointer;
-    }
-
-    .dropdown {
-        /*position: relative;*/
-        /*display: inline-block;*/
     }
 
     .dropdown-content {
@@ -309,7 +421,7 @@
 
     #main_router_view_container {
         overflow-x: hidden;
-        overflow-y: auto;
+        /*overflow-y: auto;*/
         position: absolute;
         bottom: 0;
         right: 0;
@@ -333,13 +445,6 @@
             text-decoration: none;
             display: block;
         }
-
-        /*#main_router_view {*/
-        /*height: 91vh;*/
-        /*}*/
-        /*#navBar {*/
-        /*height: 9vh;*/
-        /*}*/
     }
 
     @media (min-width: 576px) {
@@ -356,13 +461,6 @@
         .dropdown-content a {
             font-size: 12px;
         }
-
-        /*#main_router_view {*/
-        /*height: 94vh;*/
-        /*}*/
-        /*#navBar {*/
-        /*height: 6vh;*/
-        /*}*/
     }
 
     @media (min-width: 992px) {
