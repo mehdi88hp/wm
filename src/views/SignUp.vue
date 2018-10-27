@@ -1,240 +1,244 @@
 <template>
 
-    <div class="container vh-100">
-        <div class="row vh-100 d-flex justify-content-center p-2 px-md-0 py-md-5">
-            <div class="card shadow shadow-sm col-12 text-right align-self-start align-self-md-center mt-md-5">
+    <div class="main-container">
+        <div class="container">
+            <div class="card-container row d-flex justify-content-center p-2 px-md-0 py-md-5">
+                <div class="card shadow shadow-sm col-12 text-right align-self-start align-self-md-center mt-md-5 p-0">
 
-                <div class="card-body" dir="rtl">
+                    <div class="card-body" dir="rtl">
 
 
-                    <div class="card bg-info h-auto shadow-sm col-12 text-white mb-3 mb-md-0">
+                        <div class="card bg-info h-auto shadow-sm col-12 text-white mb-3 mb-md-0">
 
-                        <div class="card-body py-3 px-0">
-                            <div class="row">
+                            <div class="card-body py-3 px-0">
+                                <div class="row">
 
-                                <div class="col-md-8 text-right font-weight-bold d-flex justify-content-start">
-                                    <i class="far fa-2x fa-edit"></i>
-                                    &nbsp;
-                                    <span class="align-self-center">ثبت نام</span>
+                                    <div class="col-md-8 text-right font-weight-bold d-flex justify-content-start">
+                                        <i class="far fa-2x fa-edit"></i>
+                                        &nbsp;
+                                        <span class="align-self-center">ثبت نام</span>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-center d-block d-md-none my-2">
+                                        <div class="col-10 dropdown-divider"></div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="row d-flex justify-content-center justify-content-md-end ml-md-3">
+                                            <button class="col-4 btn btn-secondary"
+                                                    @click="$router.push({path: '/login'})">
+                                                لغو
+                                            </button>
+                                            <div class="col-1"></div>
+                                            <button class="col-4 btn btn-warning" @click="SendData()">ثبت</button>
+                                        </div>
+                                    </div>
+
                                 </div>
+                            </div>
 
-                                <div class="col-12 d-flex justify-content-center d-block d-md-none my-2">
-                                    <div class="col-10 dropdown-divider"></div>
-                                </div>
+                        </div>
 
-                                <div class="col-md-4">
-                                    <div class="row d-flex justify-content-center justify-content-md-end ml-md-3">
-                                        <button class="col-4 btn btn-secondary" @click="$router.push({path: '/login'})">
-                                            لغو
-                                        </button>
-                                        <div class="col-1"></div>
-                                        <button class="col-4 btn btn-warning" @click="SendData()">ثبت</button>
+                        <div class="row">
+                            <div class="col-12 mt-3">
+                                <transition name="fade" mode="out-in">
+                                    <div v-if="isProgressActive && isMobile" class="progress col-12 mb-3 p-0">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                             role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                                             aria-valuemax="100"
+                                             style="width: 100%"></div>
+                                    </div>
+                                </transition>
+
+                                <transition name="fade" mode="out-in">
+                                    <div class="col-12 alert alert-danger small text-right like-pre mb-3"
+                                         v-if="!isHiddenError && isMobile">{{ Error }}
+                                    </div>
+                                </transition>
+                            </div>
+                        </div>
+
+
+                        <div class="row not-clickable d-flex justify-content-center img-user-pic-sign-up">
+
+                            <div class="col-12 col-md-8 d-flex justify-content-center">
+                                <div id="img_div_holder">
+                                    <!-- photo pick button -->
+
+                                    <img id="pickPhoto" src='../assets/camera_icon.jpg'
+                                         class="img-fluid rounded-circle m-0 border border-white bg-dark clickable"
+                                         alt="user pic"
+                                         onclick="document.getElementById('userPickPhotoFile').click()">
+
+                                    <div id="userPicHolder" class="bg-white rounded-circle shadow-lg p-2">
+                                        <!-- user photo -->
+                                        <img class="rounded-circle m-0"
+                                             alt="user pic"
+                                             width="100%"
+                                             height="100%"
+                                             id="userPic_img">
+                                        <input type="file" id="userPickPhotoFile" class="d-none" accept="image/*"
+                                               v-on:change="HandleNewPic()"/>
                                     </div>
                                 </div>
-
                             </div>
+
                         </div>
 
-                    </div>
 
-                    <div class="row">
-                        <div class="col-12 mt-3">
-                            <transition name="fade" mode="out-in">
-                                <div v-if="isProgressActive && isMobile" class="progress col-12 mb-3">
-                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-                                         role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                         aria-valuemax="100"
-                                         style="width: 100%"></div>
-                                </div>
-                            </transition>
+                        <div class="row mt-4">
+                            <div class="col-lg-8">
 
-                            <transition name="fade" mode="out-in">
-                                <div class="col-12 alert alert-danger small text-right like-pre mb-3"
-                                     v-if="!isHiddenError && isMobile">{{ Error }}
-                                </div>
-                            </transition>
-                        </div>
-                    </div>
+                                <div class="row mb-3 mb-lg-0">
 
 
-                    <div class="row not-clickable d-flex justify-content-center img-user-pic-sign-up">
+                                    <div class="col-12">
+                                        <transition name="fade" mode="out-in">
+                                            <div v-if="isProgressActive && !isMobile" class="progress col-12 mb-3">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
+                                                     role="progressbar" aria-valuenow="75" aria-valuemin="0"
+                                                     aria-valuemax="100"
+                                                     style="width: 100%"></div>
+                                            </div>
+                                        </transition>
 
-                        <div class="col-12 col-md-8 d-flex justify-content-center">
-                            <div id="img_div_holder">
-                                <!-- photo pick button -->
+                                        <transition name="fade" mode="out-in">
+                                            <div class="col-12 alert alert-danger small text-right like-pre mb-3"
+                                                 v-if="!isHiddenError && !isMobile">{{ Error }}
+                                            </div>
+                                        </transition>
+                                    </div>
 
-                                <img id="pickPhoto" src='../assets/camera_icon.jpg'
-                                     class="img-fluid rounded-circle m-0 border border-white bg-dark clickable"
-                                     alt="user pic"
-                                     onclick="document.getElementById('userPickPhotoFile').click()">
+                                    <div class="col-md-6">
+                                        <input class="col-12 form-control mb-4" type="text" v-model="name"
+                                               @input="Change()"
+                                               placeholder="نام"/>
 
-                                <div id="userPicHolder" class="bg-white rounded-circle shadow-lg p-2">
-                                    <!-- user photo -->
-                                    <img class="rounded-circle m-0"
-                                         alt="user pic"
-                                         width="100%"
-                                         height="100%"
-                                         id="userPic_img">
-                                    <input type="file" id="userPickPhotoFile" class="d-none" accept="image/*"
-                                           v-on:change="HandleNewPic()"/>
-                                </div>
-                            </div>
-                        </div>
+                                    </div>
 
-                    </div>
+                                    <div class="col-md-6">
 
+                                        <input class="col-12 form-control mb-4" type="text" v-model="last_name"
+                                               @input="Change()"
+                                               placeholder="نام خانوادگی (اختیاری)"/>
 
-                    <div class="row mt-4">
-                        <div class="col-lg-8">
+                                    </div>
 
-                            <div class="row mb-3 mb-lg-0">
+                                    <div class="col-md-6">
+                                        <select class="col-12 form-control mb-4" v-model="city" @change="Change()">
+                                            <option value="-1" selected disabled hidden>شهر خود را انتخاب کنید
+                                            </option>
+                                            <option value="تهران">تهران</option>
+                                        </select>
+                                    </div>
 
+                                    <div class="col-md-6">
 
-                                <div class="col-12">
-                                    <transition name="fade" mode="out-in">
-                                        <div v-if="isProgressActive && !isMobile" class="progress col-12 mb-3">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
-                                                 role="progressbar" aria-valuenow="75" aria-valuemin="0"
-                                                 aria-valuemax="100"
-                                                 style="width: 100%"></div>
-                                        </div>
-                                    </transition>
+                                        <searchable_select class="col-12 mb-4" :options="zones"
+                                                           :value="zone"
+                                                           :title="'محله خود را انتخاب کنید'"
+                                                           v-on:choose="zone = $event"/>
 
-                                    <transition name="fade" mode="out-in">
-                                        <div class="col-12 alert alert-danger small text-right like-pre mb-3"
-                                             v-if="!isHiddenError && !isMobile">{{ Error }}
-                                        </div>
-                                    </transition>
-                                </div>
+                                    </div>
 
-                                <div class="col-md-6">
-                                    <input class="col-12 form-control mb-4" type="text" v-model="name"
-                                           @input="Change()"
-                                           placeholder="نام"/>
-
-                                </div>
-
-                                <div class="col-md-6">
-
-                                    <input class="col-12 form-control mb-4" type="text" v-model="last_name"
-                                           @input="Change()"
-                                           placeholder="نام خانوادگی (اختیاری)"/>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <select class="col-12 form-control mb-4" v-model="city" @change="Change()">
-                                        <option value="-1" selected disabled hidden>شهر خود را انتخاب کنید
-                                        </option>
-                                        <option value="تهران">تهران</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6">
-
-                                    <searchable_select class="col-12 mb-4" :options="zones"
-                                                       :value="zone"
-                                                       :title="'محله خود را انتخاب کنید'"
-                                                       v-on:choose="zone = $event"/>
-
-                                </div>
-
-                                <div class="col-12">
+                                    <div class="col-12">
                                     <textarea class="col-12 form-control mb-4"
                                               style="height: 50pt; min-height: 50pt; max-height: 50pt;"
                                               v-model="address"
                                               placeholder="آدرس را وارد کنید"
                                               @input="Change()"></textarea>
-                                </div>
-
-                                <div class="col-12 d-flex justify-content-center">
-                                    <div class="col-8 col-lg-4">
-                                        <input class="form-control text-center" type="text" v-model="invite_code"
-                                               placeholder="کد معرف (اختیاری)"/>
                                     </div>
+
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="col-8 col-lg-4">
+                                            <input class="form-control text-center" type="text" v-model="invite_code"
+                                                   placeholder="کد معرف (اختیاری)"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-center mt-3">
+                                        <button class="btn btn-link"
+                                                @click="openInNewTab('https://washmash.com/terms/')">
+                                            قوانین و مقررات را خوانده ام و می پذیرم
+                                        </button>
+                                    </div>
+
                                 </div>
 
-                                <div class="col-12 d-flex justify-content-center mt-3">
-                                    <button class="btn btn-link" @click="openInNewTab('http://washmash.com/terms/')">
-                                        قوانین و مقررات را خوانده ام و می پذیرم
+
+                            </div>
+
+                            <div class="col-lg-4 px-0">
+                                <vl-map class="col-12 m-0 p-0 shadow shadow-lg border" id="map"
+                                        style="height: 300pt;"
+                                        :load-tiles-while-animating="true"
+                                        :load-tiles-while-interacting="true"
+                                        data-projection="EPSG:4326">
+                                    <vl-view :zoom.sync="zoom"
+                                             :center.sync="center"
+                                             :rotation.sync="rotation"></vl-view>
+
+                                    <vl-layer-tile id="osm">
+                                        <vl-source-osm></vl-source-osm>
+                                    </vl-layer-tile>
+
+                                    <vl-layer-vector>
+                                        <vl-source-vector>
+                                            <vl-feature>
+                                                <vl-geom-point :coordinates="center"></vl-geom-point>
+                                            </vl-feature>
+
+                                            <vl-feature>
+                                                <vl-geom-circle :radius="500"
+                                                                :coordinates="center"></vl-geom-circle>
+                                                <vl-style-box>
+                                                    <vl-style-stroke color="red"></vl-style-stroke>
+                                                    <vl-style-fill
+                                                            color="rgba(255, 77, 45, 0.26)"></vl-style-fill>
+                                                </vl-style-box>
+                                            </vl-feature>
+                                        </vl-source-vector>
+                                    </vl-layer-vector>
+                                </vl-map>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+
+            <!-- the modal -->
+            <div class="modal" id="confirm_modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="p-3 border-bottom">
+                            <div class="row">
+                                <div class="col-12  d-flex justify-content-between">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
                                     </button>
+                                    <h5 class="modal-title text-right" id="order_info_modal_Title">پیام تایید</h5>
                                 </div>
-
-                            </div>
-
-
-                        </div>
-
-                        <div class="col-lg-4 px-0">
-                            <vl-map class="col-12 m-0 p-0 shadow shadow-lg border" id="map"
-                                    style="height: 300pt;"
-                                    :load-tiles-while-animating="true"
-                                    :load-tiles-while-interacting="true"
-                                    data-projection="EPSG:4326">
-                                <vl-view :zoom.sync="zoom"
-                                         :center.sync="center"
-                                         :rotation.sync="rotation"></vl-view>
-
-                                <vl-layer-tile id="osm">
-                                    <vl-source-osm></vl-source-osm>
-                                </vl-layer-tile>
-
-                                <vl-layer-vector>
-                                    <vl-source-vector>
-                                        <vl-feature>
-                                            <vl-geom-point :coordinates="center"></vl-geom-point>
-                                        </vl-feature>
-
-                                        <vl-feature>
-                                            <vl-geom-circle :radius="500"
-                                                            :coordinates="center"></vl-geom-circle>
-                                            <vl-style-box>
-                                                <vl-style-stroke color="red"></vl-style-stroke>
-                                                <vl-style-fill
-                                                        color="rgba(255, 77, 45, 0.26)"></vl-style-fill>
-                                            </vl-style-box>
-                                        </vl-feature>
-                                    </vl-source-vector>
-                                </vl-layer-vector>
-                            </vl-map>
-                        </div>
-
-                    </div>
-
-
-                </div>
-
-            </div>
-        </div>
-
-
-        <!-- the modal -->
-        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="p-3 border-bottom">
-                        <div class="row">
-                            <div class="col-12  d-flex justify-content-between">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h5 class="modal-title text-right" id="order_info_modal_Title">پیام تایید</h5>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-body">
-                        <div class="d-block text-center">
-                            <h5>سفارش شما با موفقیت ثبت شد. منتظر تایید سفارش از سوی کارشناسان واش-ماش باشید</h5>
+                        <div class="modal-body">
+                            <div class="d-block text-center">
+                                <h5>سفارش شما با موفقیت ثبت شد. منتظر تایید سفارش از سوی کارشناسان واش-ماش باشید</h5>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
+
         </div>
-
-
     </div>
 
 </template>
@@ -467,6 +471,39 @@
 
 
 <style scoped>
+
+    .main-container {
+        top: 0;
+        overflow-y: auto;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    @media (min-width: 0px) {
+        /*xs*/
+    }
+
+    @media (min-width: 576px) {
+        /*sm*/
+    }
+
+    @media (min-width: 768px) {
+        /*md*/
+    }
+
+    @media (min-width: 992px) {
+        /*lg*/
+        .img-user-pic-sign-up {
+            margin-top: -175pt;
+        }
+        .card-container {
+            margin-top:  75pt;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        /*xl*/
+    }
 
     #userPicHolder {
         width: 100%;

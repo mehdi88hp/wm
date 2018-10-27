@@ -241,14 +241,6 @@
 
                     const main_router_view_container = $('#main_router_view_container');
                     main_router_view_container.height(window_height - nav_height);
-
-                    const activeElement = document.activeElement;
-                    const inputs = ['input', 'textarea'];
-
-                    if (activeElement && inputs.indexOf(activeElement.tagName.toLowerCase()) !== -1) {
-                        activeElement.focus();
-                        console.log('hey !');
-                    }
                 });
             },
 
@@ -327,12 +319,13 @@
 
     .sideNav {
         height: 100%;
-        width: 0;
+        min-width: 250px;
         position: fixed;
         z-index: 2;
-        right: 0;
+        right: -250px;
         background-color: #111;
         overflow-x: hidden;
+        overflow-y: auto;
 
         -o-transition: .5s ease;
         -ms-transition: .5s ease;
@@ -342,25 +335,18 @@
     }
 
     .sideNav-opened {
-        width: 250px;
+        transform: translateX(-250px);
     }
 
     .sideNav a {
-        min-width: 250px;
         padding: 10px;
-        text-decoration: none;
         font-size: 13px;
-        color: #818181;
+        color: white;
         display: block;
-        -o-transition: .3s ease;
-        -ms-transition: .3s ease;
-        -moz-transition: .3s ease;
-        -webkit-transition: .3s ease;
-        transition: .3s ease;
     }
 
     .sideNav a:hover {
-        color: #f1f1f1;
+        color: #c82333;
     }
 
     .dropBtn {

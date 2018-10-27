@@ -121,9 +121,6 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
 
 @media (min-width: 992px) {
     /*lg*/
-    .img-user-pic-sign-up {
-        margin-top: -175pt
-    }
 }
 
 @media (min-width: 1200px) {
