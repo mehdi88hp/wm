@@ -363,16 +363,6 @@
         color: #f1f1f1;
     }
 
-    @media screen and (max-height: 450px) {
-        .sideNav {
-            padding-top: 15px;
-        }
-
-        .sideNav a {
-            font-size: 18px;
-        }
-    }
-
     .dropBtn {
         background-color: transparent;
         color: white;
