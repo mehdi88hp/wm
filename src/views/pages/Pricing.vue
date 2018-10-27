@@ -9,7 +9,7 @@
                     <div class="row">
                         <div class="col">
                             <div v-ripple
-                                 class="col-12 rounded p-3 text-center card-sort"
+                                 class="col-12 rounded p-2 text-center card-sort"
                                  :class="{ 'card-sort': sort !== 'men', 'card-sort-clicked': sort === 'men' }"
                                  @click="doSort('men')">
                                 مردانه
@@ -17,7 +17,7 @@
                         </div>
                         <div class="col">
                             <div v-ripple
-                                 class="col-12 rounded p-3 text-center card-sort"
+                                 class="col-12 rounded p-2 text-center card-sort"
                                  :class="{ 'card-sort': sort !== 'women', 'card-sort-clicked': sort === 'women' }"
                                  @click="doSort('women')">
                                 زنانه
@@ -25,7 +25,7 @@
                         </div>
                         <div class="col">
                             <div v-ripple
-                                 class="col-12 rounded p-3 text-center card-sort"
+                                 class="col-12 rounded p-2 text-center card-sort"
                                  :class="{ 'card-sort': sort !== 'home', 'card-sort-clicked': sort === 'home' }"
                                  @click="doSort('home')">
                                 منسوجات خانگی
@@ -44,7 +44,7 @@
                             </tr>
                             </thead>
                             <tbody style="word-break:break-all;">
-                            <tr v-for="(service, key) in services" :key="key">
+                            <tr v-for="(service, key) in pages[currentPage-1]" :key="key">
                                 <td>{{ service.title }}</td>
                                 <td>{{ service.service }}</td>
                                 <td>{{ service.gender }}</td>
@@ -52,6 +52,15 @@
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="row d-flex justify-content-center mt-2">
+                        <div class="col-12 col-md-6">
+                            <pagination
+                                    :pagesCount="pagesLength"
+                                    :currentPage="currentPage"
+                                    v-on:select="currentPage = $event"/>
+                        </div>
                     </div>
 
                 </div>
@@ -64,12 +73,16 @@
 
 
 <script>
+    import Pagination from "../../components/Pagination";
+
     export default {
         name: "pricing",
         data() {
             return {
 
                 sort: 'men',
+
+                currentPage: 1,
 
                 services: [],
 
@@ -79,12 +92,30 @@
             }
         },
         computed: {
+
+            pages() {
+                return this.chunk(this.services, 10);
+            },
+            pagesLength() {
+                return this.pages.length;
+            },
+
         },
 
         components: {
+            Pagination
         },
 
         methods: {
+
+            chunk: function (array, size) {
+                if (!array) return [];
+                const firstChunk = array.slice(0, size);
+                if (!firstChunk.length) {
+                    return array;
+                }
+                return [firstChunk].concat(this.chunk(array.slice(size, array.length), size));
+            },
 
             doSort: function (sort) {
                 this.sort = sort;
@@ -95,7 +126,7 @@
                     } else {
                         this.services = this.men_list = this.$userData.services.filter(function (service) {
                             return service.gender === 'مردانه';
-                        }).slice(0,11);
+                        });
 
                     }
 
@@ -106,7 +137,7 @@
                     } else {
                         this.services = this.women_list = this.$userData.services.filter(function (service) {
                             return service.gender === 'زنانه';
-                        }).slice(0,11);
+                        });
 
                     }
 
@@ -117,10 +148,14 @@
                     } else {
                         this.services = this.home_list = this.$userData.services.filter(function (service) {
                             return service.gender === 'منسوجات خانگی';
-                        }).slice(0,11);
+                        });
 
                     }
 
+                }
+
+                if (this.currentPage > this.pagesLength) {
+                    this.currentPage = this.pagesLength;
                 }
             },
 
@@ -139,7 +174,7 @@
         beforeMount: function () {
             this.services = this.men_list = this.$userData.services.filter(function (service) {
                 return service.gender === 'مردانه';
-            }).slice(0,11);
+            });
         },
         mounted: function () {
         },

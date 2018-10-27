@@ -174,33 +174,6 @@
         </div>
 
 
-        <!-- the modal -->
-        <div class="modal" id="confirm_modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="p-3 border-bottom">
-                        <div class="row">
-                            <div class="col-12  d-flex justify-content-between">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                <h5 class="modal-title text-right" id="order_info_modal_Title">پیام تایید</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div class="d-block text-center">
-                            <h5>سفارش شما با موفقیت ثبت شد. منتظر تایید سفارش از سوی کارشناسان واش-ماش باشید</h5>
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">متوجه شدم</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
     </div>
 
 </template>

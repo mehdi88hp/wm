@@ -10,9 +10,18 @@
 
         </div>
 
-        <div v-if="Array.isArray(orders) && orders.length" class="row h-auto p-2 px-lg-0 py-lg-5" dir="rtl">
+        <div v-if="pagesLength > 1" class="row d-flex justify-content-center mx-2 mt-3 mb-1">
+            <div class="col-12 col-md-6 bg-light rounded shadow-lg p-0">
+                <pagination class="my-2 mx-1" dir="rtl"
+                        :pagesCount="pagesLength"
+                        :currentPage="currentPage"
+                        v-on:select="currentPage = $event"/>
+            </div>
+        </div>
 
-            <div class="col-lg-6 p-2" v-for="(order, index) in orders" v-bind:key="index">
+        <div v-if="Array.isArray(orders) && orders.length" class="row h-auto p-2 px-lg-0" dir="rtl">
+
+            <div class="col-lg-6 p-2" v-for="(order, index) in pages[currentPage-1]" v-bind:key="index">
                 <div class="card shadow shadow-sm card-hover-blue"
                      @click='HandleModal(order)'>
                     <div class="card-body">
@@ -233,6 +242,7 @@
 
 <script>
 
+    import Pagination from "../../components/Pagination";
     export default {
         name: "orders",
         data() {
@@ -240,6 +250,8 @@
                 data: [],
                 orders: [],
                 factors: [],
+
+                currentPage: 1,
 
                 modal_title: '',
 
@@ -263,9 +275,18 @@
             }
         },
         computed: {
+
+            pages() {
+                return this.chunk(this.orders, 8);
+            },
+            pagesLength() {
+                return this.pages.length;
+            },
+
         },
 
         components: {
+            Pagination
         },
 
         methods: {

@@ -4,7 +4,7 @@
         <div class="row h-auto d-flex justify-content-center p-2 px-md-0 py-md-5">
             <div class="card h-auto shadow shadow-sm col-12 col-md-8 p-0 p-md-2 text-right">
 
-                <div class="card-body pt-1 pt-md-2 px-1" dir="rtl">
+                <div class="card-body pt-1 pt-md-2 px-1 pb-0" dir="rtl">
 
 
                     <transition name="fade" mode="out-in">
@@ -48,7 +48,7 @@
 
                             <div v-if="Array.isArray(bills) && bills.length"
                                  class="row border border-success rounded mb-2 p-3 d-flex justify-content-center card-cash-info"
-                                 v-for="(credit, key) in bills"
+                                 v-for="(credit, key) in pages[currentPage-1]"
                                  :key="key">
 
                                 <div class="col-12 text-center">{{ credit.date + " ساعت " + credit.time }}</div>
@@ -64,6 +64,16 @@
 
                             <div v-if="!Array.isArray(bills) || !bills.length"
                                  class="h5 col-12 text-info mt-4 text-center">شما هیچ صورتحسابی ندارید !
+                            </div>
+
+
+                            <div v-if="pagesLength > 1" class="row d-flex justify-content-center mt-4 mb-2">
+                                <div class="col-12 col-md-6">
+                                    <pagination
+                                            :pagesCount="pagesLength"
+                                            :currentPage="currentPage"
+                                            v-on:select="currentPage = $event"/>
+                                </div>
                             </div>
 
                         </div>
@@ -140,6 +150,7 @@
 
 
 <script>
+    import Pagination from "../../components/Pagination";
     export default {
         name: "new_order",
         data() {
@@ -149,6 +160,7 @@
 
                 amount: '',
 
+                currentPage: 1,
 
                 IncreaseBalance: false,
 
@@ -159,12 +171,30 @@
             }
         },
         computed: {
+
+            pages() {
+                return this.chunk(this.bills, 5);
+            },
+            pagesLength() {
+                return this.pages.length;
+            },
+
         },
 
         components: {
+            Pagination
         },
 
         methods: {
+
+            chunk: function (array, size) {
+                if (!array) return [];
+                const firstChunk = array.slice(0, size);
+                if (!firstChunk.length) {
+                    return array;
+                }
+                return [firstChunk].concat(this.chunk(array.slice(size, array.length), size));
+            },
 
             LeadToPay: function () {
 
