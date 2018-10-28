@@ -473,7 +473,8 @@
 <style scoped>
 
     .main-container {
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
         top: 0;
         bottom: 0;
         left: 0;

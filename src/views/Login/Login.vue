@@ -100,8 +100,8 @@
 <style scoped>
 
     .main-container {
-        overflow-y: auto;
-        overflow-x: hidden;
+        /*overflow-y: auto;*/
+        overflow: hidden;
         top: 0;
         bottom: 0;
         left: 0;
