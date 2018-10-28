@@ -7,34 +7,14 @@
                 <div class="card-body p-2" dir="rtl">
 
                     <div class="row">
-                        <div class="col">
-                            <div v-ripple
-                                 class="col-12 rounded p-2 text-center card-sort"
-                                 :class="{ 'card-sort': sort !== 'men', 'card-sort-clicked': sort === 'men' }"
-                                 @click="doSort('men')">
-                                مردانه
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div v-ripple
-                                 class="col-12 rounded p-2 text-center card-sort"
-                                 :class="{ 'card-sort': sort !== 'women', 'card-sort-clicked': sort === 'women' }"
-                                 @click="doSort('women')">
-                                زنانه
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div v-ripple
-                                 class="col-12 rounded p-2 text-center card-sort"
-                                 :class="{ 'card-sort': sort !== 'home', 'card-sort-clicked': sort === 'home' }"
-                                 @click="doSort('home')">
-                                منسوجات خانگی
-                            </div>
+                        <div class="col-12 p-0">
+                            <input id="search_input" class="form-control" type="text" placeholder="جست جو ..." @input="doSearch()"/>
                         </div>
                     </div>
 
-                    <div class="row mt-3">
-                        <table class="table table-striped table-hover">
+                    <div class="row mt-2">
+                        <table class="table table-hover table-borderless mx-2"
+                               :class="{'table-striped': !$parent.isMobileDevice}">
                             <thead class="bg-dark text-white">
                             <tr>
                                 <th>نام</th>
@@ -45,13 +25,17 @@
                             </thead>
                             <tbody style="word-break:break-all;">
                             <tr v-for="(service, key) in pages[currentPage-1]" :key="key">
-                                <td>{{ service.title }}</td>
-                                <td>{{ service.service }}</td>
-                                <td>{{ service.gender }}</td>
-                                <td style="word-break:keep-all;">{{ toMoneyFormat(service.price) }}</td>
+                                <td data-label="نام">{{ service.title }}</td>
+                                <td data-label="سرویس">{{ service.service }}</td>
+                                <td data-label="دسته بندی">{{ service.gender }}</td>
+                                <td data-label="قیمت (ریال)" style="word-break:keep-all;">{{ toMoneyFormat(service.price) }}</td>
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="row d-flex justify-content-center">
+                        <h5 v-if="searchNoResult" class="text-danger my-3">نتیجه ای یافت نشد</h5>
                     </div>
 
                     <div class="row d-flex justify-content-center mt-2">
@@ -80,25 +64,27 @@
         data() {
             return {
 
-                sort: 'men',
-
                 currentPage: 1,
 
-                services: [],
+                searchNoResult: false,
 
-                men_list: [],
-                women_list: [],
-                home_list: [],
+                services: [],
+                searchedServices: [],
+
             }
         },
         computed: {
 
             pages() {
-                return this.chunk(this.services, 10);
+                return this.chunk(this.searchedServices, 10);
             },
             pagesLength() {
                 return this.pages.length;
             },
+
+        },
+
+        watch: {
 
         },
 
@@ -117,46 +103,19 @@
                 return [firstChunk].concat(this.chunk(array.slice(size, array.length), size));
             },
 
-            doSort: function (sort) {
-                this.sort = sort;
-                if (sort === 'men') {
-                    if (Array.isArray(this.men_list) && this.men_list.length) {
-                        this.services = this.men_list;
+            doSearch: function () {
+                const word = document.getElementById('search_input').value.trim();
+                const THIS = this;
+                this.searchedServices = this.services.filter(function (row) {
+                    return row.title.indexOf(word) !== -1
+                        || row.service.indexOf(word) !== -1
+                        || row.gender.indexOf(word) !== -1
+                        || THIS.toMoneyFormat(row.price).indexOf(word) !== -1;
+                });
+                this.currentPage = 1;
 
-                    } else {
-                        this.services = this.men_list = this.$userData.services.filter(function (service) {
-                            return service.gender === 'مردانه';
-                        });
+                this.searchNoResult = !this.searchedServices.length;
 
-                    }
-
-                } else if (sort === 'women') {
-                    if (Array.isArray(this.women_list) && this.women_list.length) {
-                        this.services = this.women_list;
-
-                    } else {
-                        this.services = this.women_list = this.$userData.services.filter(function (service) {
-                            return service.gender === 'زنانه';
-                        });
-
-                    }
-
-                } else if (sort === 'home') {
-                    if (Array.isArray(this.home_list) && this.home_list.length) {
-                        this.services = this.home_list;
-
-                    } else {
-                        this.services = this.home_list = this.$userData.services.filter(function (service) {
-                            return service.gender === 'منسوجات خانگی';
-                        });
-
-                    }
-
-                }
-
-                if (this.currentPage > this.pagesLength) {
-                    this.currentPage = this.pagesLength;
-                }
             },
 
             toMoneyFormat: function (number) {
@@ -172,9 +131,7 @@
             }
         },
         beforeMount: function () {
-            this.services = this.men_list = this.$userData.services.filter(function (service) {
-                return service.gender === 'مردانه';
-            });
+            this.searchedServices = this.services = this.$userData.services;
         },
         mounted: function () {
         },
@@ -186,31 +143,6 @@
 
     *:focus {
         outline: 0;
-    }
-
-    .card-sort {
-        color: #138496;
-        background-color: #ffffff;
-        -o-transition: .5s;
-        -ms-transition: .5s;
-        -moz-transition: .5s;
-        -webkit-transition: .5s;
-        transition: .5s;
-    }
-
-    .card-sort:hover {
-        cursor: pointer;
-        color: #ffffff;
-        background-color: #138496;
-    }
-
-    .card-sort-clicked {
-        color: #ffffff;
-        background-color: #138496;
-    }
-
-    .card-sort-clicked:hover {
-        cursor: pointer;
     }
 
     hr {

@@ -1,10 +1,11 @@
 <template>
 
-    <div class="vw-100 vh-100 bg">
+    <div class="main-container bg">
 
         <div class="container">
-            <div class="row vh-100 d-flex justify-content-center align-items-center p-2 p-lg-0">
-                <div class="col-lg-6 shadow p-3 mb-5 bg-white rounded">
+            <div class="row d-flex justify-content-center align-items-center p-2 p-lg-0"
+                 :class="{ 'fixed-vh-100': view !== 'codeForm' && isMobileDevice || !isMobileDevice, 'card-container': view === 'codeForm' && isMobileDevice }">
+                <div class="col-lg-6 shadow p-3 mb-5 bg-light rounded">
                     <!-- the logo -->
                     <div class="row d-flex justify-content-center">
                         <div class="col-12 col-md-10 mt-md-5">
@@ -18,7 +19,6 @@
                     <transition name="fade" mode="out-in">
                         <component v-bind:is="view"></component>
                     </transition>
-
 
 
                     <div v-if="isProgressActive" class="progress">
@@ -37,8 +37,6 @@
 
 
 <script>
-
-
 
 
     export default {
@@ -62,6 +60,8 @@
                 phone: '',
                 code: '',
                 Error: '',
+
+                isMobileDevice: false,
             }
         },
 
@@ -81,6 +81,9 @@
             },
         },
         beforeMount: function () {
+
+            this.isMobileDevice = window.innerWidth < 576;
+
             if (localStorage.getItem('logging-out')) {
 
                 localStorage.removeItem('logging-out');
@@ -95,6 +98,26 @@
 
 
 <style scoped>
+
+    .main-container {
+        overflow-y: auto;
+        overflow-x: hidden;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: fixed;
+    }
+
+    .card-container {
+        height: auto;
+
+        -o-transition: .5s;
+        -ms-transition: .5s;
+        -moz-transition: .5s;
+        -webkit-transition: .5s;
+        transition: .5s;
+    }
 
     .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
         color: darkred;

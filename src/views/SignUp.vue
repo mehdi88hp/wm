@@ -473,10 +473,16 @@
 <style scoped>
 
     .main-container {
+        overflow: hidden;
         top: 0;
-        overflow-y: auto;
-        height: 100vh;
-        width: 100vw;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: fixed;
+    }
+
+    .card-container {
+        height: auto;
     }
 
     @media (min-width: 0px) {
@@ -496,8 +502,8 @@
         .img-user-pic-sign-up {
             margin-top: -175pt;
         }
-        .card-container {
-            margin-top:  75pt;
+        .main-container {
+            padding-top:  75pt;
         }
     }
 

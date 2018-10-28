@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="row h-auto d-flex justify-content-center p-2 px-md-0 py-md-5">
-            <div class="card h-auto shadow shadow-sm col-12 col-md-10 p-0 p-md-2 text-right">
+            <div class="card h-auto shadow shadow-sm col-12 col-md-10 p-2 text-right">
 
                 <div class="card-body pt-1 pt-md-2 px-1" dir="rtl">
 
@@ -73,7 +73,7 @@
                                         </div>
 
                                         <div class="col-md-4">
-                                            <div class="row d-flex justify-content-center justify-content-md-end ml-md-3 mt-3 mt-md-0">
+                                            <div class="row d-flex justify-content-center justify-content-md-end ml-md-3 mt-0">
                                                 <button class="col-4 btn btn-secondary" @click="Cancel()">لغو</button>
                                                 <div class="col-1"></div>
                                                 <button class="col-4 btn btn-warning" @click="SendData()">ثبت</button>
@@ -416,11 +416,33 @@
     }
 
     .balance-card {
-        font-size: 20pt;
+        font-size: 1.75rem;
     }
 
     .field-cash-info {
-        font-size: 15pt;
+        font-size: 1.3rem;
+    }
+
+    @media (max-width: 576px) {
+        .balance-card {
+            font-size: 1.2rem;
+        }
+
+        .field-cash-info {
+            font-size: 1rem;
+        }
+
+    }
+
+    @media (min-width: 576px) and (max-width: 992px) {
+        .balance-card {
+            font-size: 1.3rem;
+        }
+
+        .field-cash-info {
+            font-size: 1.1rem;
+        }
+
     }
 
     hr {

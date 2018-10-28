@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="row h-auto d-flex justify-content-center p-2 px-md-0 py-md-5">
-            <div class="card h-auto shadow shadow-sm col-12 col-md-8 p-0 p-md-2 text-right">
+            <div class="card h-auto shadow shadow-sm col-12 col-md-8 p-2 text-right">
 
                 <div class="card-body pt-1 pt-md-2 px-1 pb-0" dir="rtl">
 
@@ -17,12 +17,12 @@
                                         <div class="row balance-card">
                                             <div class="col-md-9">
                                                 <div class="row">
-                                                    <div class="col-md-6 text-right font-weight-bold d-flex justify-content-start">
+                                                    <div class="col-6 text-right font-weight-bold d-flex justify-content-start">
                                                         <i class="fas fa-2x fa-file-invoice-dollar"></i>
                                                         &nbsp;
                                                         <span class="align-self-center">اعتبار فعلی :</span>
                                                     </div>
-                                                    <div class="col-md-6 text-left font-weight-bold align-self-center mt-2 mt-md-0">
+                                                    <div class="col-6 text-left font-weight-bold align-self-center mt-2 mt-md-0">
                                                         {{ toMoneyFormat($userData.credit/10) }}
                                                         تومان
                                                     </div>
@@ -265,11 +265,33 @@
     }
 
     .balance-card {
-        font-size: 20pt;
+        font-size: 1.75rem;
     }
 
     .field-cash-info {
-        font-size: 15pt;
+        font-size: 1.3rem;
+    }
+
+    @media (max-width: 576px) {
+        .balance-card {
+            font-size: 1.2rem;
+        }
+
+        .field-cash-info {
+            font-size: 1rem;
+        }
+
+    }
+
+    @media (min-width: 576px) and (max-width: 992px) {
+        .balance-card {
+            font-size: 1.3rem;
+        }
+
+        .field-cash-info {
+            font-size: 1.1rem;
+        }
+
     }
 
     hr {

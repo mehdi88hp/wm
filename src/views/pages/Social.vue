@@ -2,7 +2,7 @@
 
     <div class="container">
         <div class="row h-auto d-flex justify-content-center p-2 px-lg-0 py-lg-5">
-            <div class="card h-auto shadow shadow-sm col-12 col-lg-8 p-0 p-md-2 text-right">
+            <div class="card h-auto shadow shadow-sm col-12 col-lg-8 p-2 text-right">
 
                 <div class="card-body pt-1 pt-md-2 px-1" dir="rtl">
 

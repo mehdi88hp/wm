@@ -1,7 +1,6 @@
 <template>
     <div class="vh-100 vw-100 text-right">
 
-
         <div id="navBar"
              class="h-auto w-100 bg-light py-0 px-2 shadow-sm d-flex justify-content-between align-items-center sticky-top"
              dir="rtl">
@@ -10,7 +9,7 @@
                 <div id="dropBtn" v-on:click="ShowDropdown()"
                      class="dropBtn row align-items-center nav-items-height clickable h-auto">
                     <img id="userPic" v-bind:src="userPic"
-                         class="rounded-circle bg-dark float-right not-clickable user-pic-Main shadow" height="40"
+                         class="rounded-circle float-right not-clickable user-pic-Main shadow" height="40"
                          width="40"/>
                     <div id="menu" class="float-left align-items-center mr-3 not-clickable"
                          :class="{ change: dropDown_opened }">
@@ -160,10 +159,6 @@
 
 <script>
 
-    // import Vue from 'vue'
-    // import 'popper.js';
-    // import 'bootstrap';
-
     export default {
         name: "Main",
         props: {},
@@ -186,7 +181,6 @@
         methods: {
 
             ShowDropdown: function () {
-                this.isMobileDevice = window.innerWidth < 576;
                 this.dropDown_opened = !this.dropDown_opened;
 
             },
@@ -244,16 +238,6 @@
                 });
             },
 
-
-            focusToElementOnKeyboardOpen: function (e) {
-                setTimeout(function () {
-                    if (e.target.tagName.toLowerCase() === "input" || e.target.tagName.toLowerCase() === "textarea") {
-                        e.target.scrollIntoView();
-                    }
-                }, 500);
-
-            },
-
         },
 
         mounted() {
@@ -261,6 +245,7 @@
             this.$nextTick(() => {
                 window.addEventListener('resize', () => {
                     this.windowHeight = window.innerHeight;
+                    this.isMobileDevice = window.innerWidth < 576;
                 });
             });
 
@@ -290,15 +275,12 @@
 
             this.setViewHeight();
 
-            document.addEventListener('focusin', this.focusToElementOnKeyboardOpen);
+            this.isMobileDevice = window.innerWidth < 576;
 
 
         },
         destroyed() {
             document.removeEventListener('click', this.documentClick);
-
-
-            document.removeEventListener('focusin', this.focusToElementOnKeyboardOpen);
 
             this.$nextTick(() => {
                 window.removeEventListener('resize', () => {
@@ -319,7 +301,8 @@
 
     .sideNav {
         height: 100%;
-        min-width: 250px;
+        width: 250px;
+        max-width: 250px;
         position: fixed;
         z-index: 2;
         right: -250px;

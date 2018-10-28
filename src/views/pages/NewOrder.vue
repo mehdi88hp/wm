@@ -298,11 +298,11 @@
                                                 <div class="row mt-3" dir="rtl">
                                                     <p class="card-text mx-2"
                                                        v-if="order_service_row.fixed_price">
-                                                        <span>هزینه ثابت :‌ </span>&emsp;<span>{{ order_service_row.fixed_price }}</span>
+                                                        <span>هزینه ثابت :‌ </span>&emsp;<span>{{ toMoneyFormat(order_service_row.fixed_price) }}</span>
                                                     </p>
                                                     <p class="card-text mx-2"
                                                        v-if="order_service_row.variable_price">
-                                                        <span>هزینه متغیر :‌ </span>&emsp;<span>{{ order_service_row.variable_price }}</span>
+                                                        <span>هزینه متغیر :‌ </span>&emsp;<span>{{ toMoneyFormat(order_service_row.variable_price) }}</span>
                                                     </p>
                                                 </div>
 
@@ -335,7 +335,7 @@
                                                         <div class="card-body">
                                                             <div class="row">
                                                                 <h5 class="card-title col-6 text-left">
-                                                                    {{ extra_option_row.price }}
+                                                                    {{ toMoneyFormat(extra_option_row.price) }}
                                                                 </h5>
                                                                 <h5 class="card-title col-6">
                                                                     {{ extra_option_row.title }}
@@ -460,7 +460,7 @@
                                                     </div>
 
                                                     <table id="order_info_modal_table"
-                                                           class="table table-borderless table-hover align-self-center mt-2"
+                                                           class="table table-borderless table-hover align-self-center mt-2 mx-2"
                                                            dir="rtl">
                                                         <thead>
                                                         <tr class="bg-dark text-white">
@@ -475,11 +475,11 @@
                                                         <tbody>
                                                         <tr v-for="(option, index) in getOrderExtraOption()"
                                                             v-bind:key="index">
-                                                            <td>{{ index+1 }}</td>
-                                                            <td>{{ option.title }}</td>
-                                                            <td>{{ option.price }}</td>
-                                                            <td>{{ option.count }}</td>
-                                                            <td>{{ option.count * option.price }}</td>
+                                                            <td data-label="#">{{ index+1 }}</td>
+                                                            <td data-label="عنوان">{{ option.title }}</td>
+                                                            <td data-label="هزینه واحد (ریال)">{{ option.price }}</td>
+                                                            <td data-label="تعداد">{{ option.count }}</td>
+                                                            <td data-label="قیمت کل (ریال)">{{ option.count * option.price }}</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>

@@ -2,22 +2,21 @@
 
     <div class="container">
 
-        <div class="row h-auto d-flex justify-content-center p-2 px-lg-0 py-lg-5">
+        <div class="row h-auto d-flex justify-content-center p-3 px-lg-0 py-lg-5">
 
             <div class="accordion col-12 col-lg-8 px-0" id="accordion" dir="rtl">
 
                 <div v-for="(faq, key) in $userData.FAQ" :key="key">
 
-                    <div class="rounded bg-info p-4 text-white shadow-lg mb-4 font-weight-bold" :id="'heading'+key"
+                    <div class="rounded bg-info p-4 text-white shadow-lg mb-4 font-weight-bold"
                          data-toggle="collapse"
-                         :data-target="'#collapse'+key"
-                         aria-expanded="false" :aria-controls="'collapse'+key">
+                         aria-expanded="true">
                         <h5 class="col-12 text-right">
                             {{ faq.question }}
                         </h5>
                     </div>
 
-                    <div class="collapse" :id="'collapse'+key" :class="{show: !key}" :aria-labelledby="'heading'+key"
+                    <div class="collapse show"
                          data-parent="#accordion">
                         <div class="rounded bg-white py-5 px-5 mb-4 text-justify shadow-lg">
                             {{ faq.answer }}

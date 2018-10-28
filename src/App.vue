@@ -17,22 +17,23 @@
             return {}
         },
 
-        methods: {},
+        methods: {
+            focusToElementOnKeyboardOpen: function (e) {
+                setTimeout(function () {
+                    const element = e.target;
+                    if (element.tagName.toLowerCase() === "input" || element.tagName.toLowerCase() === "textarea") {
+                        element.scrollIntoView();
+                    }
+                }, 500);
+
+            }
+        },
 
         mounted() {},
         beforeMount() {
 
         },
         created() {
-            // document.title = 'واش ماش';
-            //
-            // var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-            // link.type = 'image/x-icon';
-            // link.rel = 'shortcut icon';
-            // link.href = require('../src/assets/favicon.png');
-            // document.getElementsByTagName('head')[0].appendChild(link);
-
-
             // time schedule to refresh data
             const THIS = this;
             const loop = setInterval(function () {
@@ -46,7 +47,13 @@
 
             }, 120000);
 
+            document.addEventListener('focusin', this.focusToElementOnKeyboardOpen);
+
+        },
+        destroyed() {
+            document.removeEventListener('focusin', this.focusToElementOnKeyboardOpen);
         }
+
 
     }
 </script>
