@@ -172,13 +172,12 @@
                         </div>
 
 
-                        <div v-if="factors.length" class="row mt-4">
+                        <div v-if="factors.length" class="container-fluid">
+                        <div class="row mt-4">
                             <h4 class="col-12 text-center mb-2">فاکتورها</h4>
 
-                            <table id="order_info_modal_table"
-                                   class="table table-hover table-borderless mx-2"
+                            <table class="table table-hover table-borderless col-12"
                                    :class="{'table-striped': !$parent.isMobileDevice}"
-                                   style="table-layout:fixed; width:100%;"
                                    dir="rtl">
                                 <thead>
                                 <tr class="bg-dark text-white">
@@ -191,17 +190,18 @@
                                 </tr>
                                 </thead>
 
-                                <tbody style="word-break:break-all;">
+                                <tbody>
                                 <tr v-for="(factor, index) in factors" v-bind:key="index">
                                     <td data-label="#">{{ index+1 }}</td>
                                     <td data-label="عنوان">{{ factor['title'] }}</td>
                                     <td data-label="دسته بندی">{{ factor['service'] }}</td>
-                                    <td data-label="هزینه واحد (ریال)" style="word-break:keep-all;">{{ toMoneyFormat(factor['price']) }}</td>
+                                    <td data-label="هزینه واحد (ریال)">{{ toMoneyFormat(factor['price']) }}</td>
                                     <td data-label="تعداد">{{ toMoneyFormat(factor['number']) }}</td>
-                                    <td data-label="قیمت کل (ریال)" style="word-break:keep-all;">{{ toMoneyFormat(factor['total']) }}</td>
+                                    <td data-label="قیمت کل (ریال)">{{ toMoneyFormat(factor['total']) }}</td>
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
                         </div>
                     </div>
                     <div class="modal-footer" dir="rtl">

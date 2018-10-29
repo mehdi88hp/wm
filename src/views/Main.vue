@@ -146,7 +146,7 @@
 
 
         <div id="main_router_view_container"
-             :style="[dropDown_opened ? {'overflow-y': 'hidden', 'margin-right': '5px'} : {'overflow-y': 'auto'}]">
+             :style="[dropDown_opened ? {'overflow-y': 'hidden', 'margin-right': PaddingIfHasVerticalScroll()} : {'overflow-y': 'auto', '-webkit-overflow-scrolling': 'touch'}]">
             <transition name="fade" mode="out-in">
                 <!--<keep-alive>-->
                 <router-view id="main_router_view" style="height: 100%"/>
@@ -179,6 +179,21 @@
         },
 
         methods: {
+
+            /** @return {string} */
+            PaddingIfHasVerticalScroll: function () {
+                let padding = '0';
+                    if (
+                        document.getElementById('main_router_view_container').scrollHeight
+                        >
+                        document.getElementById('main_router_view_container').clientHeight
+                    ) {
+                        padding = '5px';
+                    }
+
+                return padding;
+
+            },
 
             ShowDropdown: function () {
                 this.dropDown_opened = !this.dropDown_opened;
@@ -289,8 +304,7 @@
             });
         }
 
-    }
-
+    };
 </script>
 
 <style scoped>
@@ -304,7 +318,7 @@
         width: 250px;
         max-width: 250px;
         position: fixed;
-        z-index: 2;
+        z-index: 99;
         right: -250px;
         background-color: #111;
         overflow-x: hidden;

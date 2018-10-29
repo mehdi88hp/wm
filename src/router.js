@@ -33,13 +33,6 @@ const router = new Router({
             name: 'dashboard',
             component: Main,
 
-            meta: {
-                title: 'QQQQ',
-                metaTags: [
-
-                ]
-            },
-
             children: [
                 {
                     path: 'orders',
@@ -100,7 +93,7 @@ const router = new Router({
 router.beforeEach(function (to, from, next) {
 
     if (to.query.refresh) {
-        console.log('YES');
+        // console.log('YES');
         Vue.prototype.$initData(function () {
             AuthMiddleware(to, next);
 

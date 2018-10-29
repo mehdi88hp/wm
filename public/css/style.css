@@ -94,7 +94,13 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
 }
 
 
-
+.sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    padding: 10px 5px;
+}
 
 
 

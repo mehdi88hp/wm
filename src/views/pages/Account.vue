@@ -43,13 +43,13 @@
                                 <h5 class="col-lg-6">{{ toMoneyFormat($userData.credit/10) }} تومان</h5>
                             </div>
                             <div class="row col-12 mt-4">
-                                <button class="btn btn-outline-danger col m-2" v-on:click="isEditing=!isEditing">ویرایش
+                                <button class="btn btn-outline-danger col-md m-2" v-on:click="isEditing=!isEditing">ویرایش
                                     حساب
                                 </button>
-                                <button class="btn btn-outline-dark col m-2"
+                                <button class="btn btn-outline-dark col-md m-2"
                                         @click="$router.push({path: '/dashboard/bills'})">افزایش موجودی
                                 </button>
-                                <button class="btn btn-outline-info col m-2"
+                                <button class="btn btn-outline-info col-md m-2"
                                         @click="$router.push({path: '/dashboard/addresses'})">آدرس های من
                                 </button>
                             </div>

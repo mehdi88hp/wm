@@ -4,9 +4,9 @@
         <div class="row h-auto d-flex justify-content-center p-2 py-lg-5 px-lg-0">
             <div style="padding: 0;" class="card h-auto shadow shadow-sm col-12 text-right">
 
-                <div class="card-header">
+                <div class="card-header sticky bg-light shadow-sm">
                     <!-- level controller button box -->
-                    <div class="row d-flex justify-content-between">
+                    <div class="row d-flex justify-content-between mx-2">
 
 
                         <transition name="fade" mode="out-in">
@@ -453,14 +453,15 @@
                                                     </div>
                                                 </div>
 
-                                                <div v-if="getOrderExtraOption().length && extraOptionsAllowed" class="row mt-4">
+                                                <div v-if="getOrderExtraOption().length && extraOptionsAllowed" class="container-fluid">
+                                                <div class="row mt-4">
 
                                                     <div class="col-12 d-flex justify-content-center">
                                                         <h3>آیتم های اضافی</h3>
                                                     </div>
 
                                                     <table id="order_info_modal_table"
-                                                           class="table table-borderless table-hover align-self-center mt-2 mx-2"
+                                                           class="table table-borderless table-hover align-self-center mt-2 col-12"
                                                            dir="rtl">
                                                         <thead>
                                                         <tr class="bg-dark text-white">
@@ -483,6 +484,7 @@
                                                         </tr>
                                                         </tbody>
                                                     </table>
+                                                </div>
                                                 </div>
                                             </div>
 

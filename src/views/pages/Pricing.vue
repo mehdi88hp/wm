@@ -13,7 +13,7 @@
                     </div>
 
                     <div class="row mt-2">
-                        <table class="table table-hover table-borderless mx-2"
+                        <table class="table table-hover table-borderless col-12"
                                :class="{'table-striped': !$parent.isMobileDevice}">
                             <thead class="bg-dark text-white">
                             <tr>
@@ -23,12 +23,12 @@
                                 <th>قیمت (ریال)</th>
                             </tr>
                             </thead>
-                            <tbody style="word-break:break-all;">
+                            <tbody>
                             <tr v-for="(service, key) in pages[currentPage-1]" :key="key">
                                 <td data-label="نام">{{ service.title }}</td>
                                 <td data-label="سرویس">{{ service.service }}</td>
                                 <td data-label="دسته بندی">{{ service.gender }}</td>
-                                <td data-label="قیمت (ریال)" style="word-break:keep-all;">{{ toMoneyFormat(service.price) }}</td>
+                                <td data-label="قیمت (ریال)">{{ toMoneyFormat(service.price) }}</td>
                             </tr>
                             </tbody>
                         </table>
