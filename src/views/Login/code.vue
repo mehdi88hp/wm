@@ -9,7 +9,7 @@
                         <label v-html="phone"></label> را وارد کنید</label>
                     <input id="codeField"
                            type="text"
-                           v-bind:oninput="checkCode()"
+                           @input="checkCode()"
                            v-bind:class="{
                            border : isCodeBorderActive,
                            'border-danger' : isCodeBorderActive,
@@ -24,7 +24,7 @@
 
                     <transition name="fade">
                         <div class="alert alert-danger small mt-2 like-pre"
-                             v-if="!isCodeHiddenError">{{ Error }}
+                             v-if="!isCodeHiddenError" dir="rtl">{{ Error }}
                         </div>
                     </transition>
                 </div>
@@ -109,7 +109,7 @@
         methods: {
 
             checkCode: function () {
-                this.isCodeBorderActive = !this.code.match(/^([0-9]|[۰-۹])+$/);
+                this.isCodeBorderActive = !this.code.match(/^([0-9]|[۰-۹]|[٠-٩])+$/);
 
                 if (this.countWords(this.code) > 0) {
                     if (this.isCodeBorderActive) {
@@ -254,11 +254,18 @@
 
 
             convertNumbers2English: function (string) {
-                return string.replace(/[\u0660-\u0669]/g, function (c) {
-                    return c.charCodeAt(0) - 0x0660;
-                }).replace(/[\u06f0-\u06f9]/g, function (c) {
-                    return c.charCodeAt(0) - 0x06f0;
+                // convert persian digits [۰۱۲۳۴۵۶۷۸۹]
+                let e = '۰'.charCodeAt(0);
+                string = string.replace(/[۰-۹]/g, function(t) {
+                    return t.charCodeAt(0) - e;
                 });
+
+                // convert arabic indic digits [٠١٢٣٤٥٦٧٨٩]
+                e = '٠'.charCodeAt(0);
+                string = string.replace(/[٠-٩]/g, function(t) {
+                    return t.charCodeAt(0) - e;
+                });
+                return string;
             },
 
         },

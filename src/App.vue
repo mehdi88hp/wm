@@ -22,7 +22,10 @@
                 setTimeout(function () {
                     const element = e.target;
                     if (element.tagName.toLowerCase() === "input" || element.tagName.toLowerCase() === "textarea") {
-                        element.scrollIntoView(false);
+                        const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+                        if (!isSafari) {
+                            element.scrollIntoView(true);
+                        }
                     }
                 }, 500);
 

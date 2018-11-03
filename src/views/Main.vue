@@ -139,14 +139,14 @@
                 <i class="fas fa-phone-square col-1"></i>&nbsp;&nbsp;<span class="col-11">تماس با واش ماش</span>
             </a>
             <div class="dropdown-divider"></div>
-            <a v-on:click="logOut()" class="d-flex justify-content-center align-items-center">
+            <a v-on:click="logOut()" class="d-flex justify-content-center align-items-center" style="margin-bottom: 100px;">
                 <i class="fas fa-sign-out-alt col-1"></i>&nbsp;&nbsp;<span class="col-11">خروج از حساب</span>
             </a>
         </div>
 
 
         <div id="main_router_view_container"
-             :style="[dropDown_opened ? {'overflow-y': 'hidden', 'margin-right': PaddingIfHasVerticalScroll()} : {'overflow-y': 'auto', '-webkit-overflow-scrolling': 'touch'}]">
+             :style="[dropDown_opened ? {'overflow-y': 'hidden', 'margin-right': PaddingIfHasVerticalScroll()} : {'overflow-y': 'auto'}]">
             <transition name="fade" mode="out-in">
                 <!--<keep-alive>-->
                 <router-view id="main_router_view" style="height: 100%"/>
@@ -174,7 +174,7 @@
         watch: {
             // windowHeight(newHeight, oldHeight) {
             windowHeight() {
-                this.setViewHeight();
+                // this.setViewHeight();
             }
         },
 

@@ -78,6 +78,9 @@
 
                     let countPagesToShow = Math.floor(document.getElementById('p_container').offsetWidth / indicator) - 2;
 
+                    if (window.innerWidth < 576) {
+                        countPagesToShow -= 2;
+                    }
                     // console.log(countPagesToShow);
 
                     const array = [];

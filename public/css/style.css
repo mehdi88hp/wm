@@ -11,6 +11,9 @@ html, body {
     max-width: 100%;
     height: 100%;
     overflow: hidden;
+    overflow-scrolling: touch;
+    -webkit-overflow-scrolling: touch;
+
 }
 
 html {
@@ -93,15 +96,23 @@ input, input:before, input:after, textarea, textarea:before, textarea:after {
     pointer-events: auto;
 }
 
+.modal-backdrop {
+    /*z-index: 1;*/
+    display: none;
+}
+
 
 .sticky {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 99;
+    z-index: 90;
     padding: 10px 5px;
 }
 
+.modal-content {
+    z-index: 99;
+}
 
 
 /* width */

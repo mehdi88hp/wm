@@ -6,7 +6,7 @@
             <form onsubmit="return false;">
                 <div class="form-group">
                     <input type="text"
-                           v-bind:oninput="checkPhone()"
+                           @input="checkPhone()"
                            v-bind:class="{
                            border : isBorderActive,
                            'border-danger' : isBorderActive,
@@ -16,12 +16,11 @@
                            class="form-control text-center"
                            v-model="phone"
                            maxlength="11"
-                           aria-describedby="emailHelp"
                            placeholder="شماره همراه">
 
                     <transition name="fade">
                         <div class="alert alert-danger small mt-2 text-right like-pre"
-                             v-if="!isHiddenError">{{ Error }}
+                             v-if="!isHiddenError" dir="rtl">{{ Error }}
                         </div>
                     </transition>
                 </div>
@@ -64,12 +63,14 @@
 
             checkPhone: function () {
 
-                this.isBorderActive = !(this.convertNumbers2English(this.phone).startsWith('0') && this.phone.match(/^([0-9]|[۰-۹])+$/));
+                const phone_num = this.convertNumbers2English(this.phone);
+
+                this.isBorderActive = !(phone_num.startsWith('0') && phone_num.match(/^([0-9]|[۰-۹]|[٠-٩])+$/));
 
                 if (this.countWords(this.phone) > 0) {
 
                     if (this.countWords(this.phone) > 1) {
-                        this.isBorderActive = !(this.convertNumbers2English(this.phone).startsWith('09') && this.phone.match(/^([0-9]|[۰-۹])+$/));
+                        this.isBorderActive = !(phone_num.startsWith('09') && phone_num.match(/^([0-9]|[۰-۹]|[٠-٩])+$/));
                     }
                     if (this.isBorderActive) {
                         this.isHiddenError = false;
@@ -137,11 +138,18 @@
 
 
             convertNumbers2English: function (string) {
-                return string.replace(/[\u0660-\u0669]/g, function (c) {
-                    return c.charCodeAt(0) - 0x0660;
-                }).replace(/[\u06f0-\u06f9]/g, function (c) {
-                    return c.charCodeAt(0) - 0x06f0;
+                // convert persian digits [۰۱۲۳۴۵۶۷۸۹]
+                let e = '۰'.charCodeAt(0);
+                string = string.replace(/[۰-۹]/g, function(t) {
+                    return t.charCodeAt(0) - e;
                 });
+
+                // convert arabic indic digits [٠١٢٣٤٥٦٧٨٩]
+                e = '٠'.charCodeAt(0);
+                string = string.replace(/[٠-٩]/g, function(t) {
+                    return t.charCodeAt(0) - e;
+                });
+                return string;
             }
 
 
